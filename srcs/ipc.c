@@ -1,44 +1,6 @@
 #include "lem_ipc.h"
 
-void	sem_lock(int sem_id)
-{
-	struct sembuf	ops;
-	
-	ops.sem_num = 0;
-	ops.sem_op = -1;
-	ops.sem_flg = 0;
-	if (semop(sem_id, &ops, 1) == -1)
-	{
-		perror("semop");
-		exit(1);
-	}
-}
-
-int	sem_lock_no_wait(int sem_id)
-{
-	struct sembuf	ops;
-	
-	ops.sem_num = 0;
-	ops.sem_op = -1;
-	ops.sem_flg = IPC_NOWAIT;
-	return semop(sem_id, &ops, 1);
-}
-
-void	sem_unlock(int sem_id)
-{
-	struct sembuf	ops;
-	
-	ops.sem_num = 0;
-	ops.sem_op = 1;
-	ops.sem_flg = 0;
-	if (semop(sem_id, &ops, 1) == -1)
-	{
-		perror("semop");
-		exit(1);
-	}
-}
-
-int	*get_shm_data(key_t key, int flags)
+int	*get_shm_data(key_t key, int flags, int sem_id, int wait)
 {
 	int		shmid;
 	int		*data;
@@ -49,6 +11,8 @@ int	*get_shm_data(key_t key, int flags)
 		perror("shmget");
 		return (NULL);
 	}
+	if (!wait)
+		sem_lock(sem_id);
 	data = shmat(shmid, NULL, 0);
 	if (data == (void *)-1)
 	{
@@ -56,6 +20,9 @@ int	*get_shm_data(key_t key, int flags)
 		shmctl(shmid, IPC_RMID, NULL);
 		return (NULL);
 	}
+	if (wait)
+		sleep(wait);
+	sem_unlock(sem_id);
 	return (data);
 }
 
@@ -72,7 +39,25 @@ int	init_semaphore(t_ipc *ipc)
 		}
 		return (CHILD);
 	}
+	if (semctl(ipc->sem_id, 0, SETVAL, 0) == -1)
+	{
+		perror("semctl");
+		return (-1);
+	}
 	return (PARENT);
+}
+
+int	init_msg_queue(key_t key)
+{
+	int		msg_id;
+	
+	msg_id = msgget(key, IPC_CREAT | 0644);
+	if (msg_id == -1)
+	{
+		perror("msgget");
+		return (-1);
+	}
+	return (msg_id);
 }
 
 int	init_ipc(t_ipc *ipc)
@@ -88,23 +73,55 @@ int	init_ipc(t_ipc *ipc)
 	}
 	if ((ipc->type = init_semaphore(ipc)) == -1)
 		return (1);
-	if (!(ipc->data = get_shm_data(ipc->key, IPC_CREAT | 0644)))
+	if (!(ipc->data = get_shm_data(ipc->key, IPC_CREAT | 0644, ipc->sem_id, ipc->type == PARENT ? 5 : 0)))
+		return (1);
+	if ((ipc->msg_id = init_msg_queue(ipc->key)) == -1)
 		return (1);
 	return (0);
 }
 
-void	ipc_join_board(t_ipc *ipc, t_game *game)
+int	ipc_join_board(t_ipc *ipc, t_game *game)
 {
-	if (ipc->type == PARENT)
+	sem_lock(ipc->sem_id);
+	if (join_board(game))
 	{
-		join_board(game);
-		sleep(5);
-		sem_unlock(ipc->sem_id);
+		ft_printf_fd(2, "Failed to join board\n");
+		return (1);
 	}
-	else
-	{
-		sem_lock(ipc->sem_id);
-		join_board(game);
-		sem_unlock(ipc->sem_id);
-	}
+	sem_unlock(ipc->sem_id);
+	return (0);
 }
+
+/*
+P	: Lock1 - JoinBoard - Unlock1 - Lock2 - Sleep 5 ------------------------------------------- Unlock2 -----------------------------------
+C1	: ----------------------------- Lock1 - JoinBoard - Unlock1 ----------------------------------------- Lock2 - Unlock2 -----------------
+C2	: ----------------------------------------------------------- Lock1 - JoinBoard - Unlock1 ----------------------------- Lock2 - Unlock2
+
+
+
+P	: JoinBoard - Lock - Sleep 5 - Unlock -------------------------------------
+C1	: JoinBoard --------------------------- Lock - Unlock ---------------------
+C2	: JoinBoard ------------------------------------------- Lock - Unlock -----
+
+
+
+P	: Lock - JoinBoard - Unlock - Sleep 5 ------------------------------------------------------------------------------- Lock - Unlock
+C1	: --------------------------- Lock - JoinBoard - Unlock - Lock - Unlock -----------------------------------------------------------
+C2	: ----------------------------------------------------------------------- Lock - JoinBoard - Unlock - Lock - Unlock ---------------
+
+
+
+P	: Lock - JoinBoard - Sleep 5 - Unlock -------------------------------------------------------
+C1	: ------------------------------------- Lock - JoinBoard - Unlock ---------------------------
+C2	: ----------------------------------------------------------------- Lock - JoinBoard - Unlock
+
+
+
+
+P	: Lock - AttachMem - Sleep 5 ------------------------------------------------------- Unlock ----------------------------------------- Lock - JoinBoard - Unlock -------------------------------------------------------
+C1	: ---------------------------- Lock -------------------------------------------------------- AttachMem - Unlock ------------------------------------------------- Lock - JoinBoard - Unlock ---------------------------
+C2	: ---------------------------- Lock ---------------------------------------------------------------------------- AttachMem - Unlock --------------------------------------------------------- Lock - JoinBoard - Unlock
+  
+
+
+*/

@@ -7,11 +7,16 @@ _CYAN="\033[0;36m"
 NAME = lemipc
 
 SRC = main.c \
+		team.c \
 		ipc.c \
+		sem_utils.c \
 		game.c \
 		board.c \
+		vec2.c \
 		visualizer.c \
-		vec2.c
+		visualizer_ipc.c \
+		draw.c \
+		buffer.c
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
 CC = gcc
