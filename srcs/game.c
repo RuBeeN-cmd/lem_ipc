@@ -90,13 +90,13 @@ t_vec2	get_nearest_enemy(t_game *game)
 					if (target_team && target_team != game->team)
 						return (target);
 				}
-				if ((j & 1) && (j & 2)) // <
+				if ((j & 1) && (j & 2)) // South
 					target.x--;
-				else if (j & 1) // ^
+				else if (j & 1) // West
 					target.y--;
-				else if (j & 2) // \/
+				else if (j & 2) // East
 					target.y++;
-				else // >
+				else // North
 					target.x++;
 			}
 		}

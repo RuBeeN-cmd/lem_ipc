@@ -17,6 +17,8 @@
 #define C_CYN	"\033[0;36m"
 #define C_WHT	"\033[0;37m"
 
+#define KEY_PATH	"./lemipc"
+
 #define WIN_WIDTH	800
 #define WIN_HEIGHT	600
 #define CELL_SIZE	30
@@ -83,7 +85,7 @@ void	sem_unlock(int sem_id);
 void	sem_lock(int sem_id);
 int		sem_lock_no_wait(int sem_id);
 int		ipc_join_board(t_ipc *ipc, t_game *game);
-int		*get_shm_data(key_t key, int flags, int sem_id, int wait);
+int		*get_shm_data(key_t key, int flags);
 
 // game.c
 void	init_game(t_game *game, uint32_t *raw_board, uint32_t team);

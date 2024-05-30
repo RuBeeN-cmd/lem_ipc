@@ -10,7 +10,7 @@ int	init_visualizer_semaphore(t_ipc *ipc)
 
 int	init_visualizer_ipc(t_ipc *ipc)
 {
-	char	*path = "/Users/rubenrollin/Documents/Ruben/Projects/42/lem_ipc";
+	char	*path = KEY_PATH;
 	int		proj_id = 'R';
 	
 	ipc->key = ftok(path, proj_id);
@@ -19,7 +19,7 @@ int	init_visualizer_ipc(t_ipc *ipc)
 		perror(path);
 		return (1);
 	}
-	if (init_visualizer_semaphore(ipc) || !(ipc->data = get_shm_data(ipc->key, 0, ipc->sem_id, 0)))
+	if (init_visualizer_semaphore(ipc) || !(ipc->data = get_shm_data(ipc->key, 0)))
 	{
 		ft_printf_fd(2, "Nothing to visualize\n");
 		return (1);

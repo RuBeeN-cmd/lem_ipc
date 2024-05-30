@@ -12,7 +12,7 @@ int	player_workflow(uint32_t team)
 		return (1);
 	uint32_t alive = 1;
 	uint32_t not_alone = 1;
-	usleep(100000);
+	// usleep(100000); // for macos to prevent lock order
 	while ((alive = is_alive(game, ipc)) && (not_alone = !is_team_alone(game, ipc)))
 	{
 		sem_lock(ipc.sem_id);
