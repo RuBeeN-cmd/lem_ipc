@@ -19,7 +19,9 @@ int	init_visualizer_ipc(t_ipc *ipc)
 		perror(path);
 		return (1);
 	}
-	if (init_visualizer_semaphore(ipc) || !(ipc->data = get_shm_data(ipc->key, 0)))
+	if (init_visualizer_semaphore(ipc)
+		|| (ipc->shm_id = get_shm_id(ipc->key, 0)) == -1
+		|| !(ipc->data = get_shm_data(ipc->shm_id)))
 	{
 		ft_printf_fd(2, "Nothing to visualize\n");
 		return (1);

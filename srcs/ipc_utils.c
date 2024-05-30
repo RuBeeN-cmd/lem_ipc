@@ -37,3 +37,14 @@ void	sem_unlock(int sem_id)
 		exit(1);
 	}
 }
+
+int	get_nb_process_attach(int shm_id)
+{
+	struct shmid_ds	buf;
+	if (shmctl(shm_id, IPC_STAT, &buf) == -1)
+	{
+		perror("shmctl");
+		return (-1);
+	}
+	return (buf.shm_nattch);
+}

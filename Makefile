@@ -9,7 +9,7 @@ NAME = lemipc
 SRC = main.c \
 		team.c \
 		ipc.c \
-		sem_utils.c \
+		ipc_utils.c \
 		game.c \
 		board.c \
 		vec2.c \
@@ -20,7 +20,7 @@ SRC = main.c \
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
 CC = clang
-CFLAGS = -Wall -Werror -Wextra -g3
+CFLAGS = -Wall -Werror -Wextra -g3 -fsanitize=address
 INC = -Iincludes -Ilibft/includes -Imlx/include/MLX42
 
 LIB = libft/libft.a mlx/libmlx42.a

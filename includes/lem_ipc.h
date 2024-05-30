@@ -61,11 +61,12 @@ typedef struct	s_game
 
 typedef struct	s_ipc
 {
-	key_t	key;
-	int		sem_id;
-	void	*data;
 	int		type;
+	key_t	key;
+	int		shm_id;
+	int		sem_id;
 	int		msg_id;
+	void	*data;
 }				t_ipc;
 
 typedef struct	s_visualizer
@@ -81,15 +82,19 @@ typedef struct	s_visualizer
 
 // ipc.c
 int		init_ipc(t_ipc *ipc);
+int		ipc_join_board(t_ipc *ipc, t_game *game);
+int		get_shm_id(key_t key, int flags);
+int		*get_shm_data(int shm_id);
+int		close_ipc(t_ipc ipc);
+
+// ipc_utils.c
 void	sem_unlock(int sem_id);
 void	sem_lock(int sem_id);
 int		sem_lock_no_wait(int sem_id);
-int		ipc_join_board(t_ipc *ipc, t_game *game);
-int		*get_shm_data(key_t key, int flags);
+int		get_nb_process_attach(int shm_id);
 
 // game.c
 void	init_game(t_game *game, uint32_t *raw_board, uint32_t team);
-void	move_random(t_game *game);
 int		get_best_move(t_game *game);
 int		is_alive(t_game game, t_ipc ipc);
 int		is_team_alone(t_game game, t_ipc ipc);
@@ -126,6 +131,5 @@ t_vec2	init_vec2(int x, int y);
 
 // team.c
 uint32_t	get_team(int argc, char *argv[]);
-
 
 #endif

@@ -1,21 +1,27 @@
 #include "lem_ipc.h"
 
-int	*get_shm_data(key_t key, int flags)
+int	get_shm_id(key_t key, int flags)
 {
-	int		shmid;
-	int		*data;
+	int		shm_id;
 	
-	shmid = shmget(key, get_board_size_padded(), flags);
-	if (shmid == -1)
+	shm_id = shmget(key, get_board_size_padded(), flags);
+	if (shm_id == -1)
 	{
 		perror("shmget");
-		return (NULL);
+		return (-1);
 	}
-	data = shmat(shmid, NULL, 0);
+	return (shm_id);
+}
+
+int	*get_shm_data(int shm_id)
+{
+	int		*data;
+	
+	data = shmat(shm_id, NULL, 0);
 	if (data == (void *)-1)
 	{
 		perror("shmat");
-		shmctl(shmid, IPC_RMID, NULL);
+		shmctl(shm_id, IPC_RMID, NULL);
 		return (NULL);
 	}
 	return (data);
@@ -68,7 +74,9 @@ int	init_ipc(t_ipc *ipc)
 	}
 	if ((ipc->type = init_semaphore(ipc)) == -1)
 		return (1);
-	if (!(ipc->data = get_shm_data(ipc->key, IPC_CREAT | 0644)))
+	if ((ipc->shm_id = get_shm_id(ipc->key, IPC_CREAT | 0644)) == -1)
+		return (1);
+	if (!(ipc->data = get_shm_data(ipc->shm_id)))
 		return (1);
 	if ((ipc->msg_id = init_msg_queue(ipc->key)) == -1)
 		return (1);
@@ -89,5 +97,16 @@ int	ipc_join_board(t_ipc *ipc, t_game *game)
 		return (1);
 	}
 	sem_unlock(ipc->sem_id);
+	return (0);
+}
+
+int	close_ipc(t_ipc ipc)
+{
+	int	nb_process = get_nb_process_attach(ipc.shm_id);
+	if (shmdt(ipc.data) == -1)
+	{
+		perror("semget");
+		return (1);
+	}
 	return (0);
 }
