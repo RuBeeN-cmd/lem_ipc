@@ -100,9 +100,35 @@ int	ipc_join_board(t_ipc *ipc, t_game *game)
 	return (0);
 }
 
+void	wait_for_detach_display(t_ipc ipc)
+{
+	while (get_nb_process_attach(ipc.shm_id) == 2)
+		usleep(100);
+}
+
+void	clear_ipc_data(t_ipc ipc)
+{
+	(void) ipc;
+	ft_printf_fd(1, "Clearing IPC data\n");
+}
+
+int	is_display_running(t_ipc ipc)
+{
+	if (msgsnd(ipc.msg_id, &(t_msg){MSG_CHECK_DISPLAY, 0}, 0, 0) == -1)
+	{
+		perror("msgsnd");
+		return (0);
+	}
+}
+
 int	close_ipc(t_ipc ipc)
 {
 	int	nb_process = get_nb_process_attach(ipc.shm_id);
+	if (nb_process == 2)
+	{
+		wait_for_detach_display(ipc);
+		clear_ipc_data(ipc);
+	}
 	if (shmdt(ipc.data) == -1)
 	{
 		perror("semget");

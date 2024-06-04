@@ -29,7 +29,7 @@ LIBFLAGS = $(addprefix -L, $(dir $(LIB))) $(addprefix -l, $(notdir $(subst lib,,
 ifeq ($(shell uname), Linux)
 	LIBFLAGS += -lm -lglfw -lGL
 else ifeq ($(shell uname), Darwin)
-	LIBFLAGS += -framework OpenGL -framework AppKit -L/usr/local/Cellar/glfw/3.3.9/lib/ -lglfw -I/usr/local/Cellar/glfw/3.3.9/include/GLFW
+	LIBFLAGS += -framework OpenGL -framework AppKit -L/usr/local/Cellar/glfw/3.3.9/lib/ -lglfw -I/usr/local/Cellar/glfw/3.3.9/include/GLFW -DOSX
 endif
 
 SRC_DIR = srcs

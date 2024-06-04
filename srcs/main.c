@@ -10,7 +10,9 @@ int	player_workflow(uint32_t team)
 	init_game(&game, ipc.data, team);
 	if (ipc_join_board(&ipc, &game))
 		return (1);
-	// usleep(100000); // for macos to prevent lock order
+	#ifdef OSX
+		usleep(100000); // for macos to prevent lock order
+	#endif
 	while (is_alive(game, ipc) && !is_team_alone(game, ipc))
 	{
 		sem_lock(ipc.sem_id);
