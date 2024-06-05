@@ -20,14 +20,14 @@ SRC = main.c \
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
 CC = clang
-CFLAGS = -Wall -Werror -Wextra -g3 -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -g3 #-fsanitize=address
 INC = -Iincludes -Ilibft/includes -Imlx/include/MLX42
 
 LIB = libft/libft.a mlx/libmlx42.a
 LIBFLAGS = $(addprefix -L, $(dir $(LIB))) $(addprefix -l, $(notdir $(subst lib,,$(basename $(LIB)))))
 
 ifeq ($(shell uname), Linux)
-	LIBFLAGS += -lm -lglfw -lGL
+	LIBFLAGS += -lm -lglfw -lGL -DMACOS
 else ifeq ($(shell uname), Darwin)
 	LIBFLAGS += -framework OpenGL -framework AppKit -L/usr/local/Cellar/glfw/3.3.9/lib/ -lglfw -I/usr/local/Cellar/glfw/3.3.9/include/GLFW
 endif

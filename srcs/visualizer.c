@@ -33,6 +33,22 @@ int	init_visualizer(t_visualizer *v)
 	return (0);
 }
 
+int	check_msg(t_ipc ipc)
+{
+	t_msg	msg;
+	if (msgrcv(ipc.msg_id, &msg, sizeof(msg.text), UINT32_MAX, IPC_NOWAIT) == -1)
+	{
+		if (errno == ENOMSG)
+		{
+			// ft_printf_fd(1, C_RED"No Message\n"C_END);
+			return (0);
+		}
+		perror("msgrcv");
+		return (-1);
+	}
+	return (1);
+}
+
 void	visualizer_loop(void *param)
 {
 	t_visualizer *v = (t_visualizer *) param;
@@ -44,6 +60,7 @@ void	visualizer_loop(void *param)
 	}
 	clear_window(v->img, 0xFF000000);
 	draw_board(v);
+	check_msg(v->ipc);
 }
 
 int	visualizer_workflow(void)

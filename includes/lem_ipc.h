@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <MLX42.h>
 #include <sys/msg.h>
+#include <errno.h>
 
 #define C_END	"\033[0m"
 #define C_RED	"\033[0;31m"
@@ -79,6 +80,12 @@ typedef struct	s_visualizer
 	t_ipc		ipc;
 	int			running;
 }				t_visualizer;
+ 
+typedef struct 	s_msg
+{
+	long	type;
+	char	text[1024 - 8];
+}				t_msg;
 
 // ipc.c
 int		init_ipc(t_ipc *ipc);
@@ -86,6 +93,8 @@ int		ipc_join_board(t_ipc *ipc, t_game *game);
 int		get_shm_id(key_t key, int flags);
 int		*get_shm_data(int shm_id);
 int		close_ipc(t_ipc ipc);
+int		init_msg_queue(key_t key);
+int		is_visualizer(t_ipc ipc);
 
 // ipc_utils.c
 void	sem_unlock(int sem_id);
