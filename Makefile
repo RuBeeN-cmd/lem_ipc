@@ -27,9 +27,9 @@ LIB = libft/libft.a mlx/libmlx42.a
 LIBFLAGS = $(addprefix -L, $(dir $(LIB))) $(addprefix -l, $(notdir $(subst lib,,$(basename $(LIB)))))
 
 ifeq ($(shell uname), Linux)
-	LIBFLAGS += -lm -lglfw -lGL -DMACOS
+	LIBFLAGS += -lm -lglfw -lGL -DOSX
 else ifeq ($(shell uname), Darwin)
-	LIBFLAGS += -framework OpenGL -framework AppKit -L/usr/local/Cellar/glfw/3.3.9/lib/ -lglfw -I/usr/local/Cellar/glfw/3.3.9/include/GLFW
+	LIBFLAGS += -framework OpenGL -framework AppKit -L/usr/local/Cellar/glfw/3.3.9/lib/ -lglfw -I/usr/local/Cellar/glfw/3.3.9/include/GLFW -DOSX
 endif
 
 SRC_DIR = srcs
