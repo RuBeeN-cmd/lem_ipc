@@ -11,4 +11,4 @@ ${PROGRAM} 1 &
 
 sleep 0.5
 
-${PROGRAM} visualizer
+${PROGRAM} visualizer &

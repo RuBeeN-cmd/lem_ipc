@@ -13,12 +13,12 @@ int	player_workflow(uint32_t team)
 	#ifdef OSX
 		usleep(100000); // for macos to prevent lock order
 	#endif
-	while (is_alive(game, ipc) && !is_team_alone(game, ipc))
+	while (is_alive(game, ipc) && is_other_team(game, ipc))
 	{
 		sem_lock(ipc.sem_id);
 		get_best_move(&game);
 		sem_unlock(ipc.sem_id);
-		usleep(1000000);
+		usleep(COOLDOWN);
 	}
 	close_ipc(ipc);
 	return 0;

@@ -46,7 +46,15 @@ int	check_msg(t_ipc ipc)
 		perror("msgrcv");
 		return (-1);
 	}
+	shm_det(ipc.data);
 	return (1);
+}
+
+void	destroy_visualizer(t_visualizer v)
+{
+	mlx_terminate(v.mlx);
+	free_buffer(v.buffer, BOARD_HEIGHT);
+	exit(0);
 }
 
 void	visualizer_loop(void *param)
@@ -60,7 +68,8 @@ void	visualizer_loop(void *param)
 	}
 	clear_window(v->img, 0xFF000000);
 	draw_board(v);
-	check_msg(v->ipc);
+	if (check_msg(v->ipc))
+		destroy_visualizer(*v);
 }
 
 int	visualizer_workflow(void)
@@ -70,8 +79,7 @@ int	visualizer_workflow(void)
 	if (init_visualizer(&v))
 		return (1);
 	mlx_loop(v.mlx);
-	mlx_terminate(v.mlx);
-	free_buffer(v.buffer, BOARD_HEIGHT);
+	destroy_visualizer(v);
 	return (0);
 }
 

@@ -1,11 +1,5 @@
 #include "lem_ipc.h"
 
-void	init_game(t_game *game, uint32_t *raw_board, uint32_t team)
-{
-	game->team = team;
-	init_board(game->board, raw_board);
-}
-
 int	is_two_neighboors(t_game *game, t_vec2 target)
 {
 	for (int y = target.y - 1; y < target.y + 1; y++)
@@ -19,13 +13,19 @@ int	is_two_neighboors(t_game *game, t_vec2 target)
 
 void	move_player(t_game *game, t_vec2 new_pos)
 {
-	if (new_pos.x >= 0 && new_pos.x < BOARD_WIDTH && new_pos.y >= 0 && new_pos.y < BOARD_HEIGHT
-		&& (game->board[new_pos.y][new_pos.x] == 0
-		|| (game->board[new_pos.y][new_pos.x] != game->team && is_two_neighboors(game, new_pos))))
+	if (new_pos.x >= 0 && new_pos.x < BOARD_WIDTH && new_pos.y >= 0 && new_pos.y < BOARD_HEIGHT)
 	{
-		game->board[game->position.y][game->position.x] = 0;
-		game->position = new_pos;
-		game->board[game->position.y][game->position.x] = game->team;
+		if (game->board[new_pos.y][new_pos.x] == 0)
+		{
+			game->board[game->position.y][game->position.x] = 0;
+			game->position = new_pos;
+			game->board[new_pos.y][new_pos.x] = game->team;
+		}
+		else if (game->board[new_pos.y][new_pos.x] != game->team && is_two_neighboors(game, new_pos))
+		{
+			ft_log(LOG_DEBUG, "graille");
+			game->board[new_pos.y][new_pos.x] = 0;
+		}
 	}
 }
 
@@ -132,7 +132,7 @@ int	is_alive(t_game game, t_ipc ipc)
 	return (0);
 }
 
-int	is_team_alone(t_game game, t_ipc ipc)
+int	is_other_team(t_game game, t_ipc ipc)
 {
 	sem_lock(ipc.sem_id);
 	for (size_t y = 0; y < BOARD_HEIGHT; y++)
@@ -142,26 +142,10 @@ int	is_team_alone(t_game game, t_ipc ipc)
 			if (game.board[y][x] && game.board[y][x] != game.team)
 			{
 				sem_unlock(ipc.sem_id);
-				return (0);
+				return (1);
 			}
 		}
 	}
-	print_board(game.board);
 	sem_unlock(ipc.sem_id);
-	return (1);
-}
-
-t_vec2	rand_pos(void)
-{
-	t_vec2 vec2;
-
-	if (ft_rand(&vec2, sizeof(t_vec2)))
-		return (init_vec2(-1, -1));
-	vec2.x = vec2.x % BOARD_WIDTH;
-	if (vec2.x < 0)
-		vec2.x = -vec2.x;
-	vec2.y = vec2.y % BOARD_HEIGHT;
-	if (vec2.y < 0)
-		vec2.y = -vec2.y;
-	return (vec2);
+	return (0);
 }

@@ -31,7 +31,7 @@ uint32_t	get_team(int argc, char *argv[])
 	uint32_t team = get_team_from_str(argv[1]);
 	if (team < 1 || team > MAX_TEAMS)
 	{
-		ft_printf_fd(2, "Invalid team id\n");
+		ft_log(LOG_ERROR, "Invalid team id\n");
 		exit(1);
 	}
 	return (team);

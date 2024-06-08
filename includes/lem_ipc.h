@@ -15,6 +15,7 @@
 #define C_GRN	"\033[0;32m"
 #define C_YEL	"\033[0;33m"
 #define C_BLU	"\033[0;34m"
+#define C_MAG	"\033[0;35m"
 #define C_CYN	"\033[0;36m"
 #define C_WHT	"\033[0;37m"
 
@@ -25,7 +26,7 @@
 #define CELL_SIZE	30
 #define MOVE_SPEED	1
 #define ZOOM_SPEED	1
-
+#define COOLDOWN	1000000
 
 #define PARENT		0
 #define CHILD		1
@@ -87,8 +88,28 @@ typedef struct 	s_msg
 	char	text[1024 - 8];
 }				t_msg;
 
-// ipc.c
+#define LOG_DEBUG	0
+#define LOG_INFO	1
+#define LOG_WARNING	2
+#define LOG_ERROR	3
+
+// init_ipc.c
 int		init_ipc(t_ipc *ipc);
+
+// init_game.c
+void	init_game(t_game *game, uint32_t *raw_board, uint32_t team);
+int		join_board(t_game *game);
+
+
+
+
+
+
+
+
+
+
+// ipc.c
 int		ipc_join_board(t_ipc *ipc, t_game *game);
 int		get_shm_id(key_t key, int flags);
 int		*get_shm_data(int shm_id);
@@ -100,20 +121,21 @@ int		is_visualizer(t_ipc ipc);
 void	sem_unlock(int sem_id);
 void	sem_lock(int sem_id);
 int		sem_lock_no_wait(int sem_id);
+int		sem_destroy(int sem_id);
 int		get_nb_process_attach(int shm_id);
+int		shm_det(void *data);
+int		shm_destroy(int shm_id);
+int		msg_queue_destroy(int msg_id);
 
 // game.c
-void	init_game(t_game *game, uint32_t *raw_board, uint32_t team);
 int		get_best_move(t_game *game);
 int		is_alive(t_game game, t_ipc ipc);
-int		is_team_alone(t_game game, t_ipc ipc);
+int		is_other_team(t_game game, t_ipc ipc);
 t_vec2	rand_pos(void);
 
 // board.c
 void	init_board(uint32_t **board, uint32_t *raw_board);
 size_t	get_board_size_padded(void);
-int		join_board(t_game *game);
-void	print_board(uint32_t **board);
 
 // visualizer.c
 int		visualizer_workflow(void);
@@ -140,5 +162,8 @@ t_vec2	init_vec2(int x, int y);
 
 // team.c
 uint32_t	get_team(int argc, char *argv[]);
+
+// log.c
+void	ft_log(int level, char *msg);
 
 #endif

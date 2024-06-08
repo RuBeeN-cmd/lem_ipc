@@ -8,6 +8,8 @@ NAME = lemipc
 
 SRC = main.c \
 		team.c \
+		init_ipc.c \
+		init_game.c \
 		ipc.c \
 		ipc_utils.c \
 		game.c \
@@ -16,7 +18,9 @@ SRC = main.c \
 		visualizer.c \
 		visualizer_ipc.c \
 		draw.c \
-		buffer.c
+		buffer.c \
+		log.c
+
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
 CC = clang

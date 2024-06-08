@@ -21,7 +21,7 @@ override HEADERS += -I $(INCLUDE_DIR)
 CFLAGS :=	-Wextra -Wall -Werror -Wunreachable-code -Wno-char-subscripts -Wno-sign-compare \
 			-DLODEPNG_NO_COMPILE_ANCILLARY_CHUNKS -DLODEPNG_NO_COMPILE_ENCODER
 ifdef DEBUG
-	CFLAGS += -g
+	CFLAGS += -g3
 else
 	CFLAGS	+= -Ofast -D NDEBUG
 endif

@@ -1,0 +1,98 @@
+{
+   glfw
+   Memcheck:Leak
+   ...
+   fun:glfwInit
+   ...
+}
+
+{
+   GLX_nvidia
+   Memcheck:Leak
+   ...
+   obj:/usr/lib/**/libGLX_nvidia.so*
+   ...
+}
+
+{
+   glcore_nvidia
+   Memcheck:Leak
+   ...
+   obj:/usr/lib/**/libnvidia-glcore.so*
+   ...
+}
+
+{
+   libX11
+   Memcheck:Leak
+   ...
+   obj:/usr/lib/**/libX11.so*
+   ...
+}
+
+{
+   dlopen
+   Memcheck:Leak
+   ...
+   fun:*dl_open*
+   ...
+}
+
+{
+   dlclose
+   Memcheck:Leak
+   ...
+   fun:_dl_close*
+   ...
+}
+
+{
+	nvidia_calloc
+	Memcheck:Leak
+	fun:calloc
+	fun:???
+	fun:???
+	fun:???
+	fun:???
+	fun:???
+	fun:???
+	fun:???
+	fun:???
+	fun:???
+	fun:???
+	fun:???
+}
+
+{
+	nvidia_malloc
+	Memcheck:Leak
+	fun:malloc
+	fun:???
+	fun:???
+	fun:???
+	fun:???
+	fun:???
+	fun:???
+	fun:???
+	fun:???
+	fun:???
+	fun:???
+	fun:???
+}
+
+{
+	nvidia_malloc
+	Memcheck:Leak
+	fun:realloc
+	fun:???
+	fun:???
+	fun:???
+	fun:???
+	fun:???
+	fun:???
+	fun:???
+	fun:???
+	fun:???
+	fun:???
+	fun:???
+}
