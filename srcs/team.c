@@ -27,7 +27,7 @@ uint32_t	get_team(int argc, char *argv[])
 		exit(1);
 	}
 	if (!ft_strncmp(argv[1], "visualizer", 11))
-		return (VISUALIZER);
+		return (VISUALIZER_CHANNEL);
 	uint32_t team = get_team_from_str(argv[1]);
 	if (team < 1 || team > MAX_TEAMS)
 	{

@@ -1,0 +1,12 @@
+/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/SDL3-shared.dir
+/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/SDL3_test.dir
+/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/SDL_uclibc.dir
+/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/uninstall.dir
+/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/package.dir
+/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/package_source.dir
+/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/edit_cache.dir
+/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/rebuild_cache.dir
+/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/list_install_components.dir
+/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/install.dir
+/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/install/local.dir
+/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/install/strip.dir

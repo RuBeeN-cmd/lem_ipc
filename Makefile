@@ -14,27 +14,25 @@ SRC = main.c \
 		ipc_utils.c \
 		game.c \
 		board.c \
-		vec2.c \
+		vector/vec2.c \
+		vector/fvec2.c \
 		visualizer.c \
 		visualizer_ipc.c \
 		draw.c \
 		buffer.c \
+		color.c \
 		log.c
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
 CC = clang
 CFLAGS = -Wall -Werror -Wextra -g3 #-fsanitize=address
-INC = -Iincludes -Ilibft/includes -Imlx/include/MLX42
+INC = -Iincludes -Ilibft/includes -ISDL3-3.2.10/include
 
-LIB = libft/libft.a mlx/libmlx42.a
+LIB = libft/libft.a SDL3-3.2.10/libSDL3.so
 LIBFLAGS = $(addprefix -L, $(dir $(LIB))) $(addprefix -l, $(notdir $(subst lib,,$(basename $(LIB)))))
-
-ifeq ($(shell uname), Linux)
-	LIBFLAGS += -lm -lglfw -lGL -DOSX
-else ifeq ($(shell uname), Darwin)
-	LIBFLAGS += -framework OpenGL -framework AppKit -L/usr/local/Cellar/glfw/3.3.9/lib/ -lglfw -I/usr/local/Cellar/glfw/3.3.9/include/GLFW -DOSX
-endif
+LIBFLAGS += -Wl,-rpath,SDL3-3.2.10
+LIBFLAGS += -lm
 
 SRC_DIR = srcs
 OBJ_DIR = objs
@@ -45,21 +43,22 @@ $(NAME): $(LIB) $(OBJ_DIR) $(OBJ)
 	@echo $(_GREEN)Compiling $(OBJ)...$(_END)
 	@$(CC) $(CFLAGS) $(OBJ) $(LIBFLAGS) -o $@
 
-%.a:
+%.a %.so:
 	@make -C $(dir $@)
 
 $(OBJ_DIR):
 	@mkdir -p $@
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(dir $@)
 	@echo $(_CYAN)Compiling $<...$(_END)
 	@$(CC) -o $@ -c $< $(CFLAGS) $(INC)
 
 clean:
 	@echo $(_YELLOW)Cleaning $(OBJ)...$(_END)
-	@for lib in $(dir $(LIB)); \
-		do make -C $$lib fclean; \
-	done
+# @for lib in $(dir $(LIB)); \
+# 	do make -C $$lib fclean
+# done
 	@rm -rf $(OBJ_DIR)
 
 fclean: clean

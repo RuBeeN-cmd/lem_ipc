@@ -23,9 +23,9 @@ int	is_visualizer(t_ipc ipc)
 
 	ft_bzero(&msg, sizeof(t_msg));
 	msg.type = UINT32_MAX;
-	char	text[] = "Hello, world !";
+	char	text[] = "*";
 	ft_strlcpy(msg.text, text, sizeof(text));
-	if (msgsnd(ipc.msg_id, &msg, sizeof(msg.text), 0) == -1)
+	if (msgsnd(ipc.msg_id, &msg, sizeof(msg), 0) == -1)
 	{
 		perror("msgsnt");
 		return (-1);
@@ -62,12 +62,15 @@ int	destroy_ipc(t_ipc ipc)
 int	close_ipc(t_ipc ipc)
 {
 	int	nb_process = get_nb_process_attach(ipc.shm_id);
-	if (nb_process == 2 && is_visualizer(ipc))
+	if (nb_process == 2)
 	{
 		while ((nb_process = get_nb_process_attach(ipc.shm_id)) != 1)
 			usleep(100);
 	}
 	shm_det(ipc.data);
+	sem_lock(ipc.sem_id);
+	ft_printf_fd(1, "Nb Process: %d\n", nb_process);
+	sem_unlock(ipc.sem_id);
 	if (nb_process == 1)
 		if (destroy_ipc(ipc))
 			return (1);

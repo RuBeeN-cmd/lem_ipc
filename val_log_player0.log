@@ -1,0 +1,15 @@
+==2324907== Memcheck, a memory error detector
+==2324907== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==2324907== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==2324907== Command: ./lemipc 1
+==2324907== Parent PID: 2324905
+==2324907== 
+==2324907== 
+==2324907== HEAP SUMMARY:
+==2324907==     in use at exit: 0 bytes in 0 blocks
+==2324907==   total heap usage: 0 allocs, 0 frees, 0 bytes allocated
+==2324907== 
+==2324907== All heap blocks were freed -- no leaks are possible
+==2324907== 
+==2324907== For lists of detected and suppressed errors, rerun with: -s
+==2324907== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

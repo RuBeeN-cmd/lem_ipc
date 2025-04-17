@@ -1,0 +1,631 @@
+Performing C SOURCE FILE Test COMPILER_SUPPORTS_SSE4_2 failed with the following output:
+Change Dir: /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_73673/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_73673.dir/build.make CMakeFiles/cmTC_73673.dir/build
+gmake[1]: Entering directory '/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_73673.dir/src.c.o
+/usr/bin/cc -DCOMPILER_SUPPORTS_SSE4_2  -D_GNU_SOURCE=1 -msse4.2 -mcrc32 -MD -MT CMakeFiles/cmTC_73673.dir/src.c.o -MF CMakeFiles/cmTC_73673.dir/src.c.o.d -o CMakeFiles/cmTC_73673.dir/src.c.o -c /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp/src.c
+clang: error: unknown argument: '-mcrc32'
+gmake[1]: *** [CMakeFiles/cmTC_73673.dir/build.make:79: CMakeFiles/cmTC_73673.dir/src.c.o] Error 1
+gmake[1]: Leaving directory '/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_73673/fast] Error 2
+
+
+Source file was:
+
+      #include <nmmintrin.h>
+      unsigned calc_crc32c(const char *text, unsigned len) {
+          unsigned crc32c = ~0;
+          for (; len >= 4; len -= 4, text += 4) {
+            crc32c = (unsigned)_mm_crc32_u32(crc32c, *(unsigned*)text);
+          }
+          return crc32c;
+      }
+      int main(int argc, char **argv) {
+        calc_crc32c("SDL_SSE4",8);
+        return 0;
+      }
+Determining if the _i64toa exist failed with the following output:
+Change Dir: /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_56129/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_56129.dir/build.make CMakeFiles/cmTC_56129.dir/build
+gmake[1]: Entering directory '/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_56129.dir/CheckSymbolExists.c.o
+/usr/bin/cc   -D_GNU_SOURCE=1 -MD -MT CMakeFiles/cmTC_56129.dir/CheckSymbolExists.c.o -MF CMakeFiles/cmTC_56129.dir/CheckSymbolExists.c.o.d -o CMakeFiles/cmTC_56129.dir/CheckSymbolExists.c.o -c /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp/CheckSymbolExists.c:26:19: error: use of undeclared identifier '_i64toa'
+  return ((int*)(&_i64toa))[argc];
+                  ^
+1 error generated.
+gmake[1]: *** [CMakeFiles/cmTC_56129.dir/build.make:79: CMakeFiles/cmTC_56129.dir/CheckSymbolExists.c.o] Error 1
+gmake[1]: Leaving directory '/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_56129/fast] Error 2
+
+
+File /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <float.h>
+#include <iconv.h>
+#include <inttypes.h>
+#include <limits.h>
+#include <malloc.h>
+#include <math.h>
+#include <memory.h>
+#include <signal.h>
+#include <stdarg.h>
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <strings.h>
+#include <sys/types.h>
+#include <time.h>
+#include <wchar.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef _i64toa
+  return ((int*)(&_i64toa))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Determining if the itoa exist failed with the following output:
+Change Dir: /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_a3f6c/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_a3f6c.dir/build.make CMakeFiles/cmTC_a3f6c.dir/build
+gmake[1]: Entering directory '/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_a3f6c.dir/CheckSymbolExists.c.o
+/usr/bin/cc   -D_GNU_SOURCE=1 -MD -MT CMakeFiles/cmTC_a3f6c.dir/CheckSymbolExists.c.o -MF CMakeFiles/cmTC_a3f6c.dir/CheckSymbolExists.c.o.d -o CMakeFiles/cmTC_a3f6c.dir/CheckSymbolExists.c.o -c /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp/CheckSymbolExists.c:26:19: error: use of undeclared identifier 'itoa'
+  return ((int*)(&itoa))[argc];
+                  ^
+1 error generated.
+gmake[1]: *** [CMakeFiles/cmTC_a3f6c.dir/build.make:79: CMakeFiles/cmTC_a3f6c.dir/CheckSymbolExists.c.o] Error 1
+gmake[1]: Leaving directory '/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_a3f6c/fast] Error 2
+
+
+File /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <float.h>
+#include <iconv.h>
+#include <inttypes.h>
+#include <limits.h>
+#include <malloc.h>
+#include <math.h>
+#include <memory.h>
+#include <signal.h>
+#include <stdarg.h>
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <strings.h>
+#include <sys/types.h>
+#include <time.h>
+#include <wchar.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef itoa
+  return ((int*)(&itoa))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Determining if the _ltoa exist failed with the following output:
+Change Dir: /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_a09a1/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_a09a1.dir/build.make CMakeFiles/cmTC_a09a1.dir/build
+gmake[1]: Entering directory '/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_a09a1.dir/CheckSymbolExists.c.o
+/usr/bin/cc   -D_GNU_SOURCE=1 -MD -MT CMakeFiles/cmTC_a09a1.dir/CheckSymbolExists.c.o -MF CMakeFiles/cmTC_a09a1.dir/CheckSymbolExists.c.o.d -o CMakeFiles/cmTC_a09a1.dir/CheckSymbolExists.c.o -c /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp/CheckSymbolExists.c:26:19: error: use of undeclared identifier '_ltoa'
+  return ((int*)(&_ltoa))[argc];
+                  ^
+1 error generated.
+gmake[1]: *** [CMakeFiles/cmTC_a09a1.dir/build.make:79: CMakeFiles/cmTC_a09a1.dir/CheckSymbolExists.c.o] Error 1
+gmake[1]: Leaving directory '/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_a09a1/fast] Error 2
+
+
+File /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <float.h>
+#include <iconv.h>
+#include <inttypes.h>
+#include <limits.h>
+#include <malloc.h>
+#include <math.h>
+#include <memory.h>
+#include <signal.h>
+#include <stdarg.h>
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <strings.h>
+#include <sys/types.h>
+#include <time.h>
+#include <wchar.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef _ltoa
+  return ((int*)(&_ltoa))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Determining if the sqr exist failed with the following output:
+Change Dir: /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_7b37e/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_7b37e.dir/build.make CMakeFiles/cmTC_7b37e.dir/build
+gmake[1]: Entering directory '/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_7b37e.dir/CheckSymbolExists.c.o
+/usr/bin/cc   -D_GNU_SOURCE=1 -MD -MT CMakeFiles/cmTC_7b37e.dir/CheckSymbolExists.c.o -MF CMakeFiles/cmTC_7b37e.dir/CheckSymbolExists.c.o.d -o CMakeFiles/cmTC_7b37e.dir/CheckSymbolExists.c.o -c /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp/CheckSymbolExists.c:26:19: error: use of undeclared identifier 'sqr'; did you mean 'sqrt'?
+  return ((int*)(&sqr))[argc];
+                  ^~~
+                  sqrt
+/usr/include/x86_64-linux-gnu/bits/mathcalls.h:143:13: note: 'sqrt' declared here
+__MATHCALL (sqrt,, (_Mdouble_ __x));
+            ^
+1 error generated.
+gmake[1]: *** [CMakeFiles/cmTC_7b37e.dir/build.make:79: CMakeFiles/cmTC_7b37e.dir/CheckSymbolExists.c.o] Error 1
+gmake[1]: Leaving directory '/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_7b37e/fast] Error 2
+
+
+File /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <float.h>
+#include <iconv.h>
+#include <inttypes.h>
+#include <limits.h>
+#include <malloc.h>
+#include <math.h>
+#include <memory.h>
+#include <signal.h>
+#include <stdarg.h>
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <strings.h>
+#include <sys/types.h>
+#include <time.h>
+#include <wchar.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef sqr
+  return ((int*)(&sqr))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Determining if the strlcat exist failed with the following output:
+Change Dir: /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_93662/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_93662.dir/build.make CMakeFiles/cmTC_93662.dir/build
+gmake[1]: Entering directory '/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_93662.dir/CheckSymbolExists.c.o
+/usr/bin/cc   -D_GNU_SOURCE=1 -MD -MT CMakeFiles/cmTC_93662.dir/CheckSymbolExists.c.o -MF CMakeFiles/cmTC_93662.dir/CheckSymbolExists.c.o.d -o CMakeFiles/cmTC_93662.dir/CheckSymbolExists.c.o -c /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp/CheckSymbolExists.c:26:19: error: use of undeclared identifier 'strlcat'
+  return ((int*)(&strlcat))[argc];
+                  ^
+1 error generated.
+gmake[1]: *** [CMakeFiles/cmTC_93662.dir/build.make:79: CMakeFiles/cmTC_93662.dir/CheckSymbolExists.c.o] Error 1
+gmake[1]: Leaving directory '/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_93662/fast] Error 2
+
+
+File /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <float.h>
+#include <iconv.h>
+#include <inttypes.h>
+#include <limits.h>
+#include <malloc.h>
+#include <math.h>
+#include <memory.h>
+#include <signal.h>
+#include <stdarg.h>
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <strings.h>
+#include <sys/types.h>
+#include <time.h>
+#include <wchar.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef strlcat
+  return ((int*)(&strlcat))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Determining if the strlcpy exist failed with the following output:
+Change Dir: /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_58f31/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_58f31.dir/build.make CMakeFiles/cmTC_58f31.dir/build
+gmake[1]: Entering directory '/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_58f31.dir/CheckSymbolExists.c.o
+/usr/bin/cc   -D_GNU_SOURCE=1 -MD -MT CMakeFiles/cmTC_58f31.dir/CheckSymbolExists.c.o -MF CMakeFiles/cmTC_58f31.dir/CheckSymbolExists.c.o.d -o CMakeFiles/cmTC_58f31.dir/CheckSymbolExists.c.o -c /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp/CheckSymbolExists.c:26:19: error: use of undeclared identifier 'strlcpy'
+  return ((int*)(&strlcpy))[argc];
+                  ^
+1 error generated.
+gmake[1]: *** [CMakeFiles/cmTC_58f31.dir/build.make:79: CMakeFiles/cmTC_58f31.dir/CheckSymbolExists.c.o] Error 1
+gmake[1]: Leaving directory '/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_58f31/fast] Error 2
+
+
+File /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <float.h>
+#include <iconv.h>
+#include <inttypes.h>
+#include <limits.h>
+#include <malloc.h>
+#include <math.h>
+#include <memory.h>
+#include <signal.h>
+#include <stdarg.h>
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <strings.h>
+#include <sys/types.h>
+#include <time.h>
+#include <wchar.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef strlcpy
+  return ((int*)(&strlcpy))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Determining if the strnstr exist failed with the following output:
+Change Dir: /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_24bfa/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_24bfa.dir/build.make CMakeFiles/cmTC_24bfa.dir/build
+gmake[1]: Entering directory '/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_24bfa.dir/CheckSymbolExists.c.o
+/usr/bin/cc   -D_GNU_SOURCE=1 -MD -MT CMakeFiles/cmTC_24bfa.dir/CheckSymbolExists.c.o -MF CMakeFiles/cmTC_24bfa.dir/CheckSymbolExists.c.o.d -o CMakeFiles/cmTC_24bfa.dir/CheckSymbolExists.c.o -c /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp/CheckSymbolExists.c:26:19: error: use of undeclared identifier 'strnstr'; did you mean 'strstr'?
+  return ((int*)(&strnstr))[argc];
+                  ^~~~~~~
+                  strstr
+/usr/include/string.h:350:14: note: 'strstr' declared here
+extern char *strstr (const char *__haystack, const char *__needle)
+             ^
+1 error generated.
+gmake[1]: *** [CMakeFiles/cmTC_24bfa.dir/build.make:79: CMakeFiles/cmTC_24bfa.dir/CheckSymbolExists.c.o] Error 1
+gmake[1]: Leaving directory '/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_24bfa/fast] Error 2
+
+
+File /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <float.h>
+#include <iconv.h>
+#include <inttypes.h>
+#include <limits.h>
+#include <malloc.h>
+#include <math.h>
+#include <memory.h>
+#include <signal.h>
+#include <stdarg.h>
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <strings.h>
+#include <sys/types.h>
+#include <time.h>
+#include <wchar.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef strnstr
+  return ((int*)(&strnstr))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Determining if the wcslcat exist failed with the following output:
+Change Dir: /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_cc574/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_cc574.dir/build.make CMakeFiles/cmTC_cc574.dir/build
+gmake[1]: Entering directory '/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_cc574.dir/CheckSymbolExists.c.o
+/usr/bin/cc   -D_GNU_SOURCE=1 -MD -MT CMakeFiles/cmTC_cc574.dir/CheckSymbolExists.c.o -MF CMakeFiles/cmTC_cc574.dir/CheckSymbolExists.c.o.d -o CMakeFiles/cmTC_cc574.dir/CheckSymbolExists.c.o -c /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp/CheckSymbolExists.c:26:19: error: use of undeclared identifier 'wcslcat'
+  return ((int*)(&wcslcat))[argc];
+                  ^
+1 error generated.
+gmake[1]: *** [CMakeFiles/cmTC_cc574.dir/build.make:79: CMakeFiles/cmTC_cc574.dir/CheckSymbolExists.c.o] Error 1
+gmake[1]: Leaving directory '/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_cc574/fast] Error 2
+
+
+File /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <float.h>
+#include <iconv.h>
+#include <inttypes.h>
+#include <limits.h>
+#include <malloc.h>
+#include <math.h>
+#include <memory.h>
+#include <signal.h>
+#include <stdarg.h>
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <strings.h>
+#include <sys/types.h>
+#include <time.h>
+#include <wchar.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef wcslcat
+  return ((int*)(&wcslcat))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Determining if the wcslcpy exist failed with the following output:
+Change Dir: /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_a606e/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_a606e.dir/build.make CMakeFiles/cmTC_a606e.dir/build
+gmake[1]: Entering directory '/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_a606e.dir/CheckSymbolExists.c.o
+/usr/bin/cc   -D_GNU_SOURCE=1 -MD -MT CMakeFiles/cmTC_a606e.dir/CheckSymbolExists.c.o -MF CMakeFiles/cmTC_a606e.dir/CheckSymbolExists.c.o.d -o CMakeFiles/cmTC_a606e.dir/CheckSymbolExists.c.o -c /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp/CheckSymbolExists.c:26:19: error: use of undeclared identifier 'wcslcpy'
+  return ((int*)(&wcslcpy))[argc];
+                  ^
+1 error generated.
+gmake[1]: *** [CMakeFiles/cmTC_a606e.dir/build.make:79: CMakeFiles/cmTC_a606e.dir/CheckSymbolExists.c.o] Error 1
+gmake[1]: Leaving directory '/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_a606e/fast] Error 2
+
+
+File /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <float.h>
+#include <iconv.h>
+#include <inttypes.h>
+#include <limits.h>
+#include <malloc.h>
+#include <math.h>
+#include <memory.h>
+#include <signal.h>
+#include <stdarg.h>
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <strings.h>
+#include <sys/types.h>
+#include <time.h>
+#include <wchar.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef wcslcpy
+  return ((int*)(&wcslcpy))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Determining if the sysctlbyname exist failed with the following output:
+Change Dir: /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_4bd60/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_4bd60.dir/build.make CMakeFiles/cmTC_4bd60.dir/build
+gmake[1]: Entering directory '/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_4bd60.dir/CheckSymbolExists.c.o
+/usr/bin/cc   -D_GNU_SOURCE=1 -MD -MT CMakeFiles/cmTC_4bd60.dir/CheckSymbolExists.c.o -MF CMakeFiles/cmTC_4bd60.dir/CheckSymbolExists.c.o.d -o CMakeFiles/cmTC_4bd60.dir/CheckSymbolExists.c.o -c /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp/CheckSymbolExists.c:3:10: fatal error: 'sys/sysctl.h' file not found
+#include <sys/sysctl.h>
+         ^~~~~~~~~~~~~~
+1 error generated.
+gmake[1]: *** [CMakeFiles/cmTC_4bd60.dir/build.make:79: CMakeFiles/cmTC_4bd60.dir/CheckSymbolExists.c.o] Error 1
+gmake[1]: Leaving directory '/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_4bd60/fast] Error 2
+
+
+File /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <sys/types.h>
+#include <sys/sysctl.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef sysctlbyname
+  return ((int*)(&sysctlbyname))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Determining if the elf_aux_info exist failed with the following output:
+Change Dir: /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_5b26f/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_5b26f.dir/build.make CMakeFiles/cmTC_5b26f.dir/build
+gmake[1]: Entering directory '/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_5b26f.dir/CheckSymbolExists.c.o
+/usr/bin/cc   -D_GNU_SOURCE=1 -MD -MT CMakeFiles/cmTC_5b26f.dir/CheckSymbolExists.c.o -MF CMakeFiles/cmTC_5b26f.dir/CheckSymbolExists.c.o.d -o CMakeFiles/cmTC_5b26f.dir/CheckSymbolExists.c.o -c /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp/CheckSymbolExists.c:8:19: error: use of undeclared identifier 'elf_aux_info'
+  return ((int*)(&elf_aux_info))[argc];
+                  ^
+1 error generated.
+gmake[1]: *** [CMakeFiles/cmTC_5b26f.dir/build.make:79: CMakeFiles/cmTC_5b26f.dir/CheckSymbolExists.c.o] Error 1
+gmake[1]: Leaving directory '/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_5b26f/fast] Error 2
+
+
+File /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <sys/auxv.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef elf_aux_info
+  return ((int*)(&elf_aux_info))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Performing C SOURCE FILE Test ICONV_IN_LIBICONV failed with the following output:
+Change Dir: /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_739c2/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_739c2.dir/build.make CMakeFiles/cmTC_739c2.dir/build
+gmake[1]: Entering directory '/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_739c2.dir/src.c.o
+/usr/bin/cc -DICONV_IN_LIBICONV  -D_GNU_SOURCE=1 -MD -MT CMakeFiles/cmTC_739c2.dir/src.c.o -MF CMakeFiles/cmTC_739c2.dir/src.c.o.d -o CMakeFiles/cmTC_739c2.dir/src.c.o -c /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_739c2
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_739c2.dir/link.txt --verbose=1
+/usr/bin/cc   -D_GNU_SOURCE=1 CMakeFiles/cmTC_739c2.dir/src.c.o -o cmTC_739c2  -liconv 
+/usr/bin/ld: cannot find -liconv: No such file or directory
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+gmake[1]: *** [CMakeFiles/cmTC_739c2.dir/build.make:100: cmTC_739c2] Error 1
+gmake[1]: Leaving directory '/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_739c2/fast] Error 2
+
+
+Source file was:
+
+        #include <stddef.h>
+        #include <iconv.h>
+        int main(int argc, char **argv) {
+            return !iconv_open(NULL,NULL);
+        }
+Performing C SOURCE FILE Test LIBC_HAS_WORKING_LIBUNWIND failed with the following output:
+Change Dir: /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_ffa6b/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_ffa6b.dir/build.make CMakeFiles/cmTC_ffa6b.dir/build
+gmake[1]: Entering directory '/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_ffa6b.dir/src.c.o
+/usr/bin/cc -DLIBC_HAS_WORKING_LIBUNWIND  -D_GNU_SOURCE=1 -MD -MT CMakeFiles/cmTC_ffa6b.dir/src.c.o -MF CMakeFiles/cmTC_ffa6b.dir/src.c.o.d -o CMakeFiles/cmTC_ffa6b.dir/src.c.o -c /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp/src.c
+/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp/src.c:1:16: fatal error: 'libunwind.h' file not found
+      #include <libunwind.h>
+               ^~~~~~~~~~~~~
+1 error generated.
+gmake[1]: *** [CMakeFiles/cmTC_ffa6b.dir/build.make:79: CMakeFiles/cmTC_ffa6b.dir/src.c.o] Error 1
+gmake[1]: Leaving directory '/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_ffa6b/fast] Error 2
+
+
+Source file was:
+      #include <libunwind.h>
+      int main(int argc, char *argv[]) {
+        (void)argc; (void)argv;
+        unw_context_t context;
+        unw_cursor_t cursor;
+        unw_word_t pc;
+        char sym[256];
+        unw_word_t offset;
+        unw_getcontext(&context);
+        unw_step(&cursor);
+        unw_get_reg(&cursor, UNW_REG_IP, &pc);
+        unw_get_proc_name(&cursor, sym, sizeof(sym), &offset);
+        return 0;
+      }
+Performing C SOURCE FILE Test LIBUNWIND_HAS_WORKINGLIBUNWIND failed with the following output:
+Change Dir: /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_701f9/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_701f9.dir/build.make CMakeFiles/cmTC_701f9.dir/build
+gmake[1]: Entering directory '/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_701f9.dir/src.c.o
+/usr/bin/cc -DLIBUNWIND_HAS_WORKINGLIBUNWIND  -D_GNU_SOURCE=1 -MD -MT CMakeFiles/cmTC_701f9.dir/src.c.o -MF CMakeFiles/cmTC_701f9.dir/src.c.o.d -o CMakeFiles/cmTC_701f9.dir/src.c.o -c /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp/src.c
+/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp/src.c:1:16: fatal error: 'libunwind.h' file not found
+      #include <libunwind.h>
+               ^~~~~~~~~~~~~
+1 error generated.
+gmake[1]: *** [CMakeFiles/cmTC_701f9.dir/build.make:79: CMakeFiles/cmTC_701f9.dir/src.c.o] Error 1
+gmake[1]: Leaving directory '/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_701f9/fast] Error 2
+
+
+Source file was:
+      #include <libunwind.h>
+      int main(int argc, char *argv[]) {
+        (void)argc; (void)argv;
+        unw_context_t context;
+        unw_cursor_t cursor;
+        unw_word_t pc;
+        char sym[256];
+        unw_word_t offset;
+        unw_getcontext(&context);
+        unw_step(&cursor);
+        unw_get_reg(&cursor, UNW_REG_IP, &pc);
+        unw_get_proc_name(&cursor, sym, sizeof(sym), &offset);
+        return 0;
+      }
+Determining if the include file pthread_np.h exists failed with the following output:
+Change Dir: /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_348d5/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_348d5.dir/build.make CMakeFiles/cmTC_348d5.dir/build
+gmake[1]: Entering directory '/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_348d5.dir/CheckIncludeFile.c.o
+/usr/bin/cc   -D_GNU_SOURCE=1 -D_REENTRANT -pthread -MD -MT CMakeFiles/cmTC_348d5.dir/CheckIncludeFile.c.o -MF CMakeFiles/cmTC_348d5.dir/CheckIncludeFile.c.o.d -o CMakeFiles/cmTC_348d5.dir/CheckIncludeFile.c.o -c /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp/CheckIncludeFile.c:1:10: fatal error: 'pthread_np.h' file not found
+#include <pthread_np.h>
+         ^~~~~~~~~~~~~~
+1 error generated.
+gmake[1]: *** [CMakeFiles/cmTC_348d5.dir/build.make:79: CMakeFiles/cmTC_348d5.dir/CheckIncludeFile.c.o] Error 1
+gmake[1]: Leaving directory '/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_348d5/fast] Error 2
+
+
+

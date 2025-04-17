@@ -6,9 +6,14 @@
 #include <sys/sem.h>
 #include <libft.h>
 #include <stdio.h>
-#include <MLX42.h>
+#include <SDL3/SDL.h>
 #include <sys/msg.h>
 #include <errno.h>
+
+#include <color.h>
+#include <vector.h>
+
+#define PI	3.14159265
 
 #define C_END	"\033[0m"
 #define C_RED	"\033[0;31m"
@@ -21,21 +26,28 @@
 
 #define KEY_PATH	"./lemipc"
 
-#define WIN_WIDTH	800
-#define WIN_HEIGHT	600
-#define CELL_SIZE	30
-#define MOVE_SPEED	1
-#define ZOOM_SPEED	1
-#define COOLDOWN	1000000
+#define WIN_TITLE		"Lem-Ipc"
+#define WIN_WIDTH		800
+#define WIN_HEIGHT		600
+#define INITIAL_PADDING	20
+#define BORDER_WIDTH	2
+#define MOVE_SPEED		12
+#define ZOOM_SPEED		1
+#define COOLDOWN		100000
 
 #define PARENT		0
 #define CHILD		1
 
-#define MAX_TEAMS	(UINT32_MAX - 1)
-#define VISUALIZER	UINT32_MAX
+#define MAX_TEAMS			(UINT32_MAX - 10)
+#define VISUALIZER_CHANNEL	UINT32_MAX
+#define PAUSE_CHANNEL		(UINT32_MAX - 1)
 
-#define BOARD_WIDTH		11
-#define BOARD_HEIGHT	11
+#define EMPTY_CELL	0
+
+#define NULL_POS	((t_vec2) {-1, -1})
+
+#define BOARD_WIDTH		30
+#define BOARD_HEIGHT	30
 
 #define PAGE_SIZE		getpagesize()
 
@@ -47,12 +59,6 @@
 #define BOTTOM_MOVE			5
 #define BOTTOM_LEFT_MOVE	6
 #define LEFT_MOVE			7
-
-typedef struct	s_vec2
-{
-	int		x;
-	int		y;
-}				t_vec2;
 
 typedef struct	s_game
 {
@@ -73,19 +79,20 @@ typedef struct	s_ipc
 
 typedef struct	s_visualizer
 {
-	mlx_t		*mlx;
-	mlx_image_t	*img;
-	t_vec2		offset;
-	float		scale;
-	uint32_t	**buffer;
-	t_ipc		ipc;
-	int			running;
+	SDL_Window		*window;
+	SDL_Renderer	*renderer;
+	t_fvec2			offset;
+	uint32_t		cell_size;
+	uint32_t		**buffer;
+	t_ipc			ipc;
+	int				running;
+	t_vec2			board_size;
 }				t_visualizer;
  
 typedef struct 	s_msg
 {
-	long	type;
-	char	text[1024 - 8];
+	uint64_t	type;
+	char		text[8];	
 }				t_msg;
 
 #define LOG_DEBUG	0
@@ -126,23 +133,28 @@ int		get_nb_process_attach(int shm_id);
 int		shm_det(void *data);
 int		shm_destroy(int shm_id);
 int		msg_queue_destroy(int msg_id);
+int		send_pause_msg(t_ipc ipc);
+int		check_pause_msg(t_ipc ipc);
 
 // game.c
 int		get_best_move(t_game *game);
+int		is_with_mate(t_game game);
+void	go_to_mate(t_game *game);
 int		is_alive(t_game game, t_ipc ipc);
 int		is_other_team(t_game game, t_ipc ipc);
 t_vec2	rand_pos(void);
 
 // board.c
-void	init_board(uint32_t **board, uint32_t *raw_board);
-size_t	get_board_size_padded(void);
+void		init_board(uint32_t **board, uint32_t *raw_board);
+size_t		get_board_size_padded(void);
+uint32_t	get_target_team(t_vec2 target, uint32_t *board[]);
 
 // visualizer.c
 int		visualizer_workflow(void);
-int		init_visualizer(t_visualizer *v);
-void	visualizer_loop(void *param);
+int		init_visualizer(t_visualizer *v, char title[], uint32_t width, uint32_t height);
+// void	visualizer_loop(void *param);
 void	handle_keys(t_visualizer* v);
-void	key_hook(mlx_key_data_t keydata, void *param);
+// void	key_hook(mlx_key_data_t keydata, void *param);
 void	free_buffer(uint32_t **buffer, size_t height);
 
 // visualizer_ipc.c
@@ -155,10 +167,7 @@ void	copy_buffer(uint32_t **dst, uint32_t *src, size_t height);
 
 // draw.c
 void	draw_board(t_visualizer *v);
-void	clear_window(mlx_image_t *img, int color);
-
-// vec2.c
-t_vec2	init_vec2(int x, int y);
+void	clear_window(SDL_Renderer *renderer, t_color color);
 
 // team.c
 uint32_t	get_team(int argc, char *argv[]);

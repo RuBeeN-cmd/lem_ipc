@@ -5,7 +5,7 @@ t_vec2	rand_pos(void)
 	t_vec2 vec2;
 
 	if (ft_rand(&vec2, sizeof(t_vec2)))
-		return (init_vec2(-1, -1));
+		return ((t_vec2) { -1, -1 });
 	vec2.x = vec2.x % BOARD_WIDTH;
 	if (vec2.x < 0)
 		vec2.x = -vec2.x;
