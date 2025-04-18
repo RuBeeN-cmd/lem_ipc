@@ -17,8 +17,8 @@ do
     team_id=$(((i % ${nb_team}) + 1))
     printf "%-25s Team: [   %-4d]\n" "Lauching number |${i}|" "${team_id}"
     # valgrind --log-file=./val_log_player${i}.log 
-    ${PROGRAM} ${team_id} >> player_log 2>&1 & # >/dev/null 2>&1 &
+    ${PROGRAM} ${team_id} >/dev/null 2>&1 &
     sleep 0.01
 done
 
-${PROGRAM} visualizer >> viz_log 2>&1 &
+${PROGRAM} visualizer &
