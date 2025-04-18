@@ -1,6 +1,6 @@
 #include "lem_ipc.h"
 
-uint32_t	get_team_from_str(const char *nptr)
+static uint32_t	get_team_from_str(const char *nptr)
 {
 	unsigned int	nb;
 	char			*str;

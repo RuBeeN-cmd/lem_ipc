@@ -14,14 +14,18 @@ SRC = main.c \
 		ipc_utils.c \
 		game.c \
 		board.c \
-		vector/vec2.c \
-		vector/fvec2.c \
-		visualizer.c \
-		visualizer_ipc.c \
-		draw.c \
-		buffer.c \
-		color.c \
-		log.c
+		message.c \
+		player/player.c \
+		models/vector/vec2.c \
+		models/vector/fvec2.c \
+		models/color.c \
+		models/log.c \
+		visualizer/visualizer.c \
+		visualizer/visualizer_ipc.c \
+		visualizer/draw.c \
+		visualizer/buffer.c \
+		visualizer/events.c \
+		visualizer/sdl.c
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 

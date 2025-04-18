@@ -89,37 +89,3 @@ int	msg_queue_destroy(int msg_id)
 	}
 	return (0);
 }
-
-int	send_pause_msg(t_ipc ipc)
-{
-	t_msg	msg = {
-		PAUSE_CHANNEL,
-		"*"
-	};
-	if (msgsnd(ipc.msg_id, &msg, sizeof(msg), 0) == -1)
-	{
-		perror("msgsnt");
-		return (1);
-	}
-	ft_printf_fd(1, "Msg Sent for sure\n");
-	return (0);
-}
-
-int	check_pause_msg(t_ipc ipc)
-{
-	t_msg	msg;
-
-	errno = 0;
-	if (msgrcv(ipc.msg_id, &msg, sizeof(msg), PAUSE_CHANNEL, IPC_NOWAIT) == -1)
-	{
-		if (errno == ENOMSG)
-		{
-			ft_printf_fd(1, "No Message\n");
-			return (0);
-		}
-		ft_printf_fd(1, "Msgrcv Error\n");
-		perror("msgrcv");
-		return (-1);
-	}
-	return (1);
-}

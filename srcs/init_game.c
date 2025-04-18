@@ -42,5 +42,6 @@ void	init_board(uint32_t **board, uint32_t *raw_board)
 void	init_game(t_game *game, uint32_t *raw_board, uint32_t team)
 {
 	game->team = team;
+	game->visualizer_target = 0;
 	init_board(game->board, raw_board);
 }

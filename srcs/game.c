@@ -40,7 +40,6 @@ void	move_up(t_game *game)
 {
 	t_vec2	new_pos;
 
-	ft_printf_fd(STDERR_FILENO, "Player %d moving up\n", game->team);
 	new_pos = game->position;
 	new_pos.y--;
 	move_player(game, new_pos);
@@ -50,7 +49,6 @@ void	move_down(t_game *game)
 {
 	t_vec2	new_pos;
 
-	ft_printf_fd(STDERR_FILENO, "Player %d moving down\n", game->team);
 	new_pos = game->position;
 	new_pos.y++;
 	move_player(game, new_pos);
@@ -60,7 +58,6 @@ void	move_left(t_game *game)
 {
 	t_vec2	new_pos;
 
-	ft_printf_fd(STDERR_FILENO, "Player %d moving left\n", game->team);
 	new_pos = game->position;
 	new_pos.x--;
 	move_player(game, new_pos);
@@ -70,7 +67,6 @@ void	move_right(t_game *game)
 {
 	t_vec2	new_pos;
 
-	ft_printf_fd(STDERR_FILENO, "Player %d moving right\n", game->team);
 	new_pos = game->position;
 	new_pos.x++;
 	move_player(game, new_pos);
@@ -238,5 +234,15 @@ int	is_other_team(t_game game, t_ipc ipc)
 		}
 	}
 	sem_unlock(ipc.sem_id);
+	return (0);
+}
+
+int is_game_paused(t_ipc ipc)
+{
+	if (check_pause_msg(ipc.msg_id) == 1)
+	{
+		send_pause_msg(ipc.msg_id);
+		return (1);
+	}
 	return (0);
 }

@@ -1,0 +1,15 @@
+==74481== Memcheck, a memory error detector
+==74481== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==74481== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==74481== Command: ./lemipc 2
+==74481== Parent PID: 74465
+==74481== 
+==74481== 
+==74481== HEAP SUMMARY:
+==74481==     in use at exit: 0 bytes in 0 blocks
+==74481==   total heap usage: 0 allocs, 0 frees, 0 bytes allocated
+==74481== 
+==74481== All heap blocks were freed -- no leaks are possible
+==74481== 
+==74481== For lists of detected and suppressed errors, rerun with: -s
+==74481== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

@@ -38,9 +38,11 @@
 #define PARENT		0
 #define CHILD		1
 
-#define MAX_TEAMS			(UINT32_MAX - 10)
-#define VISUALIZER_CHANNEL	UINT32_MAX
-#define PAUSE_CHANNEL		(UINT32_MAX - 1)
+#define MAX_TEAMS					(UINT32_MAX - 10)
+#define VISUALIZER					UINT32_MAX
+#define VISUALIZER_CHANNEL			UINT32_MAX
+#define PAUSE_CHANNEL				(UINT32_MAX - 1)
+#define VISUALIZER_TARGET_CHANNEL	(UINT32_MAX - 2)
 
 #define EMPTY_CELL	0
 
@@ -65,6 +67,7 @@ typedef struct	s_game
 	uint32_t	*board[BOARD_HEIGHT];
 	t_vec2		position;
 	uint32_t	team;
+	int			visualizer_target;
 }				t_game;
 
 typedef struct	s_ipc
@@ -92,8 +95,14 @@ typedef struct	s_visualizer
 typedef struct 	s_msg
 {
 	uint64_t	type;
-	char		text[8];	
+	char		text[8];
 }				t_msg;
+
+typedef struct 	s_vec2_msg
+{
+	uint64_t	type;
+	t_vec2		v;
+}				t_vec2_msg;
 
 #define LOG_DEBUG	0
 #define LOG_INFO	1
@@ -108,7 +117,8 @@ void	init_game(t_game *game, uint32_t *raw_board, uint32_t team);
 int		join_board(t_game *game);
 
 
-
+// player.c
+int	player_workflow(uint32_t team);
 
 
 
@@ -124,6 +134,12 @@ int		close_ipc(t_ipc ipc);
 int		init_msg_queue(key_t key);
 int		is_visualizer(t_ipc ipc);
 
+// message.c
+int send_visualizer_target_msg(int msg_id, t_vec2 target);
+int	check_visualizer_target_msg(int msg_id, t_vec2 *target);
+int		send_pause_msg(int msg_id);
+int		check_pause_msg(int msg_id);
+
 // ipc_utils.c
 void	sem_unlock(int sem_id);
 void	sem_lock(int sem_id);
@@ -133,8 +149,6 @@ int		get_nb_process_attach(int shm_id);
 int		shm_det(void *data);
 int		shm_destroy(int shm_id);
 int		msg_queue_destroy(int msg_id);
-int		send_pause_msg(t_ipc ipc);
-int		check_pause_msg(t_ipc ipc);
 
 // game.c
 int		get_best_move(t_game *game);
@@ -143,6 +157,7 @@ void	go_to_mate(t_game *game);
 int		is_alive(t_game game, t_ipc ipc);
 int		is_other_team(t_game game, t_ipc ipc);
 t_vec2	rand_pos(void);
+int		is_game_paused(t_ipc ipc);
 
 // board.c
 void		init_board(uint32_t **board, uint32_t *raw_board);
@@ -151,11 +166,11 @@ uint32_t	get_target_team(t_vec2 target, uint32_t *board[]);
 
 // visualizer.c
 int		visualizer_workflow(void);
-int		init_visualizer(t_visualizer *v, char title[], uint32_t width, uint32_t height);
-// void	visualizer_loop(void *param);
-void	handle_keys(t_visualizer* v);
-// void	key_hook(mlx_key_data_t keydata, void *param);
+int		handle_events(t_visualizer* v);
 void	free_buffer(uint32_t **buffer, size_t height);
+// events.c
+// sdl.c
+int init_sdl(t_visualizer *v, char title[], uint32_t width, uint32_t height);
 
 // visualizer_ipc.c
 int	init_visualizer_ipc(t_ipc *ipc);
