@@ -1,4 +1,4 @@
-#include "lem_ipc.h"
+#include <lem_ipc.h>
 
 static uint32_t	get_team_from_str(const char *nptr)
 {
@@ -27,7 +27,7 @@ uint32_t	get_team(int argc, char *argv[])
 		exit(1);
 	}
 	if (!ft_strncmp(argv[1], "visualizer", 11))
-		return (VISUALIZER_CHANNEL);
+		return (VISUALIZER);
 	uint32_t team = get_team_from_str(argv[1]);
 	if (team < 1 || team > MAX_TEAMS)
 	{
@@ -35,4 +35,12 @@ uint32_t	get_team(int argc, char *argv[])
 		exit(1);
 	}
 	return (team);
+}
+
+uint32_t	get_team_on_board(t_vec2 target, uint32_t *board[]) {
+	if (target.x < 0 || target.x >= BOARD_WIDTH
+		|| target.y < 0 || target.y >= BOARD_HEIGHT)
+		return (VISUALIZER); // Error case
+	else
+		return (board[target.y][target.x]);
 }

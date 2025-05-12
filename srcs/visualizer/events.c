@@ -1,4 +1,4 @@
-#include "lem_ipc.h"
+#include <visualizer.h>
 
 int	is_on_board(t_vec2 pos)
 {
@@ -66,7 +66,7 @@ int	handle_events(t_visualizer* v)
 				if (vec2cmp(target, NULL_POS))
 				{
 					ft_printf_fd(1, "Clicked on : (%d, %d)\n", target.x, target.y);
-					send_visualizer_target_msg(v->ipc.msg_id, target, VISUALIZER_TARGET_CHANNEL);	
+					send_visualizer_target_msg(v->ipc.msg_id, target);	
 				}
 			}
 		}

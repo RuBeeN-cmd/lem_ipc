@@ -1,4 +1,4 @@
-#include "color.h"
+#include <utils/color.h>
 
 t_color color_from_u32(uint32_t input)
 {

@@ -1,16 +1,24 @@
-#include "lem_ipc.h"
+#include <visualizer.h>
 
 static int	init_visualizer(t_visualizer *v, char title[], uint32_t width, uint32_t height)
 {
-	if (init_visualizer_ipc(&v->ipc))
+	if (init_visualizer_ipc(&v->ipc, BOARD_SIZE)) {
+		ft_printf_fd(2, "Nothing to visualize\n");
 		return (1);
+    }
 	if (init_buffer(&v->buffer))
 		return (1);
+		
 	v->running = -1;
 	v->cell_size = (height - INITIAL_PADDING) / BOARD_HEIGHT;
 	if (v->cell_size * BOARD_WIDTH > (width - INITIAL_PADDING))
 		v->cell_size = (width - INITIAL_PADDING) / BOARD_WIDTH;
 	v->offset = (t_fvec2) {0, 0};
+	v->target_infos = (t_supervised_infos) {
+		.pos = NULL_POS,
+		.team = -1,
+		.is_alive = 0
+	};
 	if (init_sdl(v, title, width, height))
 	{
 		free_buffer(v->buffer, BOARD_HEIGHT);
@@ -21,9 +29,7 @@ static int	init_visualizer(t_visualizer *v, char title[], uint32_t width, uint32
 
 static void	destroy_visualizer(t_visualizer *v)
 {
-	SDL_DestroyRenderer(v->renderer);
-	SDL_DestroyWindow(v->window);
-	SDL_Quit();
+	destroy_sdl(v);
 	free_buffer(v->buffer, BOARD_HEIGHT);
 	exit(0);
 }
@@ -52,7 +58,7 @@ static int	visualizer_routine(t_visualizer *v)
 	{
 		if (v->running == -1)
 		{
-			if (check_pause_msg(v->ipc.msg_id))
+			if (check_pause_msg(v->ipc.msg_id) == 1)
 			{
 				send_pause_msg(v->ipc.msg_id);
 				v->running = 0;
@@ -60,11 +66,14 @@ static int	visualizer_routine(t_visualizer *v)
 			else
 				v->running = 1;
 		}
+		check_target_infos_msg(v->ipc.msg_id, &v->target_infos);
+		ft_printf_fd(1, "Visualizer Target: (%d,%d)\n", v->target_infos.pos.x, v->target_infos.pos.y);
 		copy_buffer(v->buffer, v->ipc.data, BOARD_HEIGHT);
 		sem_unlock(v->ipc.sem_id);
 	}
 	clear_window(v->renderer, color_from_u32(0xFF000000));
 	draw_board(v);
+	draw_target_infos(v, NULL);
 	SDL_RenderPresent(v->renderer);
 	if (!is_game_ended(v->buffer))
 		return (0);

@@ -1,4 +1,6 @@
-#include "lem_ipc.h"
+#include <lem_ipc.h>
+#include <visualizer.h>
+#include <player.h>
 
 int main(int argc, char *argv[])
 {

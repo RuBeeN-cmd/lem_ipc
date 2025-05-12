@@ -1,4 +1,4 @@
-#include "lem_ipc.h"
+#include <visualizer.h>
 
 void	free_buffer(uint32_t **buffer, size_t height)
 {

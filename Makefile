@@ -8,34 +8,32 @@ NAME = lemipc
 
 SRC = main.c \
 		team.c \
-		init_ipc.c \
-		init_game.c \
-		ipc.c \
-		ipc_utils.c \
-		game.c \
-		board.c \
-		message.c \
 		player/player.c \
-		models/vector/vec2.c \
-		models/vector/fvec2.c \
-		models/color.c \
-		models/log.c \
+		player/game.c \
+		player/init_game.c \
+		player/ipc.c \
+		ipc/init_ipc.c \
+		ipc/ipc_utils.c \
+		ipc/message.c \
 		visualizer/visualizer.c \
-		visualizer/visualizer_ipc.c \
 		visualizer/draw.c \
 		visualizer/buffer.c \
 		visualizer/events.c \
-		visualizer/sdl.c
+		visualizer/sdl.c \
+		models/vector/vec2.c \
+		models/vector/fvec2.c \
+		models/color.c \
+		models/log.c
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
 CC = clang
 CFLAGS = -Wall -Werror -Wextra -g3 #-fsanitize=address
-INC = -Iincludes -Ilibft/includes -ISDL3-3.2.10/include
+INC = -Iincludes -Ilibft/includes -ISDL3-3.2.10/include -ISDL3_ttf-3.2.2/include
 
-LIB = libft/libft.a SDL3-3.2.10/libSDL3.so
+LIB = libft/libft.a SDL3-3.2.10/libSDL3.so SDL3_ttf-3.2.2/libSDL3_ttf.so
 LIBFLAGS = $(addprefix -L, $(dir $(LIB))) $(addprefix -l, $(notdir $(subst lib,,$(basename $(LIB)))))
-LIBFLAGS += -Wl,-rpath,SDL3-3.2.10
+LIBFLAGS += -Wl,-rpath,SDL3-3.2.10 -Wl,-rpath,SDL3_ttf-3.2.2
 LIBFLAGS += -lm
 
 SRC_DIR = srcs

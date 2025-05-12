@@ -1,11 +1,11 @@
 CMakeFiles/SDL3-shared.dir/src/video/offscreen/SDL_offscreenvulkan.c.o: \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/SDL3-shared.dir/cmake_pch.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/SDL3-shared.dir/cmake_pch.h.c \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/SDL_internal.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include-config-relwithdebinfo/build_config/SDL_build_config.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_platform_defines.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/dynapi/SDL_dynapi.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/dynapi/SDL_dynapi_overrides.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/SDL3-shared.dir/cmake_pch.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/CMakeFiles/SDL3-shared.dir/cmake_pch.h.c \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/SDL_internal.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include-config-relwithdebinfo/build_config/SDL_build_config.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_platform_defines.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/dynapi/SDL_dynapi.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/dynapi/SDL_dynapi_overrides.h \
   /usr/include/x86_64-linux-gnu/sys/types.h /usr/include/features.h \
   /usr/include/features-time64.h \
   /usr/include/x86_64-linux-gnu/bits/wordsize.h \
@@ -80,66 +80,66 @@ CMakeFiles/SDL3-shared.dir/src/video/offscreen/SDL_offscreenvulkan.c.o: \
   /usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h \
   /usr/include/x86_64-linux-gnu/bits/iscanonical.h \
   /usr/lib/llvm-12/lib/clang/12.0.1/include/float.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_stdinc.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_stdinc.h \
   /usr/lib/llvm-12/lib/clang/12.0.1/include/stdbool.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_begin_code.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_close_code.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_assert.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_asyncio.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_atomic.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_audio.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_endian.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_error.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_mutex.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_thread.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_properties.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_iostream.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_bits.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_blendmode.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_camera.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_pixels.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_surface.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_rect.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_clipboard.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_cpuinfo.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_dialog.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_video.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_events.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_gamepad.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_guid.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_joystick.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_power.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_sensor.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_keyboard.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_keycode.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_scancode.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_mouse.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_pen.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_touch.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_filesystem.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_gpu.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_haptic.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_hidapi.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_hints.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_init.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_loadso.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_locale.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_log.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_messagebox.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_metal.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_misc.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_platform.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_process.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_render.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_storage.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_system.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_time.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_timer.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_tray.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_version.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_oldnames.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_intrin.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_begin_code.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_close_code.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_assert.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_asyncio.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_atomic.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_audio.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_endian.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_error.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_mutex.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_thread.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_properties.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_iostream.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_bits.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_blendmode.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_camera.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_pixels.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_surface.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_rect.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_clipboard.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_cpuinfo.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_dialog.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_video.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_events.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_gamepad.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_guid.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_joystick.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_power.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_sensor.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_keyboard.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_keycode.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_scancode.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_mouse.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_pen.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_touch.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_filesystem.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_gpu.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_haptic.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_hidapi.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_hints.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_init.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_loadso.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_locale.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_log.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_messagebox.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_metal.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_misc.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_platform.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_process.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_render.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_storage.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_system.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_time.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_timer.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_tray.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_version.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_oldnames.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_intrin.h \
   /usr/lib/llvm-12/lib/clang/12.0.1/include/mmintrin.h \
   /usr/lib/llvm-12/lib/clang/12.0.1/include/xmmintrin.h \
   /usr/lib/llvm-12/lib/clang/12.0.1/include/mm_malloc.h \
@@ -219,12 +219,12 @@ CMakeFiles/SDL3-shared.dir/src/video/offscreen/SDL_offscreenvulkan.c.o: \
   /usr/lib/llvm-12/lib/clang/12.0.1/include/enqcmdintrin.h \
   /usr/lib/llvm-12/lib/clang/12.0.1/include/serializeintrin.h \
   /usr/lib/llvm-12/lib/clang/12.0.1/include/tsxldtrkintrin.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_main.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/SDL_utils_c.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/SDL_hashtable.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/video/offscreen/SDL_offscreenvulkan.c \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/video/offscreen/../SDL_vulkan_internal.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/video/offscreen/../wayland/SDL_waylanddyn.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_main.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/SDL_utils_c.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/SDL_hashtable.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/video/offscreen/SDL_offscreenvulkan.c \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/video/offscreen/../SDL_vulkan_internal.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/video/offscreen/../wayland/SDL_waylanddyn.h \
   /usr/include/wayland-cursor.h /usr/include/wayland-util.h \
   /usr/include/xkbcommon/xkbcommon.h \
   /usr/include/xkbcommon/xkbcommon-names.h \
@@ -232,24 +232,24 @@ CMakeFiles/SDL3-shared.dir/src/video/offscreen/SDL_offscreenvulkan.c.o: \
   /usr/include/xkbcommon/xkbcommon-compat.h \
   /usr/include/xkbcommon/xkbcommon-compose.h \
   /usr/include/wayland-client-core.h /usr/include/wayland-version.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/video/offscreen/../wayland/SDL_waylandsym.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/wayland-generated-protocols/wayland-client-protocol.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/video/offscreen/../wayland/SDL_waylandsym.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/wayland-generated-protocols/wayland-client-protocol.h \
   /usr/include/wayland-client.h /usr/include/wayland-client-protocol.h \
   /usr/include/wayland-egl.h /usr/include/wayland-egl-core.h \
   /usr/include/libdecor-0/libdecor.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/video/offscreen/.././khronos/vulkan/vulkan.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/video/offscreen/.././khronos/vulkan/vk_platform.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/video/offscreen/.././khronos/vulkan/vulkan_core.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/video/offscreen/.././khronos/vulkan/../vk_video/vulkan_video_codec_h264std.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/video/offscreen/.././khronos/vulkan/../vk_video/vulkan_video_codecs_common.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/video/offscreen/.././khronos/vulkan/../vk_video/vulkan_video_codec_h264std_encode.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/video/offscreen/.././khronos/vulkan/../vk_video/vulkan_video_codec_h265std.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/video/offscreen/.././khronos/vulkan/../vk_video/vulkan_video_codec_h265std_encode.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/video/offscreen/.././khronos/vulkan/../vk_video/vulkan_video_codec_h264std_decode.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/video/offscreen/.././khronos/vulkan/../vk_video/vulkan_video_codec_h265std_decode.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/video/offscreen/.././khronos/vulkan/../vk_video/vulkan_video_codec_av1std.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/video/offscreen/.././khronos/vulkan/../vk_video/vulkan_video_codec_av1std_decode.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/video/offscreen/.././khronos/vulkan/vulkan_wayland.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/video/offscreen/.././khronos/vulkan/vulkan.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/video/offscreen/.././khronos/vulkan/vk_platform.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/video/offscreen/.././khronos/vulkan/vulkan_core.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/video/offscreen/.././khronos/vulkan/../vk_video/vulkan_video_codec_h264std.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/video/offscreen/.././khronos/vulkan/../vk_video/vulkan_video_codecs_common.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/video/offscreen/.././khronos/vulkan/../vk_video/vulkan_video_codec_h264std_encode.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/video/offscreen/.././khronos/vulkan/../vk_video/vulkan_video_codec_h265std.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/video/offscreen/.././khronos/vulkan/../vk_video/vulkan_video_codec_h265std_encode.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/video/offscreen/.././khronos/vulkan/../vk_video/vulkan_video_codec_h264std_decode.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/video/offscreen/.././khronos/vulkan/../vk_video/vulkan_video_codec_h265std_decode.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/video/offscreen/.././khronos/vulkan/../vk_video/vulkan_video_codec_av1std.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/video/offscreen/.././khronos/vulkan/../vk_video/vulkan_video_codec_av1std_decode.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/video/offscreen/.././khronos/vulkan/vulkan_wayland.h \
   /usr/include/xcb/xcb.h /usr/include/x86_64-linux-gnu/sys/uio.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_iovec.h \
   /usr/include/x86_64-linux-gnu/bits/uio_lim.h \
@@ -265,11 +265,11 @@ CMakeFiles/SDL3-shared.dir/src/video/offscreen/SDL_offscreenvulkan.c.o: \
   /usr/include/x86_64-linux-gnu/bits/types/struct___jmp_buf_tag.h \
   /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h \
   /usr/include/xcb/xproto.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/video/offscreen/.././khronos/vulkan/vulkan_xcb.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/video/offscreen/.././khronos/vulkan/vulkan_xcb.h \
   /usr/include/X11/Xlib.h /usr/include/X11/X.h \
   /usr/include/X11/Xfuncproto.h /usr/include/X11/Xosdefs.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/video/offscreen/.././khronos/vulkan/vulkan_xlib.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_vulkan.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/video/offscreen/../SDL_sysvideo.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/video/offscreen/../SDL_surface_c.h \
-  /nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/video/offscreen/../SDL_blit.h
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/video/offscreen/.././khronos/vulkan/vulkan_xlib.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/include/SDL3/SDL_vulkan.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/video/offscreen/../SDL_sysvideo.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/video/offscreen/../SDL_surface_c.h \
+  /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/src/video/offscreen/../SDL_blit.h

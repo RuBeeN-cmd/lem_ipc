@@ -1,8 +1,8 @@
-if (NOT EXISTS "/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/install_manifest.txt")
-    message(FATAL_ERROR "Cannot find install manifest: \"/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/install_manifest.txt\"")
+if (NOT EXISTS "/home/rrollin/Documents/lem_ipc/SDL3-3.2.10/install_manifest.txt")
+    message(FATAL_ERROR "Cannot find install manifest: \"/home/rrollin/Documents/lem_ipc/SDL3-3.2.10/install_manifest.txt\"")
 endif()
 
-file(READ "/nfs/homes/rrollin/Documents/lem_ipc/SDL3-3.2.10/install_manifest.txt" files)
+file(READ "/home/rrollin/Documents/lem_ipc/SDL3-3.2.10/install_manifest.txt" files)
 string(REGEX REPLACE "\n" ";" files "${files}")
 foreach(file ${files})
     message(STATUS "Uninstalling \"$ENV{DESTDIR}${file}\"")

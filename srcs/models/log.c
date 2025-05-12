@@ -1,4 +1,4 @@
-#include "lem_ipc.h"
+#include <utils/log.h>
 
 void	ft_log(int level, char *msg)
 {
