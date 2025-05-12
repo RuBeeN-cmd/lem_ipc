@@ -43,6 +43,7 @@
 #define VISUALIZER_CHANNEL			UINT32_MAX
 #define PAUSE_CHANNEL				(UINT32_MAX - 1)
 #define VISUALIZER_TARGET_CHANNEL	(UINT32_MAX - 2)
+#define TARGET_POS_CHANNEL			(UINT32_MAX - 3)
 
 #define EMPTY_CELL	0
 
@@ -130,13 +131,13 @@ int	player_workflow(uint32_t team);
 int		ipc_join_board(t_ipc *ipc, t_game *game);
 int		get_shm_id(key_t key, int flags);
 int		*get_shm_data(int shm_id);
-int		close_ipc(t_ipc ipc);
+int		close_ipc(t_ipc *ipc);
 int		init_msg_queue(key_t key);
 int		is_visualizer(t_ipc ipc);
 
 // message.c
-int send_visualizer_target_msg(int msg_id, t_vec2 target);
-int	check_visualizer_target_msg(int msg_id, t_vec2 *target);
+int send_visualizer_target_msg(int msg_id, t_vec2 target, int channel);
+int	check_visualizer_target_msg(int msg_id, t_vec2 *target, int channel);
 int		send_pause_msg(int msg_id);
 int		check_pause_msg(int msg_id);
 
@@ -154,10 +155,10 @@ int		msg_queue_destroy(int msg_id);
 int		get_best_move(t_game *game);
 int		is_with_mate(t_game game);
 void	go_to_mate(t_game *game);
-int		is_alive(t_game game, t_ipc ipc);
-int		is_other_team(t_game game, t_ipc ipc);
+int		is_alive(t_game *game, t_ipc *ipc);
+int		is_other_team(t_game *game, t_ipc *ipc);
 t_vec2	rand_pos(void);
-int		is_game_paused(t_ipc ipc);
+int		is_game_paused(t_ipc *ipc);
 
 // board.c
 void		init_board(uint32_t **board, uint32_t *raw_board);

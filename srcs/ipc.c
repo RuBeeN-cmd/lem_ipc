@@ -45,32 +45,32 @@ int	is_visualizer(t_ipc ipc)
 	return (0);
 }
 
-int	destroy_ipc(t_ipc ipc)
+int	destroy_ipc(t_ipc *ipc)
 {
 	int	ret = 0;
 
 	ft_log(LOG_DEBUG, "Deleting IPC\n");
-	if (shm_destroy(ipc.shm_id))
+	if (shm_destroy(ipc->shm_id))
 		ret = 1;
-	if (msg_queue_destroy(ipc.msg_id))
+	if (msg_queue_destroy(ipc->msg_id))
 		ret = 1;
-	if (sem_destroy(ipc.sem_id))
+	if (sem_destroy(ipc->sem_id))
 		ret = 1;
 	return (ret);
 }
 
-int	close_ipc(t_ipc ipc)
+int	close_ipc(t_ipc *ipc)
 {
-	int	nb_process = get_nb_process_attach(ipc.shm_id);
+	int	nb_process = get_nb_process_attach(ipc->shm_id);
 	if (nb_process == 2)
 	{
-		while ((nb_process = get_nb_process_attach(ipc.shm_id)) != 1)
+		while ((nb_process = get_nb_process_attach(ipc->shm_id)) != 1)
 			usleep(100);
 	}
-	shm_det(ipc.data);
-	sem_lock(ipc.sem_id);
+	shm_det(ipc->data);
+	sem_lock(ipc->sem_id);
 	ft_printf_fd(1, "Nb Process: %d\n", nb_process);
-	sem_unlock(ipc.sem_id);
+	sem_unlock(ipc->sem_id);
 	if (nb_process == 1)
 		if (destroy_ipc(ipc))
 			return (1);

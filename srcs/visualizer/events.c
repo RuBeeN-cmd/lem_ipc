@@ -66,7 +66,7 @@ int	handle_events(t_visualizer* v)
 				if (vec2cmp(target, NULL_POS))
 				{
 					ft_printf_fd(1, "Clicked on : (%d, %d)\n", target.x, target.y);
-					send_visualizer_target_msg(v->ipc.msg_id, target);	
+					send_visualizer_target_msg(v->ipc.msg_id, target, VISUALIZER_TARGET_CHANNEL);	
 				}
 			}
 		}

@@ -6,7 +6,7 @@ int	send_pause_msg(int msg_id)
 		PAUSE_CHANNEL,
 		"*"
 	};
-	if (msgsnd(msg_id, &msg, sizeof(msg), 0) == -1)
+	if (msgsnd(msg_id, &msg, 1, 0) == -1)
 	{
 		perror("msgsnt");
 		return (1);
@@ -32,29 +32,13 @@ int	check_pause_msg(int msg_id)
 	return (1);
 }
 
-int send_visualizer_target_msg(int msg_id, t_vec2 target)
+int send_visualizer_target_msg(int msg_id, t_vec2 target, int channel)
 {
-    t_msg	msg;
-
-    msg.type = VISUALIZER_TARGET_CHANNEL;
-    
-    ft_memcpy((msg.text), &target, 8);
-
-    ft_printf_fd(1, "Msg: %p\n", &msg);
-    ft_printf_fd(1, "Msg.type: %p\n", &(msg.type));
-    ft_printf_fd(1, "Text: %p\n", msg.text);
-
-    for (size_t i = 0; i < 8; i++)
-    {
-        ft_printf_fd(1, "char[%u] = %d\n | %p\n", i, msg.text[i], msg.text + i);
-    }
-
-
-
-    // msg.v.x = target.x;
-    // msg.v.y = target.y;
-
-	if (msgsnd(msg_id, &msg, 16, 0) == -1)
+	t_vec2_msg	msg = {
+		channel,
+		target
+	};
+	if (msgsnd(msg_id, &msg, sizeof(msg.v), 0) == -1)
 	{
 		perror("msgsnt");
 		return (1);
@@ -63,12 +47,12 @@ int send_visualizer_target_msg(int msg_id, t_vec2 target)
 	return (0);
 }
 
-int	check_visualizer_target_msg(int msg_id, t_vec2 *target)
+int	check_visualizer_target_msg(int msg_id, t_vec2 *target, int channel)
 {
 	t_vec2_msg	msg;
 
 	errno = 0;
-	if (msgrcv(msg_id, &msg, sizeof(msg), VISUALIZER_TARGET_CHANNEL, IPC_NOWAIT) == -1)
+	if (msgrcv(msg_id, &msg, sizeof(msg), channel, IPC_NOWAIT) == -1)
 	{
 		if (errno == ENOMSG)
 		{

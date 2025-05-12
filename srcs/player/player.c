@@ -9,30 +9,33 @@ static void player_routine(t_game *game)
 	}
 }
 
-static void player_loop(t_game game, t_ipc ipc)
+static void player_loop(t_game *game, t_ipc *ipc)
 {
 	while (is_alive(game, ipc) && is_other_team(game, ipc))
 	{
-		sem_lock(ipc.sem_id);
+		sem_lock(ipc->sem_id);
 		t_vec2 visualizer_target;
-		int ret = check_visualizer_target_msg(ipc.msg_id, &visualizer_target);
+		int ret = check_visualizer_target_msg(ipc->msg_id, &visualizer_target, VISUALIZER_TARGET_CHANNEL);
 		ft_printf_fd(1, "Ret: %d\n");
 		if (ret == 1)
 		{
 			ft_printf_fd(1, "Visualizer Target: (%d,%d)\n", visualizer_target.x, visualizer_target.y);
-			if (!vec2cmp(visualizer_target, game.position))
-				game.visualizer_target = 1;
+			if (!vec2cmp(visualizer_target, game->position))
+				game->visualizer_target = 1;
 			else {
-				// if (game.visualizer_target == 1)
-				// game.visualizer_target = 0;
-				send_visualizer_target_msg(ipc.msg_id, visualizer_target);
+				// if (game->visualizer_target == 1)
+				// game->visualizer_target = 0;
+				send_visualizer_target_msg(ipc->msg_id, visualizer_target, VISUALIZER_TARGET_CHANNEL);
 			}
 		}
 		if (!is_game_paused(ipc))
-			player_routine(&game);
-		if (game.visualizer_target)
-			ft_printf_fd(1, "Sending: (%d, %d)\n", game.position.x, game.position.y);
-		sem_unlock(ipc.sem_id);
+			player_routine(game);
+		if (game->visualizer_target) {
+			ft_printf_fd(1, "Sending: (%d, %d)\n", game->position.x, game->position.y);
+			send_visualizer_target_msg(ipc->msg_id, visualizer_target, VISUALIZER_TARGET_CHANNEL);
+
+		}
+		sem_unlock(ipc->sem_id);
 		usleep(COOLDOWN);
 	}
 }
@@ -50,7 +53,7 @@ int	player_workflow(uint32_t team)
 	#ifdef OSX
 		usleep(100000); // for macos: to prevent lock order
 	#endif
-	player_loop(game, ipc);
-	close_ipc(ipc);
+	player_loop(&game, &ipc);
+	close_ipc(&ipc);
 	return (0);
 }

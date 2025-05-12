@@ -19,12 +19,12 @@ static int	init_visualizer(t_visualizer *v, char title[], uint32_t width, uint32
 	return (0);
 }
 
-static void	destroy_visualizer(t_visualizer v)
+static void	destroy_visualizer(t_visualizer *v)
 {
-	SDL_DestroyRenderer(v.renderer);
-	SDL_DestroyWindow(v.window);
+	SDL_DestroyRenderer(v->renderer);
+	SDL_DestroyWindow(v->window);
 	SDL_Quit();
-	free_buffer(v.buffer, BOARD_HEIGHT);
+	free_buffer(v->buffer, BOARD_HEIGHT);
 	exit(0);
 }
 
@@ -85,6 +85,6 @@ int	visualizer_workflow(void)
 		return (1);
 	visualizer_loop(&v);
 	shm_det(v.ipc.data);
-	destroy_visualizer(v);
+	destroy_visualizer(&v);
 	return (0);
 }

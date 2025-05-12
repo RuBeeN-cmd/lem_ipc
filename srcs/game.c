@@ -207,41 +207,41 @@ void	go_to_mate(t_game *game)
 		move_down(game);
 }
 
-int	is_alive(t_game game, t_ipc ipc)
+int	is_alive(t_game *game, t_ipc *ipc)
 {
-	sem_lock(ipc.sem_id);
-	if (is_two_enemys(&game)) {
-		game.board[game.position.y][game.position.x] = EMPTY_CELL;
-		sem_unlock(ipc.sem_id);
+	sem_lock(ipc->sem_id);
+	if (is_two_enemys(game)) {
+		game->board[game->position.y][game->position.x] = EMPTY_CELL;
+		sem_unlock(ipc->sem_id);
 		return (0);
 	}
-	sem_unlock(ipc.sem_id);
+	sem_unlock(ipc->sem_id);
 	return (1);
 }
 
-int	is_other_team(t_game game, t_ipc ipc)
+int	is_other_team(t_game *game, t_ipc *ipc)
 {
-	sem_lock(ipc.sem_id);
+	sem_lock(ipc->sem_id);
 	for (size_t y = 0; y < BOARD_HEIGHT; y++)
 	{
 		for (size_t x = 0; x < BOARD_WIDTH; x++)
 		{
-			if (game.board[y][x] != EMPTY_CELL && game.board[y][x] != game.team)
+			if (game->board[y][x] != EMPTY_CELL && game->board[y][x] != game->team)
 			{
-				sem_unlock(ipc.sem_id);
+				sem_unlock(ipc->sem_id);
 				return (1);
 			}
 		}
 	}
-	sem_unlock(ipc.sem_id);
+	sem_unlock(ipc->sem_id);
 	return (0);
 }
 
-int is_game_paused(t_ipc ipc)
+int is_game_paused(t_ipc *ipc)
 {
-	if (check_pause_msg(ipc.msg_id) == 1)
+	if (check_pause_msg(ipc->msg_id) == 1)
 	{
-		send_pause_msg(ipc.msg_id);
+		send_pause_msg(ipc->msg_id);
 		return (1);
 	}
 	return (0);
