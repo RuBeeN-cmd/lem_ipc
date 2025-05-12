@@ -13,8 +13,8 @@
 #include <stdlib.h>
 
 #include <libft.h>
-#include <utils/log.h>
-#include <utils/vector.h>
+#include <models/log.h>
+#include <models/vector.h>
 
 #define PAGE_SIZE		getpagesize()
 

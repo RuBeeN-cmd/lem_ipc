@@ -3,8 +3,8 @@
 
 #include <stdint.h>
 #include <libft.h>
-#include <utils/vector.h>
-#include <utils/log.h>
+#include <models/vector.h>
+#include <models/log.h>
 
 #define BOARD_WIDTH		30
 #define BOARD_HEIGHT	30

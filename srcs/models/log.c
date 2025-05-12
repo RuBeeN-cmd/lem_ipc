@@ -1,4 +1,4 @@
-#include <utils/log.h>
+#include <models/log.h>
 
 void	ft_log(int level, char *msg)
 {
