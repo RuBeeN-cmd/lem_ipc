@@ -2,7 +2,7 @@
 
 PROGRAM="./lemipc"
 
-rm -f player.log viz.log
+rm -f player*.log viz.log both.log
 
 if [[ $# -ne 2 ]]; then
     echo invalid use 
@@ -18,8 +18,8 @@ do
     printf "%-25s Team: [   %-4d]\n" "Lauching number |${i}|" "${team_id}"
     # valgrind --log-file=./val_log_player${i}.log 
     # valgrind --log-file=./val_log_player${i}.log ${PROGRAM} ${team_id} >> player.log & # >/dev/null 2>&1 &
-    ${PROGRAM} ${team_id} >> player.log & # >/dev/null 2>&1 &
+    ${PROGRAM} ${team_id} >> player${i}.log & # >/dev/null 2>&1 &
     sleep 0.01
 done
 
-${PROGRAM} visualizer >> viz.log &
+${PROGRAM} visualizer & # >> viz.log & 

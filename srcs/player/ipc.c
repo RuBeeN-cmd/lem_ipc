@@ -31,16 +31,34 @@ static int	destroy_ipc(t_ipc *ipc)
 	return (ret);
 }
 
+int is_visualizer(t_ipc *ipc)
+{
+	if (check_msg(ipc->msg_id, NULL, 1, VISUALIZER_CHANNEL) == 1)
+	{
+		send_msg(ipc->msg_id, "*", 1, VISUALIZER_CHANNEL);
+		return (1);
+	}
+	return (0);
+}
+
 int	close_ipc(t_ipc *ipc)
 {
+	sem_lock(ipc->sem_id);
 	int	nb_process = get_nb_process_attach(ipc->shm_id);
-	if (nb_process == 2)
+	ft_printf_fd(1, "Getting nb_process: %d\n", nb_process);
+	if (nb_process == 2 && is_visualizer(ipc))
 	{
 		while ((nb_process = get_nb_process_attach(ipc->shm_id)) != 1)
+		{
+			ft_printf_fd(1, "Getting nb_process: %d\n", nb_process);
+			sem_unlock(ipc->sem_id);
 			usleep(100);
+			sem_lock(ipc->sem_id);	
+		}
 	}
+	ft_printf_fd(1, "Detaching from shared memory\n");
 	shm_det(ipc->data);
-	sem_lock(ipc->sem_id);
+	ft_printf_fd(1, "Quiting with process = %d\n", nb_process);
 	sem_unlock(ipc->sem_id);
 	if (nb_process == 1)
 		if (destroy_ipc(ipc))

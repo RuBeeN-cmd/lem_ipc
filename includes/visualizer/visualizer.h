@@ -8,23 +8,26 @@
 #include <ipc.h>
 #include <models/color.h>
 #include <models/vector.h>
+#include <visualizer/panel.h>
 
-#define WIN_WIDTH		800
-#define WIN_HEIGHT		600
-#define WIN_TITLE		"Lem-Ipc"
-#define PANEL_WIDTH		200
-#define PANEL_HEIGHT	100
-#define PANEL_MARGIN	100
-#define INITIAL_PADDING	20
-#define BORDER_WIDTH	2
-#define MOVE_SPEED		12
-#define ZOOM_SPEED		1
+#define WIN_WIDTH					800
+#define WIN_HEIGHT					600
+#define WIN_TITLE					"Lem-Ipc"
+#define SUPERVISION_PANEL_WIDTH		200
+#define SUPERVISION_PANEL_HEIGHT	140
+
+#define INITIAL_PADDING		20
+#define BORDER_WIDTH		2
+#define MOVE_SPEED			12
+#define ZOOM_SPEED			1
 
 typedef struct	s_visualizer
 {
 	SDL_Window			*window;
 	SDL_Renderer		*renderer;
 	TTF_Font			*font;
+	TTF_TextEngine		*text_engine;
+	t_panel				supervision_panel;
 
 	t_fvec2				offset;
 	uint32_t			cell_size;

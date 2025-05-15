@@ -239,9 +239,9 @@ int	is_other_team(t_game *game, t_ipc *ipc)
 
 int is_game_paused(t_ipc *ipc)
 {
-	if (check_pause_msg(ipc->msg_id) == 1)
+	if (check_msg(ipc->msg_id, NULL, 1, PAUSE_CHANNEL) == 1)
 	{
-		send_pause_msg(ipc->msg_id);
+		send_msg(ipc->msg_id, "*", 1, PAUSE_CHANNEL);
 		return (1);
 	}
 	return (0);

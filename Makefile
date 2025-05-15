@@ -16,10 +16,11 @@ SRC = main.c \
 		ipc/ipc_utils.c \
 		ipc/message.c \
 		visualizer/visualizer.c \
-		visualizer/draw.c \
+		visualizer/ui/draw.c \
 		visualizer/buffer.c \
-		visualizer/events.c \
-		visualizer/sdl.c \
+		visualizer/ui/events.c \
+		visualizer/ui/sdl.c \
+		visualizer/ui/panel.c \
 		models/vector/vec2.c \
 		models/vector/fvec2.c \
 		models/color.c \

@@ -5,6 +5,7 @@
 #include <libft.h>
 #include <models/vector.h>
 #include <models/log.h>
+#include <models/color.h>
 
 #define BOARD_WIDTH		30
 #define BOARD_HEIGHT	30
@@ -19,5 +20,7 @@
 // team.c
 uint32_t	get_team(int argc, char *argv[]);
 uint32_t	get_team_on_board(t_vec2 target, uint32_t *board[]);
+t_color		get_team_color(int team);
+t_color		hsl_to_rgb(uint16_t h_deg, float s, float l);
 
 #endif

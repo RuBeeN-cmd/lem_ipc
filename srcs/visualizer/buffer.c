@@ -1,4 +1,4 @@
-#include <visualizer.h>
+#include <visualizer/visualizer.h>
 
 void	free_buffer(uint32_t **buffer, size_t height)
 {

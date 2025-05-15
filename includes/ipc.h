@@ -45,35 +45,32 @@ typedef struct	s_supervised_infos
 	int			is_alive;
 }				t_supervised_infos;
 
-typedef struct 	s_supervised_infos_msg
+typedef struct	s_supervised_infos_msg
 {
 	uint64_t		    type;
 	t_supervised_infos	target_infos;
 }				t_supervised_infos_msg;
 
-typedef struct 	s_msg
+typedef enum	e_new_target_msg_type
 {
-	uint64_t	type;
-	char		text[8];
-}				t_msg;
+	STOP_TARGETING,
+	NEW_TARGETING
+}				t_new_target_msg_type;
 
-typedef struct 	s_vec2_msg
+typedef struct	s_new_target_msg
 {
-	uint64_t	type;
-	t_vec2		v;
-}				t_vec2_msg;
+	t_new_target_msg_type	type;
+	t_vec2					target;
+}				t_new_target_msg;
 
 // init_ipc.c
 int	init_player_ipc(t_ipc *ipc, t_vec2 board_size);
 int	init_visualizer_ipc(t_ipc *ipc, t_vec2 board_size);
 
 // message.c
-int	check_target_infos_msg(int msg_id, t_supervised_infos *target_infos);
-int	send_target_infos_msg(int msg_id, t_supervised_infos target_infos);
-int	send_visualizer_target_msg(int msg_id, t_vec2 target);
-int	check_visualizer_target_msg(int msg_id, t_vec2 *target);
-int	send_pause_msg(int msg_id);
-int	check_pause_msg(int msg_id);
+int					check_msg(int msg_id, void *data, uint32_t data_size, uint32_t channel);
+int					send_msg(int msg_id, void *data, uint32_t data_size, uint32_t channel);
+t_new_target_msg	new_msg(t_vec2 target, t_new_target_msg_type type);
 
 // ipc_utils.c
 uint32_t	get_shm_size(t_vec2 board_size);
