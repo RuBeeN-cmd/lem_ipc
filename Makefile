@@ -7,6 +7,7 @@ _CYAN="\033[0;36m"
 NAME = lemipc
 
 SRC = main.c \
+		args.c \
 		team.c \
 		player/player.c \
 		player/game.c \
@@ -30,7 +31,7 @@ SRC = main.c \
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
 CC = clang
-CFLAGS = -Wall -Werror -Wextra -g3 #-fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -gdwarf-4 #-fsanitize=address
 INC = -Iincludes -Ilibft/includes -ISDL3-3.2.10/include -ISDL3_ttf-3.2.2/include
 
 LIB = libft/libft.a SDL3-3.2.10/libSDL3.so SDL3_ttf-3.2.2/libSDL3_ttf.so

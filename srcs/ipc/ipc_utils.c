@@ -13,6 +13,7 @@ int	sem_lock(int sem_id)
 	ops.sem_num = 0;
 	ops.sem_op = -1;
 	ops.sem_flg = 0;
+	ft_log(LOG_DEBUG, "sem_lock");
 	return (semop(sem_id, &ops, 1));
 }
 
@@ -33,6 +34,7 @@ int	sem_unlock(int sem_id)
 	ops.sem_num = 0;
 	ops.sem_op = 1;
 	ops.sem_flg = 0;
+	ft_log(LOG_DEBUG, "sem_unlock");
 	return (semop(sem_id, &ops, 1));
 }
 

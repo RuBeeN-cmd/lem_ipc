@@ -66,9 +66,11 @@ int	player_workflow(uint32_t team, t_vec2 board_size)
 	t_ipc	ipc;
 	t_game	game;
 
-	if (init_player_ipc(&ipc, BOARD_SIZE))
+	if (init_player_ipc(&ipc, &board_size))
 		return (1);
+	ft_log(LOG_DEBUG, "IPC initialized\n");
 	init_game(&game, ipc.data, team, board_size);
+	ft_log(LOG_DEBUG, "Game initialized\n");
 	if (ipc_join_board(&ipc, &game))
 		return (1);
 	#ifdef OSX

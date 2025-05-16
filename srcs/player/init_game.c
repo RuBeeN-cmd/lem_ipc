@@ -35,7 +35,7 @@ int	join_board(t_game *game)
 
 void	init_board(uint32_t **board, uint32_t *raw_board, t_vec2 board_size)
 {
-	for (size_t i = 0; i < board_size.y; i++)
+	for (size_t i = 0; i < (size_t) board_size.y; i++)
 		board[i] = raw_board + i * board_size.x;
 }
 

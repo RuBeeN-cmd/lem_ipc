@@ -5,8 +5,8 @@ void	draw_cell(t_visualizer *v, int x, int y, int team, uint32_t renderer_width,
 	t_color		team_color = get_team_color(team);
 	size_t		cell_size = v->cell_size;
 	t_vec2		pos = {
-		(x - (float) (BOARD_WIDTH / 2) - v->offset.x) * cell_size + renderer_width / 2 + BORDER_WIDTH / 2,
-		(y - (float) (BOARD_HEIGHT / 2) - v->offset.y) * cell_size + renderer_height / 2 + BORDER_WIDTH / 2
+		(x - (float) (v->board_size.x / 2) - v->offset.x) * cell_size + renderer_width / 2 + BORDER_WIDTH / 2,
+		(y - (float) (v->board_size.y / 2) - v->offset.y) * cell_size + renderer_height / 2 + BORDER_WIDTH / 2
 	};
 	SDL_FRect	cell = {pos.x, pos.y, cell_size - BORDER_WIDTH, cell_size - BORDER_WIDTH};
 	SDL_SetRenderDrawColor(v->renderer, team_color.r, team_color.g, team_color.b, team_color.a);
@@ -27,8 +27,8 @@ void	draw_board(t_visualizer *v)
 	uint32_t renderer_width;
 	uint32_t renderer_height;
 	SDL_GetCurrentRenderOutputSize(v->renderer, (int *) &renderer_width, (int *) &renderer_height);
-	for (size_t y = 0; y < BOARD_HEIGHT; y++)
-		for (size_t x = 0; x < BOARD_WIDTH; x++)
+	for (size_t y = 0; y < (size_t) v->board_size.y; y++)
+		for (size_t x = 0; x < (size_t) v->board_size.x; x++)
 			draw_cell(v, x, y, v->buffer[y][x], renderer_width, renderer_height);
 }
 

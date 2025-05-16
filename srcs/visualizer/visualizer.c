@@ -3,17 +3,16 @@
 static int	init_visualizer(t_visualizer *v, char title[], uint32_t width, uint32_t height)
 {
 	t_vec2	board_size;
-	if (init_visualizer_ipc(&v->ipc, &board_size)) {
-		ft_printf_fd(2, "Nothing to visualize\n");
+	if (init_visualizer_ipc(&v->ipc, &board_size) == 1)
 		return (1);
-	}
-	if (init_buffer(&v->buffer))
+	if (init_buffer(&v->buffer, board_size))
 		return (1);
 	send_msg(v->ipc.msg_id, "*", 1, VISUALIZER_CHANNEL);
 	v->running = -1;
-	v->cell_size = (height - INITIAL_PADDING) / BOARD_HEIGHT;
-	if (v->cell_size * BOARD_WIDTH > (width - INITIAL_PADDING))
-		v->cell_size = (width - INITIAL_PADDING) / BOARD_WIDTH;
+	v->board_size = board_size;
+	v->cell_size = (height - INITIAL_PADDING) / v->board_size.y;
+	if (v->cell_size * v->board_size.x > (width - INITIAL_PADDING))
+		v->cell_size = (width - INITIAL_PADDING) / v->board_size.x;
 	v->offset = (t_fvec2) {0, 0};
 	v->target_infos = (t_supervised_infos) {
 		.pos = NULL_POS,
@@ -27,7 +26,7 @@ static int	init_visualizer(t_visualizer *v, char title[], uint32_t width, uint32
 	v->supervision_panel.visible = 0;
 	if (init_sdl(v, title, width, height))
 	{
-		free_buffer(v->buffer, BOARD_HEIGHT);
+		free_buffer(v->buffer, v->board_size.y);
 		return (1);
 	}
 	return (0);
@@ -38,15 +37,15 @@ static void	destroy_visualizer(t_visualizer *v)
 	check_msg(v->ipc.msg_id, NULL, 1, VISUALIZER_CHANNEL);
 	destroy_text_line_list(&v->supervision_panel);
 	destroy_sdl(v);
-	free_buffer(v->buffer, BOARD_HEIGHT);
+	free_buffer(v->buffer, v->board_size.y);
 	exit(0);
 }
 
-static int	is_game_ended(uint32_t **board)
+static int	is_game_ended(uint32_t **board, t_vec2 board_size)
 {
 	uint32_t found_id = 0;
-	for (int y = 0; y < BOARD_HEIGHT; y++) {
-		for (int x = 0; x < BOARD_WIDTH; x++) {
+	for (int y = 0; y < board_size.y; y++) {
+		for (int x = 0; x < board_size.x; x++) {
 			if (board[y][x] != EMPTY_CELL) {
 				if (found_id == 0)
 					found_id = board[y][x];
@@ -102,14 +101,14 @@ static int	visualizer_routine(t_visualizer *v)
 		}
 		check_msg(v->ipc.msg_id, &v->target_infos, sizeof(v->target_infos), TARGET_INFOS_CHANNEL);
 		create_panel_text_lines(v, &v->supervision_panel, v->target_infos);
-		copy_buffer(v->buffer, v->ipc.data, BOARD_HEIGHT);
+		copy_buffer(v->buffer, v->ipc.data, v->board_size);
 		sem_unlock(v->ipc.sem_id);
 	}
 	clear_window(v->renderer, color_from_u32(0xFF000000));
 	draw_board(v);
 	draw_target_infos(v, NULL);
 	SDL_RenderPresent(v->renderer);
-	if (!is_game_ended(v->buffer))
+	if (!is_game_ended(v->buffer, v->board_size))
 		return (0);
 	return (1);
 }

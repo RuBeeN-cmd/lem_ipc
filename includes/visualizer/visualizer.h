@@ -47,8 +47,8 @@ int		handle_events(t_visualizer* v);
 
 // buffer.c
 void	free_buffer(uint32_t **buffer, size_t height);
-int		init_buffer(uint32_t ***buffer);
-void	copy_buffer(uint32_t **dst, uint32_t *src, size_t height);
+int		init_buffer(uint32_t ***buffer, t_vec2 board_size);
+void	copy_buffer(uint32_t **dst, uint32_t *src, t_vec2 board_size);
 
 // sdl.c
 int			init_sdl(t_visualizer *v, char title[], uint32_t width, uint32_t height);

@@ -83,6 +83,6 @@ int	add_text_line(TTF_TextEngine *engine, TTF_Font *font, t_panel *panel, char *
 		return (1);
 	}
 	ft_lstadd_back(&panel->text_line_list, new_node);
-	ft_lstsort(&panel->text_line_list, cmp_text_line);
+	ft_lstsort(panel->text_line_list, cmp_text_line);
 	return (0);
 }

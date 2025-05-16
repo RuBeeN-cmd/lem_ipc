@@ -78,15 +78,13 @@ uint32_t	get_team(char *team_str)
 		return (VISUALIZER);
 	uint32_t team = get_team_from_str(team_str);
 	if (team < 1 || team > MAX_TEAMS)
-	{
 		return (0);
-	}
 	return (team);
 }
 
-uint32_t	get_team_on_board(t_vec2 target, uint32_t *board[]) {
-	if (target.x < 0 || target.x >= BOARD_WIDTH
-		|| target.y < 0 || target.y >= BOARD_HEIGHT)
+uint32_t	get_team_on_board(t_vec2 target, uint32_t *board[], t_vec2 board_size) {
+	if (target.x < 0 || target.x >= board_size.x
+		|| target.y < 0 || target.y >= board_size.y)
 		return (VISUALIZER); // Error case
 	else
 		return (board[target.y][target.x]);

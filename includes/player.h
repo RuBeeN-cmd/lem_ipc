@@ -24,13 +24,13 @@ int		is_with_mate(t_game game);
 void	go_to_mate(t_game *game);
 int		is_alive(t_game *game, t_ipc *ipc);
 int		is_other_team(t_game *game, t_ipc *ipc);
-t_vec2	rand_pos(void);
+t_vec2	rand_pos(t_vec2 board_size);
 int		is_game_paused(t_ipc *ipc);
 
 // init_game.c
 void	init_game(t_game *game, uint32_t *raw_board, uint32_t team, t_vec2 board_size);
 int		join_board(t_game *game);
-void	init_board(uint32_t **board, uint32_t *raw_board);
+void	init_board(uint32_t **board, uint32_t *raw_board, t_vec2 board_size);
 
 // ipc.c
 int	ipc_join_board(t_ipc *ipc, t_game *game);

@@ -1,9 +1,13 @@
 #include <models/log.h>
 
-void	ft_log(int level, char *msg)
+void	ft_log(int level, const char *str, ...)
 {
+	va_list	args;
 	char	*prefix;
 	int		fd = 1;
+
+	if (!str)
+		return ;
 	if (level >= LOG_WARNING)
 		fd = 2;
 	switch (level)
@@ -24,5 +28,9 @@ void	ft_log(int level, char *msg)
 			prefix = "";
 			break ;
 	}
-	ft_printf_fd(fd, "%s%s", prefix, msg);
+	va_start(args, str);
+	ft_printf_fd(fd, "%s", prefix);
+	ft_print_valist_fd(fd, str, args);
+	ft_printf_fd(fd, "\n", prefix);
+	va_end(args);
 }

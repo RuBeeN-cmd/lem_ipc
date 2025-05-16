@@ -18,6 +18,6 @@
 #define LOG_ERROR	3
 
 // log.c
-void	ft_log(int level, char *msg);
+void	ft_log(int level, const char *str, ...);
 
 #endif

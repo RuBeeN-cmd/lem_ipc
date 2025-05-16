@@ -1,5 +1,108 @@
-[[0;35mDEBUG[0m] Sending board size
-[[0;35mDEBUG[0m] Board size sent
-Getting nb_process: 3
+[[0;35mDEBUG[0m] sem_lock
+[[0;35mDEBUG[0m] Getting board size from msg_q 163889
+[[0;35mDEBUG[0m] Board size received: (30, 30)
+[[0;35mDEBUG[0m] Sending board size: (30, 30) in msg_q 163889
+[[0;35mDEBUG[0m] sem_unlock
+[[0;35mDEBUG[0m] IPC initialized
+
+[[0;35mDEBUG[0m] Game initialized
+
+[[0;35mDEBUG[0m] sem_lock
+[[0;35mDEBUG[0m] sem_unlock
+[[0;35mDEBUG[0m] sem_lock
+[[0;35mDEBUG[0m] sem_unlock
+[[0;35mDEBUG[0m] sem_lock
+[[0;35mDEBUG[0m] sem_unlock
+[[0;35mDEBUG[0m] sem_lock
+[[0;35mDEBUG[0m] sem_unlock
+[[0;35mDEBUG[0m] sem_lock
+[[0;35mDEBUG[0m] No message in queue
+[[0;35mDEBUG[0m] No message in queue
+[[0;35mDEBUG[0m] sem_unlock
+[[0;35mDEBUG[0m] sem_lock
+[[0;35mDEBUG[0m] sem_unlock
+[[0;35mDEBUG[0m] sem_lock
+[[0;35mDEBUG[0m] sem_unlock
+[[0;35mDEBUG[0m] sem_lock
+[[0;35mDEBUG[0m] No message in queue
+[[0;35mDEBUG[0m] No message in queue
+[[0;35mDEBUG[0m] sem_unlock
+[[0;35mDEBUG[0m] sem_lock
+[[0;35mDEBUG[0m] sem_unlock
+[[0;35mDEBUG[0m] sem_lock
+[[0;35mDEBUG[0m] sem_unlock
+[[0;35mDEBUG[0m] sem_lock
+[[0;35mDEBUG[0m] No message in queue
+[[0;35mDEBUG[0m] No message in queue
+[[0;35mDEBUG[0m] sem_unlock
+[[0;35mDEBUG[0m] sem_lock
+[[0;35mDEBUG[0m] sem_unlock
+[[0;35mDEBUG[0m] sem_lock
+[[0;35mDEBUG[0m] sem_unlock
+[[0;35mDEBUG[0m] sem_lock
+[[0;35mDEBUG[0m] No message in queue
+[[0;35mDEBUG[0m] No message in queue
+[[0;35mDEBUG[0m] sem_unlock
+[[0;35mDEBUG[0m] sem_lock
+[[0;35mDEBUG[0m] sem_unlock
+[[0;35mDEBUG[0m] sem_lock
+[[0;35mDEBUG[0m] sem_unlock
+[[0;35mDEBUG[0m] sem_lock
+[[0;35mDEBUG[0m] No message in queue
+[[0;35mDEBUG[0m] No message in queue
+[[0;35mDEBUG[0m] sem_unlock
+[[0;35mDEBUG[0m] sem_lock
+[[0;35mDEBUG[0m] sem_unlock
+[[0;35mDEBUG[0m] sem_lock
+[[0;35mDEBUG[0m] sem_unlock
+[[0;35mDEBUG[0m] sem_lock
+[[0;35mDEBUG[0m] No message in queue
+[[0;35mDEBUG[0m] No message in queue
+[[0;35mDEBUG[0m] sem_unlock
+[[0;35mDEBUG[0m] sem_lock
+[[0;35mDEBUG[0m] sem_unlock
+[[0;35mDEBUG[0m] sem_lock
+[[0;35mDEBUG[0m] sem_unlock
+[[0;35mDEBUG[0m] sem_lock
+[[0;35mDEBUG[0m] No message in queue
+[[0;35mDEBUG[0m] No message in queue
+[[0;35mDEBUG[0m] sem_unlock
+[[0;35mDEBUG[0m] sem_lock
+[[0;35mDEBUG[0m] sem_unlock
+[[0;35mDEBUG[0m] sem_lock
+[[0;35mDEBUG[0m] sem_unlock
+[[0;35mDEBUG[0m] sem_lock
+[[0;35mDEBUG[0m] No message in queue
+[[0;35mDEBUG[0m] No message in queue
+[[0;35mDEBUG[0m] sem_unlock
+[[0;35mDEBUG[0m] sem_lock
+[[0;35mDEBUG[0m] sem_unlock
+[[0;35mDEBUG[0m] sem_lock
+[[0;35mDEBUG[0m] sem_unlock
+[[0;35mDEBUG[0m] sem_lock
+[[0;35mDEBUG[0m] No message in queue
+[[0;35mDEBUG[0m] No message in queue
+[[0;35mDEBUG[0m] sem_unlock
+[[0;35mDEBUG[0m] sem_lock
+[[0;35mDEBUG[0m] sem_unlock
+[[0;35mDEBUG[0m] sem_lock
+[[0;35mDEBUG[0m] sem_unlock
+[[0;35mDEBUG[0m] sem_lock
+[[0;35mDEBUG[0m] No message in queue
+[[0;35mDEBUG[0m] No message in queue
+[[0;35mDEBUG[0m] sem_unlock
+[[0;35mDEBUG[0m] sem_lock
+[[0;35mDEBUG[0m] sem_unlock
+[[0;35mDEBUG[0m] sem_lock
+[[0;35mDEBUG[0m] sem_unlock
+[[0;35mDEBUG[0m] sem_lock
+[[0;35mDEBUG[0m] No message in queue
+[[0;35mDEBUG[0m] No message in queue
+[[0;35mDEBUG[0m] sem_unlock
+[[0;35mDEBUG[0m] sem_lock
+[[0;35mDEBUG[0m] sem_unlock
+[[0;35mDEBUG[0m] sem_lock
+Getting nb_process: 9
 Detaching from shared memory
-Quiting with process = 3
+Quiting with process = 9
+[[0;35mDEBUG[0m] sem_unlock

@@ -21,13 +21,16 @@
 #define PARENT	0
 #define CHILD	1
 
-#define KEY_PATH	"./lemipc"
+#define KEY_PATH		"./lemipc"
+#define INIT_PROJ_ID	'L'
+#define SHM_PROJ_ID		'R'
 
 #define VISUALIZER_CHANNEL			UINT32_MAX
 #define PAUSE_CHANNEL				(UINT32_MAX - 1)
 #define VISUALIZER_TARGET_CHANNEL	(UINT32_MAX - 2)
 #define TARGET_INFOS_CHANNEL		(UINT32_MAX - 3)
 #define BOARD_SIZE_CHANNEL			(UINT32_MAX - 4)
+
 
 typedef struct	s_ipc
 {
@@ -37,6 +40,9 @@ typedef struct	s_ipc
 	int		sem_id;
 	int		msg_id;
 	void	*data;
+	key_t	init_key;
+	int		init_sem_id;
+	t_vec2	board_size;
 }				t_ipc;
 
 typedef struct	s_supervised_infos
@@ -72,8 +78,8 @@ typedef struct	s_vec2_msg
 
 
 // init_ipc.c
-int	init_player_ipc(t_ipc *ipc, t_vec2 board_size);
-int	init_visualizer_ipc(t_ipc *ip, t_vec2 *board_size);
+int	init_player_ipc(t_ipc *ipc, t_vec2 *board_size);
+int	init_visualizer_ipc(t_ipc *ipc, t_vec2 *board_size);
 
 // message.c
 int					check_msg(int msg_id, void *data, uint32_t data_size, uint32_t channel);

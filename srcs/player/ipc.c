@@ -19,16 +19,11 @@ int	ipc_join_board(t_ipc *ipc, t_game *game)
 
 static int	destroy_ipc(t_ipc *ipc)
 {
-	int	ret = 0;
-
 	ft_log(LOG_DEBUG, "Deleting IPC\n");
-	if (shm_destroy(ipc->shm_id))
-		ret = 1;
-	if (msg_queue_destroy(ipc->msg_id))
-		ret = 1;
-	if (sem_destroy(ipc->sem_id))
-		ret = 1;
-	return (ret);
+	return (sem_destroy(ipc->init_sem_id)
+		|| shm_destroy(ipc->shm_id)
+		|| msg_queue_destroy(ipc->msg_id)
+		|| sem_destroy(ipc->sem_id));
 }
 
 int is_visualizer(t_ipc *ipc)

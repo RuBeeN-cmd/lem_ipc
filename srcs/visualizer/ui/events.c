@@ -1,9 +1,9 @@
 #include <visualizer/visualizer.h>
 
-static int	is_on_board(t_vec2 pos)
+static int	is_on_board(t_vec2 pos, t_vec2 board_size)
 {
-	return (pos.x >= 0 && pos.x < BOARD_WIDTH
-		&& pos.y >= 0 && pos.y < BOARD_HEIGHT);
+	return (pos.x >= 0 && pos.x < board_size.x
+		&& pos.y >= 0 && pos.y < board_size.y);
 }
 
 static t_vec2	screen_pos_to_board_pos(t_visualizer *v, t_vec2 screen_pos)
@@ -14,9 +14,9 @@ static t_vec2	screen_pos_to_board_pos(t_visualizer *v, t_vec2 screen_pos)
 	t_vec2	v1 = sub_vec2(screen_pos, scalar_div_vec2(renderer_size, 2));
 	t_fvec2	v2 = scalar_div_fvec2(vec2_to_fvec2(v1), v->cell_size);
 	v2 = add_fvec2(v2, v->offset);
-	v2 = add_fvec2(v2, scalar_div_fvec2((t_fvec2) {BOARD_WIDTH, BOARD_HEIGHT}, 2));
+	v2 = add_fvec2(v2, scalar_div_fvec2(vec2_to_fvec2(v->board_size), 2));
 	v1 = fvec2_to_vec2(v2);
-	if (is_on_board(v1))
+	if (is_on_board(v1, v->board_size))
 		return (v1);
 	return (NULL_POS);
 }
@@ -105,7 +105,7 @@ static void	on_click(t_visualizer *v, t_vec2 pos)
 		sem_lock(v->ipc.sem_id);
 		stop_supervising(v, v->target_infos.pos);
 		t_new_target_msg new_target_msg = new_msg(click_pos, NEW_TARGETING);
-		if (get_team_on_board(new_target_msg.target, v->buffer)) {
+		if (get_team_on_board(new_target_msg.target, v->buffer, v->board_size)) {
 			supervise(v, new_target_msg.target);
 			ft_log(LOG_DEBUG, "Supervision msg sent\n");
 		} else {
