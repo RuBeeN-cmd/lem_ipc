@@ -2,7 +2,8 @@
 
 static int	init_visualizer(t_visualizer *v, char title[], uint32_t width, uint32_t height)
 {
-	if (init_visualizer_ipc(&v->ipc, BOARD_SIZE)) {
+	t_vec2	board_size;
+	if (init_visualizer_ipc(&v->ipc, &board_size)) {
 		ft_printf_fd(2, "Nothing to visualize\n");
 		return (1);
 	}
@@ -63,7 +64,6 @@ static void	create_panel_text_lines(t_visualizer *v, t_panel *panel, t_supervise
 		destroy_text_line_list(panel);
 	panel->text_line_list = NULL;
 	add_text_line(v->text_engine, v->font, panel, "Target Info : ", color_from_u32(0xFF000000), JUSTIFY_CENTER, 0);
-
 	add_text_line(v->text_engine, v->font, panel, "Position : ", color_from_u32(0xFF000000), JUSTIFY_LEFT, 1);
 	char *str = "(";
 	str = ft_strjoin_free(str, ft_itoa(target_infos.pos.x), 2);

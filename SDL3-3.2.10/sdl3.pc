@@ -9,6 +9,6 @@ URL: https://www.libsdl.org/
 Version: 3.2.10
 Requires.private: 
 Conflicts:
-Libs: -L${libdir} -Wl,-rpath,${libdir} -Wl,--enable-new-dtags -lSDL3 
-Libs.private: -pthread -lm
+Libs: -L${libdir} -Wl,-rpath,${libdir} -lSDL3 
+Libs.private: -Wl,-framework,CoreMedia -Wl,-framework,CoreVideo -Wl,-framework,Cocoa -Wl,-weak_framework,UniformTypeIdentifiers -Wl,-framework,IOKit -Wl,-framework,ForceFeedback -Wl,-framework,Carbon -Wl,-framework,CoreAudio -Wl,-framework,AudioToolbox -Wl,-framework,AVFoundation -Wl,-framework,Foundation -Wl,-framework,GameController -Wl,-framework,Metal -Wl,-framework,QuartzCore -Wl,-weak_framework,CoreHaptics -lpthread -lm
 Cflags: -I${includedir} 

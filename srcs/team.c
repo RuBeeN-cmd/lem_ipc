@@ -72,20 +72,14 @@ static uint32_t	get_team_from_str(const char *nptr)
 	return (nb);
 }
 
-uint32_t	get_team(int argc, char *argv[])
+uint32_t	get_team(char *team_str)
 {
-	if (argc != 2)
-	{
-		ft_printf_fd(2, "Usage: %s <team id>\n", argv[0]);
-		exit(1);
-	}
-	if (!ft_strncmp(argv[1], "visualizer", 11))
+	if (!ft_strncmp(team_str, "visualizer", 11))
 		return (VISUALIZER);
-	uint32_t team = get_team_from_str(argv[1]);
+	uint32_t team = get_team_from_str(team_str);
 	if (team < 1 || team > MAX_TEAMS)
 	{
-		ft_log(LOG_ERROR, "Invalid team id\n");
-		exit(1);
+		return (0);
 	}
 	return (team);
 }

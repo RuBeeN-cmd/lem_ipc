@@ -1,13 +1,13 @@
-if (NOT EXISTS "/home/rrollin/Documents/lem_ipc/SDL3-3.2.10/install_manifest.txt")
-    message(FATAL_ERROR "Cannot find install manifest: \"/home/rrollin/Documents/lem_ipc/SDL3-3.2.10/install_manifest.txt\"")
+if (NOT EXISTS "/Users/rubenrollin/Documents/Ruben/Projects/42/lem_ipc/SDL3-3.2.10/install_manifest.txt")
+    message(FATAL_ERROR "Cannot find install manifest: \"/Users/rubenrollin/Documents/Ruben/Projects/42/lem_ipc/SDL3-3.2.10/install_manifest.txt\"")
 endif()
 
-file(READ "/home/rrollin/Documents/lem_ipc/SDL3-3.2.10/install_manifest.txt" files)
+file(READ "/Users/rubenrollin/Documents/Ruben/Projects/42/lem_ipc/SDL3-3.2.10/install_manifest.txt" files)
 string(REGEX REPLACE "\n" ";" files "${files}")
 foreach(file ${files})
     message(STATUS "Uninstalling \"$ENV{DESTDIR}${file}\"")
     execute_process(
-        COMMAND /usr/bin/cmake -E remove "$ENV{DESTDIR}${file}"
+        COMMAND /usr/local/bin/cmake -E remove "$ENV{DESTDIR}${file}"
         OUTPUT_VARIABLE rm_out
         RESULT_VARIABLE rm_retval
     )

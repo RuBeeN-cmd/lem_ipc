@@ -8,14 +8,15 @@
 
 typedef struct	s_game
 {
-	uint32_t	*board[BOARD_HEIGHT];
+	uint32_t	**board;
+	t_vec2		board_size;
 	t_vec2		position;
 	uint32_t	team;
 	int			is_supervised;
 }				t_game;
 
 // player.c
-int	player_workflow(uint32_t team);
+int	player_workflow(uint32_t team, t_vec2 board_size);
 
 // game.c
 int		get_best_move(t_game *game);
@@ -27,7 +28,7 @@ t_vec2	rand_pos(void);
 int		is_game_paused(t_ipc *ipc);
 
 // init_game.c
-void	init_game(t_game *game, uint32_t *raw_board, uint32_t team);
+void	init_game(t_game *game, uint32_t *raw_board, uint32_t team, t_vec2 board_size);
 int		join_board(t_game *game);
 void	init_board(uint32_t **board, uint32_t *raw_board);
 

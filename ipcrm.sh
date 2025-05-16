@@ -25,7 +25,7 @@ free_ipcs() {
     fi
 }
 
-sleep 2
+pkill -9 lemipc
 free_ipcs -m "Shared memory"
 free_ipcs -s "Semaphore"
 free_ipcs -q "Message queue"

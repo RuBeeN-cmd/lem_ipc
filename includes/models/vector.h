@@ -1,6 +1,8 @@
 #ifndef VECTOR_H
 #define VECTOR_H
 
+#define NULL_SIZE	((t_vec2) {-1, -1})
+
 typedef struct	s_vec2
 {
 	int	x;

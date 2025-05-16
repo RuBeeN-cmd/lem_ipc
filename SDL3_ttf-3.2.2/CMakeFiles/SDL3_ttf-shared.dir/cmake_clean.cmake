@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  ".0"
   "CMakeFiles/SDL3_ttf-shared.dir/src/SDL_gpu_textengine.c.o"
   "CMakeFiles/SDL3_ttf-shared.dir/src/SDL_gpu_textengine.c.o.d"
   "CMakeFiles/SDL3_ttf-shared.dir/src/SDL_hashtable.c.o"
@@ -11,10 +12,10 @@ file(REMOVE_RECURSE
   "CMakeFiles/SDL3_ttf-shared.dir/src/SDL_surface_textengine.c.o.d"
   "CMakeFiles/SDL3_ttf-shared.dir/src/SDL_ttf.c.o"
   "CMakeFiles/SDL3_ttf-shared.dir/src/SDL_ttf.c.o.d"
+  "libSDL3_ttf.0.2.2.dylib"
+  "libSDL3_ttf.0.dylib"
+  "libSDL3_ttf.dylib"
   "libSDL3_ttf.pdb"
-  "libSDL3_ttf.so"
-  "libSDL3_ttf.so.0"
-  "libSDL3_ttf.so.0.2.2"
 )
 
 # Per-language clean rules from dependency scanning.

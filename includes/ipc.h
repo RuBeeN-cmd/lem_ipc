@@ -27,6 +27,7 @@
 #define PAUSE_CHANNEL				(UINT32_MAX - 1)
 #define VISUALIZER_TARGET_CHANNEL	(UINT32_MAX - 2)
 #define TARGET_INFOS_CHANNEL		(UINT32_MAX - 3)
+#define BOARD_SIZE_CHANNEL			(UINT32_MAX - 4)
 
 typedef struct	s_ipc
 {
@@ -63,9 +64,16 @@ typedef struct	s_new_target_msg
 	t_vec2					target;
 }				t_new_target_msg;
 
+typedef struct	s_vec2_msg
+{
+	uint64_t	type;
+	t_vec2		vec2;
+}				t_vec2_msg;
+
+
 // init_ipc.c
 int	init_player_ipc(t_ipc *ipc, t_vec2 board_size);
-int	init_visualizer_ipc(t_ipc *ipc, t_vec2 board_size);
+int	init_visualizer_ipc(t_ipc *ip, t_vec2 *board_size);
 
 // message.c
 int					check_msg(int msg_id, void *data, uint32_t data_size, uint32_t channel);
@@ -74,9 +82,9 @@ t_new_target_msg	new_msg(t_vec2 target, t_new_target_msg_type type);
 
 // ipc_utils.c
 uint32_t	get_shm_size(t_vec2 board_size);
-void		sem_lock(int sem_id);
+int			sem_lock(int sem_id);
 int			sem_lock_no_wait(int sem_id);
-void		sem_unlock(int sem_id);
+int			sem_unlock(int sem_id);
 int			sem_destroy(int sem_id);
 int			get_nb_process_attach(int shm_id);
 int			shm_det(void *data);

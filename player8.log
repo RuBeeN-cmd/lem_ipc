@@ -1,0 +1,6 @@
+[[0;35mDEBUG[0m] Sending board size
+[[0;35mDEBUG[0m] Board size sent
+Getting nb_process: 1
+Detaching from shared memory
+Quiting with process = 1
+[[0;35mDEBUG[0m] Deleting IPC

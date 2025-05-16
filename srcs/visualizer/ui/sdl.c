@@ -54,7 +54,9 @@ int init_sdl(t_visualizer *v, char title[], uint32_t width, uint32_t height)
 		SDL_Quit();
 		return (1);
 	}
-	if (!(v->font = load_font("/usr/share/fonts/truetype/quicksand/Quicksand-Regular.ttf", 20)))
+	// char *font_path = "/usr/share/fonts/truetype/quicksand/Quicksand-Regular.ttf";
+	char *font_path = "/Library/Fonts/Arial Unicode.ttf";
+	if (!(v->font = load_font(font_path, 20)))
 	{
 		ft_log(LOG_ERROR, "Failed to load font !\n");
 		TTF_Quit();

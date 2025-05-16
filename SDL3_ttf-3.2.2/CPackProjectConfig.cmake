@@ -4,8 +4,8 @@ endif()
 
 set(PROJECT_NAME "SDL3_ttf")
 set(PROJECT_VERSION "3.2.2")
-set(PROJECT_SOURCE_DIR "/home/rrollin/Documents/lem_ipc/SDL3_ttf-3.2.2")
-set(SDL_CMAKE_PLATFORM "Linux")
+set(PROJECT_SOURCE_DIR "/Users/rubenrollin/Documents/Ruben/Projects/42/lem_ipc/SDL3_ttf-3.2.2")
+set(SDL_CMAKE_PLATFORM "Darwin")
 set(SDL_CPU_NAMES "X64")
 list(SORT SDL_CPU_NAMES)
 

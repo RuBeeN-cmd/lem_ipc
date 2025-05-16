@@ -2,8 +2,8 @@ if(CPACK_PACKAGE_FILE_NAME MATCHES ".*-src$")
     message(FATAL_ERROR "Creating source archives for SDL 3.2.10 is not supported.")
 endif()
 
-set(PROJECT_SOURCE_DIR "/home/rrollin/Documents/lem_ipc/SDL3-3.2.10")
-set(SDL_CMAKE_PLATFORM "Linux")
+set(PROJECT_SOURCE_DIR "/Users/rubenrollin/Documents/Ruben/Projects/42/lem_ipc/SDL3-3.2.10")
+set(SDL_CMAKE_PLATFORM "macOS")
 set(SDL_CPU_NAMES "")
 list(SORT SDL_CPU_NAMES)
 

@@ -7,9 +7,9 @@
 #include <models/log.h>
 #include <models/color.h>
 
-#define BOARD_WIDTH		30
-#define BOARD_HEIGHT	30
-#define BOARD_SIZE		((t_vec2) {BOARD_WIDTH, BOARD_HEIGHT})
+#define DEF_BOARD_WIDTH		30
+#define DEF_BOARD_HEIGHT	30
+#define DEF_BOARD_SIZE		((t_vec2) {DEF_BOARD_WIDTH, DEF_BOARD_HEIGHT})
 
 #define NULL_POS		((t_vec2) {-1, -1})
 #define EMPTY_CELL		0
@@ -18,7 +18,7 @@
 #define VISUALIZER		UINT32_MAX
 
 // team.c
-uint32_t	get_team(int argc, char *argv[]);
+uint32_t	get_team(char *team_str);
 uint32_t	get_team_on_board(t_vec2 target, uint32_t *board[]);
 t_color		get_team_color(int team);
 t_color		hsl_to_rgb(uint16_t h_deg, float s, float l);
