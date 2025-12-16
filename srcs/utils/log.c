@@ -26,19 +26,28 @@ char *get_log_prefix(t_log_level level) {
 	int idx = 0;
 	ft_strlcpy(buff + idx, "[", sizeof(buff) - idx);
 	idx += 1;
-	char *color = get_color(COLOR_CYAN);
-	ft_strlcpy(buff + idx, color, sizeof(buff) - idx);
-	idx += ft_strlen(color);
 	if (level == LEVEL_DEBUG) {
+		char *color = get_color(COLOR_PURPLE);
+		ft_strlcpy(buff + idx, color, sizeof(buff) - idx);
+		idx += ft_strlen(color);
 		ft_strlcpy(buff + idx, DBG_PREFIX, sizeof(buff) - idx);
 		idx += ft_strlen(DBG_PREFIX);
 	} else if (level == LEVEL_INFO) {
+		char *color = get_color(COLOR_CYAN);
+		ft_strlcpy(buff + idx, color, sizeof(buff) - idx);
+		idx += ft_strlen(color);
 		ft_strlcpy(buff + idx, INFO_PREFIX, sizeof(buff) - idx);
 		idx += ft_strlen(INFO_PREFIX);
 	} else if (level == LEVEL_WARNING) {
+		char *color = get_color(COLOR_YELLOW);
+		ft_strlcpy(buff + idx, color, sizeof(buff) - idx);
+		idx += ft_strlen(color);
 		ft_strlcpy(buff + idx, WARN_PREFIX, sizeof(buff) - idx);
 		idx += ft_strlen(WARN_PREFIX);
 	} else if (level == LEVEL_ERROR) {
+		char *color = get_color(COLOR_RED);
+		ft_strlcpy(buff + idx, color, sizeof(buff) - idx);
+		idx += ft_strlen(color);
 		ft_strlcpy(buff + idx, ERR_PREFIX, sizeof(buff) - idx);
 		idx += ft_strlen(ERR_PREFIX);
 	}
