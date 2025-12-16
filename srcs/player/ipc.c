@@ -10,7 +10,7 @@ int	ipc_join_board(t_ipc *ipc, t_game *game)
 	sem_lock(ipc->sem_id);
 	if (join_board(game))
 	{
-		ft_log(LOG_ERROR, "Failed to join board");
+		ERR("Failed to join board");
 		return (1);
 	}
 	sem_unlock(ipc->sem_id);
@@ -19,7 +19,7 @@ int	ipc_join_board(t_ipc *ipc, t_game *game)
 
 static int	destroy_ipc(t_ipc *ipc)
 {
-	ft_log(LOG_DEBUG, "Deleting IPC\n");
+	DBG("Deleting IPC\n");
 	return (sem_destroy(ipc->init_sem_id)
 		|| shm_destroy(ipc->shm_id)
 		|| msg_queue_destroy(ipc->msg_id)

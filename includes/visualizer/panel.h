@@ -25,7 +25,7 @@ typedef struct s_text_line
 	t_vec2					size;
 	t_color					color;
 	uint32_t				line_number;
-	t_justification	justification;
+	t_justification			justification;
 }				t_text_line;
 
 typedef enum e_anchor

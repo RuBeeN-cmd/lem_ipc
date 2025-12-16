@@ -39,13 +39,13 @@ static void	toggle_pause(t_visualizer *v)
 	if (v->running == 1)
 	{
 		v->running = 0;
-		ft_log(LOG_DEBUG, "Paused\n");
+		DBG("Paused\n");
 		send_msg(v->ipc.msg_id, "*", 1, PAUSE_CHANNEL);
 	}
 	else if (v->running == 0)
 	{
 		v->running = 1;
-		ft_log(LOG_DEBUG, "Unpaused\n");
+		DBG("Unpaused\n");
 		check_msg(v->ipc.msg_id, NULL, 1, PAUSE_CHANNEL);
 	}
 	sem_unlock(v->ipc.sem_id);
@@ -107,7 +107,7 @@ static void	on_click(t_visualizer *v, t_vec2 pos)
 		t_new_target_msg new_target_msg = new_msg(click_pos, NEW_TARGETING);
 		if (get_team_on_board(new_target_msg.target, v->buffer, v->board_size)) {
 			supervise(v, new_target_msg.target);
-			ft_log(LOG_DEBUG, "Supervision msg sent\n");
+			DBG("Supervision msg sent\n");
 		} else {
 			v->target_infos.pos = NULL_POS;
 		}

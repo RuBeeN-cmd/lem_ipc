@@ -17,9 +17,9 @@ static void	check_supervision_msg(t_ipc *ipc, t_game *game)
 	{
 		if (!vec2cmp(visualizer_target.target, game->position)) {
 			if (visualizer_target.type == STOP_TARGETING)
-				ft_log(LOG_DEBUG, "Player catch: STOP TARGET\n");
+				DBG("Player catch: STOP TARGET\n");
 			else
-				ft_log(LOG_DEBUG, "Player catch: NEW TARGET\n");
+				DBG("Player catch: NEW TARGET\n");
 			game->is_supervised = visualizer_target.type;
 		}
 		else
@@ -68,9 +68,9 @@ int	player_workflow(uint32_t team, t_vec2 board_size)
 
 	if (init_player_ipc(&ipc, &board_size))
 		return (1);
-	ft_log(LOG_DEBUG, "IPC initialized\n");
+	DBG("IPC initialized\n");
 	init_game(&game, ipc.data, team, board_size);
-	ft_log(LOG_DEBUG, "Game initialized\n");
+	DBG("Game initialized\n");
 	if (ipc_join_board(&ipc, &game))
 		return (1);
 	#ifdef OSX

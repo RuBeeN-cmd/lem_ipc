@@ -26,7 +26,8 @@ SRC = main.c \
 		models/vector/vec2.c \
 		models/vector/fvec2.c \
 		models/color.c \
-		models/log.c
+		utils/log.c \
+		utils/ansi_color.c
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 

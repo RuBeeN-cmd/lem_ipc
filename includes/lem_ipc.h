@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <libft.h>
 #include <models/vector.h>
-#include <models/log.h>
+#include <utils/log.h>
 #include <models/color.h>
 
 #define DEF_BOARD_WIDTH		30

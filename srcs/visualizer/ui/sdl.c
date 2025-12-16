@@ -29,36 +29,36 @@ int init_sdl(t_visualizer *v, char title[], uint32_t width, uint32_t height)
 	if (!SDL_Init(SDL_INIT_VIDEO))
 	{
 		perror("SDL");
-		ft_log(LOG_ERROR, "Failed to init SDL !\n");
+		ERR("Failed to init SDL !\n");
 		return (1);
 	}
 	if (!(v->window = SDL_CreateWindow(title, width, height, SDL_WINDOW_RESIZABLE)))
 	{
-		ft_log(LOG_ERROR, "Failed to init window !\n");
+		ERR("Failed to init window !\n");
 		SDL_Quit();
 		return (1);
 	}
 	
 	if (!(v->renderer = SDL_CreateRenderer(v->window, NULL)))
 	{
-		ft_log(LOG_ERROR, "Failed to init renderer !\n");
+		ERR("Failed to init renderer !\n");
 		SDL_DestroyWindow(v->window);
 		SDL_Quit();
 		return (1);
 	}
 	if (!TTF_Init())
 	{
-		ft_log(LOG_ERROR, "Failed to init SDL_ttf !\n");
+		ERR("Failed to init SDL_ttf !\n");
 		SDL_DestroyRenderer(v->renderer);
 		SDL_DestroyWindow(v->window);
 		SDL_Quit();
 		return (1);
 	}
-	char *font_path = "/usr/share/fonts/truetype/quicksand/Quicksand-Regular.ttf";
+	char *font_path = "/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf";
 	// char *font_path = "/Library/Fonts/Arial Unicode.ttf";
 	if (!(v->font = load_font(font_path, 20)))
 	{
-		ft_log(LOG_ERROR, "Failed to load font !\n");
+		ERR("Failed to load font !\n");
 		TTF_Quit();
 		SDL_DestroyRenderer(v->renderer);
 		SDL_DestroyWindow(v->window);
@@ -67,7 +67,7 @@ int init_sdl(t_visualizer *v, char title[], uint32_t width, uint32_t height)
 	}
 	if (!(v->text_engine = TTF_CreateRendererTextEngine(v->renderer)))
 	{
-		ft_log(LOG_ERROR, "Failed to create text engine !\n");
+		ERR("Failed to create text engine !\n");
 		unload_font(v->font);
 		TTF_Quit();
 		SDL_DestroyRenderer(v->renderer);
@@ -75,6 +75,6 @@ int init_sdl(t_visualizer *v, char title[], uint32_t width, uint32_t height)
 		SDL_Quit();
 		return (1);
 	}
-	ft_log(LOG_DEBUG, "SDL successfully initialized !\n");
+	DBG("SDL successfully initialized !\n");
 	return (0);
 }

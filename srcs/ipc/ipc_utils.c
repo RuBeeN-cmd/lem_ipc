@@ -13,7 +13,7 @@ int	sem_lock(int sem_id)
 	ops.sem_num = 0;
 	ops.sem_op = -1;
 	ops.sem_flg = 0;
-	ft_log(LOG_DEBUG, "sem_lock");
+	DBG("sem_lock");
 	return (semop(sem_id, &ops, 1));
 }
 
@@ -34,7 +34,7 @@ int	sem_unlock(int sem_id)
 	ops.sem_num = 0;
 	ops.sem_op = 1;
 	ops.sem_flg = 0;
-	ft_log(LOG_DEBUG, "sem_unlock");
+	DBG("sem_unlock");
 	return (semop(sem_id, &ops, 1));
 }
 
@@ -42,7 +42,7 @@ int	sem_destroy(int sem_id)
 {
 	if (semctl(sem_id, 0, IPC_RMID) == -1)
 	{
-		ft_log(LOG_ERROR, "Can't destroy semaphore");
+		ERR("Can't destroy semaphore");
 		return (1);
 	}
 	return (0);
@@ -73,7 +73,7 @@ int	shm_destroy(int shm_id)
 {
 	if (shmctl(shm_id, IPC_RMID, NULL) == -1)
 	{
-		ft_log(LOG_ERROR, "Can't destroy shared memory");
+		ERR("Can't destroy shared memory");
 		return (1);
 	}
 	return (0);
@@ -83,7 +83,7 @@ int	msg_queue_destroy(int msg_id)
 {
 	if (msgctl(msg_id, IPC_RMID, NULL) == -1)
 	{
-		ft_log(LOG_ERROR, "Can't destroy message queue");
+		ERR("Can't destroy message queue");
 		return (1);
 	}
 	return (0);

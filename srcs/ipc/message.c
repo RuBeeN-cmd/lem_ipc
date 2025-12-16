@@ -22,7 +22,7 @@ int	check_msg(int msg_id, void *data, uint32_t data_size, uint32_t channel)
 		free(msg_ptr);
 		if (errno == ENOMSG)
 		{
-			ft_log(LOG_DEBUG, "No message in queue");
+			DBG("No message in queue");
 			return (0);
 		}
 		perror("msgrcv");
