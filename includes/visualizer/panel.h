@@ -28,6 +28,34 @@ typedef struct s_text_line
 	t_justification			justification;
 }				t_text_line;
 
+typedef struct s_button
+{
+	t_vec2	position;
+	t_vec2	size;
+	t_color	color;
+	int		border_size;
+	int		border_color;
+	void	(*on_click)(void);
+} 				t_button;
+
+typedef enum e_element_type
+{
+	ELEMENT_TYPE_BUTTON,
+	ELEMENT_TYPE_TEXT_LINE
+}				t_element_type;
+
+typedef struct s_ui_element
+{
+	t_element_type	type;
+	void			*element;
+}				t_ui_element;
+
+typedef struct s_ui_row
+{
+	uint32_t	line_number;
+	t_list		*elements;
+}				t_ui_row;
+
 typedef enum e_anchor
 {
 	ANCHOR_TOP_LEFT,
@@ -48,6 +76,8 @@ typedef struct	s_panel
 	t_vec2		margin;
 	t_vec2		padding;
 	t_list		*text_line_list;
+
+	t_list		*rows;
 }				t_panel;
 
 

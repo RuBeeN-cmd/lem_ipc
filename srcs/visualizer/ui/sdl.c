@@ -19,7 +19,9 @@ void destroy_sdl(t_visualizer *v)
 	TTF_DestroyRendererTextEngine(v->text_engine);
 	unload_font(v->font);
 	TTF_Quit();
+	DBG("Destroying Renderer...\n");
 	SDL_DestroyRenderer(v->renderer);
+	DBG("Renderer destroyed.\n");
 	SDL_DestroyWindow(v->window);
 	SDL_Quit();
 }

@@ -1,4 +1,5 @@
 #include <player.h>
+#include <string.h>
 
 int	ipc_join_board(t_ipc *ipc, t_game *game)
 {

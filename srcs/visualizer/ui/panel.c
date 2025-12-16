@@ -12,6 +12,7 @@ t_panel	init_panel(t_vec2 size, t_anchor anchor)
 		.border_size = PANEL_DEF_BORDER_WIDTH,
 		.border_color = color_from_u32(0xFF000000),
 		.text_line_list = NULL,
+		.rows = NULL
 	});
 }
 
@@ -24,6 +25,8 @@ void	draw_rectangle(SDL_Renderer *renderer, t_vec2 pos, t_vec2 size, t_color col
 
 void	draw_panel(SDL_Renderer *renderer, t_panel *panel)
 {
+	if (!panel->visible)
+		return ;
 	uint32_t renderer_width;
 	uint32_t renderer_height;
 	SDL_GetCurrentRenderOutputSize(renderer, (int *) &renderer_width, (int *) &renderer_height);
@@ -56,7 +59,6 @@ void	draw_panel(SDL_Renderer *renderer, t_panel *panel)
 	size = sub_vec2(panel->size, scalar_mult_vec2((t_vec2) {panel->border_size, panel->border_size}, 2));
 	draw_rectangle(renderer, pos, size, panel->color);
 
-	// Draw Text
 	if (panel->text_line_list)
 	{
 		t_list *current = panel->text_line_list;

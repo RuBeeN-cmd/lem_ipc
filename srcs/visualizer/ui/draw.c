@@ -59,40 +59,40 @@ TTF_Text	*draw_text(t_visualizer *v, char *text, t_vec2 pos, t_color color) {
 	return (ttf_text);
 }
 
-void	draw_target_infos(t_visualizer *v, t_supervised_infos *target_infos)
-{
-	if (!v->supervision_panel.visible)
-	return ;
-	uint32_t renderer_width;
-	uint32_t renderer_height;
-	SDL_GetCurrentRenderOutputSize(v->renderer, (int *) &renderer_width, (int *) &renderer_height);
+// void	draw_target_infos(t_visualizer *v, t_supervised_infos *target_infos)
+// {
+// 	if (!v->supervision_panel.visible)
+// 	return ;
+// 	// uint32_t renderer_width;
+// 	// uint32_t renderer_height;
+// 	// SDL_GetCurrentRenderOutputSize(v->renderer, (int *) &renderer_width, (int *) &renderer_height);
 	
 	
 
 
 
-	draw_panel(v->renderer, &v->supervision_panel);
+// 	draw_panel(v->renderer, &v->supervision_panel);
 
 
 
-	(void) target_infos;
+// 	// (void) target_infos;
 
 
 
-	// t_vec2 pos = (t_vec2) {v->supervision_panel.offset.x + 10, v->supervision_panel.offset.y + 10};
+// 	// t_vec2 pos = (t_vec2) {v->supervision_panel.offset.x + 10, v->supervision_panel.offset.y + 10};
 
-	// TTF_Text *text = draw_text(v, "Target Info : ", pos, color_from_u32(0xFF000000));
-	// t_vec2 text_size = get_text_size(text);
-	// pos.y += text_size.y;
-	// TTF_DestroyText(text);
-	// text = draw_text(v, "Position : ", pos, color_from_u32(0xFF000000));
-	// text_size = get_text_size(text);
-	// pos.x += text_size.x + 10;
-	// TTF_DestroyText(text);
-	// char *str = ft_itoa(v->target_infos.pos.x);
-	// str = ft_strjoin_free(str, ", ", 1);
-	// str = ft_strjoin_free(str, ft_itoa(v->target_infos.pos.y), 3);
-	// text = draw_text(v, str, pos, color_from_u32(0xFF000000));
-	// TTF_DestroyText(text);
-	// free(str);
-}
+// 	// TTF_Text *text = draw_text(v, "Target Info : ", pos, color_from_u32(0xFF000000));
+// 	// t_vec2 text_size = get_text_size(text);
+// 	// pos.y += text_size.y;
+// 	// TTF_DestroyText(text);
+// 	// text = draw_text(v, "Position : ", pos, color_from_u32(0xFF000000));
+// 	// text_size = get_text_size(text);
+// 	// pos.x += text_size.x + 10;
+// 	// TTF_DestroyText(text);
+// 	// char *str = ft_itoa(v->target_infos.pos.x);
+// 	// str = ft_strjoin_free(str, ", ", 1);
+// 	// str = ft_strjoin_free(str, ft_itoa(v->target_infos.pos.y), 3);
+// 	// text = draw_text(v, str, pos, color_from_u32(0xFF000000));
+// 	// TTF_DestroyText(text);
+// 	// free(str);
+// }

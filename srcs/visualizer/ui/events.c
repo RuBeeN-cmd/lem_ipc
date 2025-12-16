@@ -23,7 +23,15 @@ static t_vec2	screen_pos_to_board_pos(t_visualizer *v, t_vec2 screen_pos)
 
 static void	zoom(t_visualizer *v, float zoom_factor)
 {
+	uint32_t old_cell_size = v->cell_size;
 	v->cell_size *= zoom_factor;
+	if (old_cell_size == v->cell_size)
+	{
+		if (zoom_factor < 1)
+			v->cell_size--;
+		else
+			v->cell_size++;
+	}
 	v->cell_size = ft_max(v->cell_size, 4);
 	v->cell_size = ft_min(v->cell_size, 100);
 }
@@ -51,6 +59,13 @@ static void	toggle_pause(t_visualizer *v)
 	sem_unlock(v->ipc.sem_id);
 }
 
+static void	edit_mode_toggle(t_visualizer *v)
+{
+	v->edit_mode = !v->edit_mode;
+	v->edit_panel.visible = v->edit_mode;
+	DBG("Edit mode: %s\n", v->edit_mode ? "ON" : "OFF");
+}
+
 static int	on_key_down(SDL_Keycode key, t_visualizer *v)
 {
 	if (key == SDLK_ESCAPE)
@@ -69,6 +84,8 @@ static int	on_key_down(SDL_Keycode key, t_visualizer *v)
 		move(v, (t_vec2) {MOVE_SPEED, 0});
 	else if (key == SDLK_SPACE)
 		toggle_pause(v);
+	else if (key == SDLK_E)
+		edit_mode_toggle(v);
 	return (0);
 }
 
@@ -79,7 +96,6 @@ static void	stop_supervising(t_visualizer *v, t_vec2 supervised)
 		t_new_target_msg erase_target_msg = new_msg(supervised, STOP_TARGETING);
 		send_msg(v->ipc.msg_id, &erase_target_msg, sizeof(erase_target_msg), VISUALIZER_TARGET_CHANNEL);
 		v->supervision_panel.visible = 0;
-		// v->target_infos.pos = NULL_POS;
 	}
 }
 

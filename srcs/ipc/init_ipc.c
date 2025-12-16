@@ -45,7 +45,7 @@ static int	send_board_size(int msg_id, t_vec2 board_size)
 static t_vec2	get_board_size(int msg_id)
 {
 	t_vec2	board_size;
-	DBG("Getting board size from msg_q %d", msg_id);
+	DBG("Getting board size from msg_q %d\n", msg_id);
 	if (check_msg(msg_id, &board_size, sizeof(t_vec2), BOARD_SIZE_CHANNEL) != 1)
 		return (NULL_SIZE);
 	return (board_size);
@@ -99,7 +99,7 @@ static int	init_child(t_ipc *ipc, t_vec2 *board_size)
 		ERR("Failed to fetch board size.");
 		return (1);
 	}
-	DBG("Board size received: (%d, %d)", board_size->x, board_size->y);
+	DBG("Board size received: (%d, %d)\n", board_size->x, board_size->y);
 	if (send_board_size(ipc->msg_id, *board_size))
 	{
 		ERR("Failed to send board size.");
@@ -127,8 +127,8 @@ static int	init_initialization(t_ipc *ipc)
 		sem_unlock(ipc->init_sem_id);
 		return (1);
 	}
-	if (init_semaphore(ipc->init_key, IPC_CREAT | IPC_EXCL | 0644) == -1) {
-		if (init_semaphore(ipc->init_key, 0644) == -1) {
+	if ((ipc->init_sem_id = init_semaphore(ipc->init_key, IPC_CREAT | IPC_EXCL | 0644)) == -1) {
+		if ((ipc->init_sem_id = init_semaphore(ipc->init_key, 0644)) == -1) {
 			ERR("Can't access initialization semaphore.");
 			return (1);
 		}
