@@ -59,13 +59,6 @@ static void	toggle_pause(t_visualizer *v)
 	sem_unlock(v->ipc.sem_id);
 }
 
-static void	edit_mode_toggle(t_visualizer *v)
-{
-	v->edit_mode = !v->edit_mode;
-	v->edit_panel.visible = v->edit_mode;
-	DBG("Edit mode: %s\n", v->edit_mode ? "ON" : "OFF");
-}
-
 static int	on_key_down(SDL_Keycode key, t_visualizer *v)
 {
 	if (key == SDLK_ESCAPE)
@@ -84,8 +77,6 @@ static int	on_key_down(SDL_Keycode key, t_visualizer *v)
 		move(v, (t_vec2) {MOVE_SPEED, 0});
 	else if (key == SDLK_SPACE)
 		toggle_pause(v);
-	else if (key == SDLK_E)
-		edit_mode_toggle(v);
 	return (0);
 }
 

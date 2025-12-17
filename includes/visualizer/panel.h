@@ -28,34 +28,6 @@ typedef struct s_text_line
 	t_justification			justification;
 }				t_text_line;
 
-typedef struct s_button
-{
-	t_vec2	position;
-	t_vec2	size;
-	t_color	color;
-	int		border_size;
-	int		border_color;
-	void	(*on_click)(void);
-} 				t_button;
-
-typedef enum e_element_type
-{
-	ELEMENT_TYPE_BUTTON,
-	ELEMENT_TYPE_TEXT_LINE
-}				t_element_type;
-
-typedef struct s_ui_element
-{
-	t_element_type	type;
-	void			*element;
-}				t_ui_element;
-
-typedef struct s_ui_row
-{
-	uint32_t	line_number;
-	t_list		*elements;
-}				t_ui_row;
-
 typedef enum e_anchor
 {
 	ANCHOR_TOP_LEFT,
@@ -81,7 +53,7 @@ typedef struct	s_panel
 }				t_panel;
 
 
-t_panel	init_panel(t_vec2 size, t_anchor anchor);
+t_panel	init_panel(t_vec2 size, t_anchor anchor, int visible);
 void	draw_panel(SDL_Renderer *renderer, t_panel *panel);
 void	destroy_text_line_list(t_panel *panel);
 int		add_text_line(TTF_TextEngine *engine, TTF_Font *font, t_panel *panel, char *text, t_color color, t_justification justification, uint32_t line_number);

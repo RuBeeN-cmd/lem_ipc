@@ -15,6 +15,7 @@
 #define WIN_TITLE					"Lem-Ipc"
 #define SUPERVISION_PANEL_WIDTH		300
 #define SUPERVISION_PANEL_HEIGHT	140
+#define SUPERVISION_PANEL_SIZE		((t_vec2) {SUPERVISION_PANEL_WIDTH, SUPERVISION_PANEL_HEIGHT})
 
 #define INITIAL_PADDING		20
 #define BORDER_WIDTH		2
@@ -28,7 +29,6 @@ typedef struct	s_visualizer
 	TTF_Font			*font;
 	TTF_TextEngine		*text_engine;
 	t_panel				supervision_panel;
-	t_panel 			edit_panel;
 
 	t_fvec2				offset;
 	uint32_t			cell_size;
@@ -38,7 +38,6 @@ typedef struct	s_visualizer
 	int					running;
 	t_vec2				board_size;
 	t_supervised_infos	target_infos;
-	int					edit_mode;
 }				t_visualizer;
 
 // visualizer.c

@@ -1,6 +1,6 @@
 #include <visualizer/panel.h>
 
-t_panel	init_panel(t_vec2 size, t_anchor anchor)
+t_panel	init_panel(t_vec2 size, t_anchor anchor, int visible)
 {
 	return ((t_panel) {
 		.color = color_from_u32(0xFFFFFFFF),
@@ -8,7 +8,7 @@ t_panel	init_panel(t_vec2 size, t_anchor anchor)
 		.anchor = anchor,
 		.margin = (t_vec2) {PANEL_DEF_MARGIN, PANEL_DEF_MARGIN},
 		.padding = (t_vec2) {PANEL_DEF_PADDING, PANEL_DEF_PADDING},
-		.visible = 1,
+		.visible = visible,
 		.border_size = PANEL_DEF_BORDER_WIDTH,
 		.border_color = color_from_u32(0xFF000000),
 		.text_line_list = NULL,

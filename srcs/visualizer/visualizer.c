@@ -1,15 +1,22 @@
 #include <visualizer/visualizer.h>
 
+static void	init_visualizer_panels(t_visualizer *v)
+{
+	v->supervision_panel = init_panel(SUPERVISION_PANEL_SIZE, ANCHOR_TOP_RIGHT, 0);
+}
+
 static int	init_visualizer(t_visualizer *v, char title[], uint32_t width, uint32_t height)
 {
 	t_vec2	board_size;
+
 	if (init_visualizer_ipc(&v->ipc, &board_size) == 1)
 		return (1);
 	if (init_buffer(&v->buffer, board_size))
 		return (1);
+
 	send_msg(v->ipc.msg_id, "*", 1, VISUALIZER_CHANNEL);
 	v->running = -1;
-	v->edit_mode = 0;
+
 	v->board_size = board_size;
 	v->cell_size = (height - INITIAL_PADDING) / v->board_size.y;
 	if (v->cell_size * v->board_size.x > (width - INITIAL_PADDING))
@@ -20,22 +27,12 @@ static int	init_visualizer(t_visualizer *v, char title[], uint32_t width, uint32
 		.team = -1,
 		.is_alive = 0
 	};
-	v->supervision_panel = init_panel(
-		(t_vec2) {SUPERVISION_PANEL_WIDTH, SUPERVISION_PANEL_HEIGHT},
-		ANCHOR_TOP_RIGHT
-	);
-	v->supervision_panel.visible = 0;
-	v->edit_panel = init_panel(
-		(t_vec2) {200, 100},
-		ANCHOR_TOP_LEFT
-	);
-	v->edit_panel.visible = 0;
+	init_visualizer_panels(v);
 	if (init_sdl(v, title, width, height))
 	{
 		free_buffer(v->buffer, v->board_size.y);
 		return (1);
 	}
-	add_text_line(v->text_engine, v->font, &v->edit_panel, "Edit Mode:", color_from_u32(0xFF000000), JUSTIFY_CENTER, 0);
 	return (0);
 }
 
@@ -43,7 +40,6 @@ static void	destroy_visualizer(t_visualizer *v)
 {
 	check_msg(v->ipc.msg_id, NULL, 1, VISUALIZER_CHANNEL);
 	destroy_text_line_list(&v->supervision_panel);
-	destroy_text_line_list(&v->edit_panel);
 	destroy_sdl(v);
 	free_buffer(v->buffer, v->board_size.y);
 	exit(0);
@@ -104,7 +100,7 @@ static int	visualizer_routine(t_visualizer *v)
 				send_msg(v->ipc.msg_id, "*", 1, PAUSE_CHANNEL);
 				v->running = 0;
 			}
-			else
+		 	else
 				v->running = 1;
 		}
 		check_msg(v->ipc.msg_id, &v->target_infos, sizeof(v->target_infos), TARGET_INFOS_CHANNEL);
@@ -114,9 +110,7 @@ static int	visualizer_routine(t_visualizer *v)
 	}
 	clear_window(v->renderer, color_from_u32(0xFF000000));
 	draw_board(v);
-	// draw_target_infos(v, NULL);
 	draw_panel(v->renderer, &v->supervision_panel);
-	draw_panel(v->renderer, &v->edit_panel);
 	SDL_RenderPresent(v->renderer);
 	if (!is_game_ended(v->buffer, v->board_size))
 		return (0);
@@ -127,7 +121,7 @@ static void	visualizer_loop(t_visualizer *v)
 {
 	while (visualizer_routine(v))
 		SDL_Delay(16);
-	sleep(2);
+	SDL_Delay(2000);
 }
 
 int	visualizer_workflow(void)
