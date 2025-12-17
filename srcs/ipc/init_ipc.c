@@ -36,7 +36,7 @@ static int	init_msg_queue(key_t key, int flags)
 
 static int	send_board_size(int msg_id, t_vec2 board_size)
 {
-	DBG("Sending board size: (%d, %d) in msg_q %d", board_size.x, board_size.y, msg_id);
+	DBG("Sending board size: (%d, %d) in msg_q %d\n", board_size.x, board_size.y, msg_id);
 	if (send_msg(msg_id, &board_size, sizeof(t_vec2), BOARD_SIZE_CHANNEL))
 		return (1);
 	return (0);

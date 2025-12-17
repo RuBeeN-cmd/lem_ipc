@@ -13,12 +13,16 @@ SRC = main.c \
 		player/game.c \
 		player/init_game.c \
 		player/ipc.c \
+		player/messages.c \
 		ipc/init_ipc.c \
 		ipc/ipc_utils.c \
 		ipc/message.c \
 		visualizer/visualizer.c \
-		visualizer/ui/draw.c \
 		visualizer/buffer.c \
+		visualizer/kills.c \
+		visualizer/supervision.c \
+		visualizer/game.c \
+		visualizer/ui/draw.c \
 		visualizer/ui/events.c \
 		visualizer/ui/sdl.c \
 		visualizer/ui/panel.c \

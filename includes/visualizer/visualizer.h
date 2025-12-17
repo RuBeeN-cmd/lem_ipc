@@ -16,6 +16,9 @@
 #define SUPERVISION_PANEL_WIDTH		300
 #define SUPERVISION_PANEL_HEIGHT	140
 #define SUPERVISION_PANEL_SIZE		((t_vec2) {SUPERVISION_PANEL_WIDTH, SUPERVISION_PANEL_HEIGHT})
+#define KILLS_PANEL_WIDTH			200
+#define KILLS_PANEL_HEIGHT			300
+#define KILLS_PANEL_SIZE			((t_vec2) {KILLS_PANEL_WIDTH, KILLS_PANEL_HEIGHT})
 
 #define INITIAL_PADDING		20
 #define BORDER_WIDTH		2
@@ -29,6 +32,7 @@ typedef struct	s_visualizer
 	TTF_Font			*font;
 	TTF_TextEngine		*text_engine;
 	t_panel				supervision_panel;
+	t_panel				kills_panel;
 
 	t_fvec2				offset;
 	uint32_t			cell_size;
@@ -38,6 +42,8 @@ typedef struct	s_visualizer
 	int					running;
 	t_vec2				board_size;
 	t_supervised_infos	target_infos;
+
+	t_list				*kills;
 }				t_visualizer;
 
 // visualizer.c
@@ -61,5 +67,17 @@ void		unload_font(TTF_Font *font);
 void	draw_board(t_visualizer *v);
 void	clear_window(SDL_Renderer *renderer, t_color color);
 void	draw_target_infos(t_visualizer *v, t_supervised_infos *target_infos);
+
+
+// kills.c
+void	create_kills_panel_text_lines(t_visualizer *v, t_panel *panel);
+void	update_kill_list(t_visualizer *v);
+
+// supervision.c
+void	create_supervision_panel_text_lines(t_visualizer *v, t_panel *panel, t_supervised_infos target_infos);
+
+// utils.c
+int	is_game_ended(uint32_t **board, t_vec2 board_size);
+
 
 #endif

@@ -15,7 +15,7 @@ int	is_two_enemys(t_game *game)
 				continue ;
 			for (int j = 0; j < i; j++)
 				if (enemys_id[j] == game->board[y][x])
-					return (1);
+					return (enemys_id[j]);
 			if (game->board[y][x] != game->team)
 				enemys_id[i++] = game->board[y][x];
 		}
@@ -166,14 +166,18 @@ int	get_best_move(t_game *game)
 	if (!vec2cmp(target_pos, NULL_POS))
 		return (-1);
 
-	if (target_pos.x < game->position.x)
-		move_left(game);
-	else if (target_pos.x > game->position.x)
-		move_right(game);
-	if (target_pos.y < game->position.y)
-		move_up(game);
-	else if (target_pos.y > game->position.y)
-		move_down(game);
+	t_vec2 delta = {target_pos.x - game->position.x, target_pos.y - game->position.y};
+	if (ft_abs(delta.x) > ft_abs(delta.y)) {
+		if (delta.x > 0)
+			move_right(game);
+		else
+			move_left(game);
+	} else {
+		if (delta.y > 0)
+			move_down(game);
+		else
+			move_up(game);
+	}
 	return (0);
 }
 
@@ -197,26 +201,32 @@ void	go_to_mate(t_game *game)
 	t_vec2	nearest_mate = get_nearest(*game, 1);
 	if (nearest_mate.x == -1 && nearest_mate.y == -1)
 		return ;
-	if (nearest_mate.x < game->position.x)
-		move_left(game);
-	else if (nearest_mate.x > game->position.x)
-		move_right(game);
-	if (nearest_mate.y < game->position.y)
-		move_up(game);
-	else if (nearest_mate.y > game->position.y)
-		move_down(game);
+
+	t_vec2 delta = {nearest_mate.x - game->position.x, nearest_mate.y - game->position.y};
+	if (ft_abs(delta.x) > ft_abs(delta.y)) {
+		if (delta.x > 0)
+			move_right(game);
+		else
+			move_left(game);
+	} else {
+		if (delta.y > 0)
+			move_down(game);
+		else
+			move_up(game);
+	}
 }
 
-int	is_alive(t_game *game, t_ipc *ipc)
+int	is_killed_by_team(t_game *game, t_ipc *ipc)
 {
 	sem_lock(ipc->sem_id);
-	if (is_two_enemys(game)) {
+	int team_id = is_two_enemys(game);
+	if (team_id != 0) {
 		game->board[game->position.y][game->position.x] = EMPTY_CELL;
 		sem_unlock(ipc->sem_id);
-		return (0);
+		return (team_id);
 	}
 	sem_unlock(ipc->sem_id);
-	return (1);
+	return (0);
 }
 
 int	is_other_team(t_game *game, t_ipc *ipc)
@@ -245,4 +255,96 @@ int is_game_paused(t_ipc *ipc)
 		return (1);
 	}
 	return (0);
+}
+
+int is_other_mate(t_game game) {
+	for (int y = 0; y < game.board_size.y; y++) {
+		for (int x = 0; x < game.board_size.x; x++) {
+			if (x != game.position.x || y != game.position.y)
+				if (game.board[y][x] == game.team)
+					return (1);
+		}
+	}
+	return (0);
+}
+
+int can_make_move(t_game *game, t_vec2 new_pos) {
+	if (new_pos.x >= 0 && new_pos.x < game->board_size.x && new_pos.y >= 0 && new_pos.y < game->board_size.y) {
+		if (game->board[new_pos.y][new_pos.x] == EMPTY_CELL)
+			return (1);
+	}
+	return (0);
+}
+
+int	can_move_down(t_game *game) {
+	t_vec2 new_pos = {game->position.x, game->position.y + 1};
+	return (can_make_move(game, new_pos));
+}
+
+int can_move_up(t_game *game) {
+	t_vec2 new_pos = {game->position.x, game->position.y - 1};
+	return (can_make_move(game, new_pos));
+}
+
+int can_move_left(t_game *game) {
+	t_vec2 new_pos = {game->position.x - 1, game->position.y};
+	return (can_make_move(game, new_pos));
+}
+
+int can_move_right(t_game *game) {
+	t_vec2 new_pos = {game->position.x + 1, game->position.y};
+	return (can_make_move(game, new_pos));
+}
+
+void escape_from_enemys(t_game *game)
+{
+	t_vec2	nearest_enemy = get_nearest(*game, 0);
+	if (!vec2cmp(nearest_enemy, NULL_POS))
+		return ;
+	
+	t_vec2 delta = {nearest_enemy.x - game->position.x, nearest_enemy.y - game->position.y};
+	if (ft_abs(delta.x) > ft_abs(delta.y)) {
+		if (delta.x < 0) {
+			if (can_move_right(game))
+				move_right(game);
+			else if (delta.y < 0)
+				move_down(game);
+			else if (delta.y > 0)
+				move_up(game);
+		} else {
+			if (can_move_left(game))
+				move_left(game);
+			else if (delta.y < 0)
+				move_down(game);
+			else if (delta.y > 0)
+				move_up(game);
+		}
+	} else {
+		if (delta.y < 0) {
+			if (can_move_down(game))
+				move_down(game);
+			else if (delta.x < 0)
+				move_right(game);
+			else if (delta.x > 0)
+				move_left(game);
+		} else {
+			if (can_move_up(game))
+				move_up(game);
+			else if (delta.x < 0)
+				move_right(game);
+			else if (delta.x > 0)
+				move_left(game);
+		}
+	}
+}
+
+void player_routine(t_game *game)
+{
+	if (!is_other_mate(*game)) {
+		escape_from_enemys(game);
+	} else if (!is_with_mate(*game)) {
+		go_to_mate(game);
+	} else {
+		get_best_move(game);
+	}
 }

@@ -1,0 +1,5 @@
+Player logic:
+	No more mate alive:
+		Escape !!!!! 
+	ELSE:
+		

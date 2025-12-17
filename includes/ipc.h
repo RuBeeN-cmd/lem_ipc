@@ -30,7 +30,7 @@
 #define VISUALIZER_TARGET_CHANNEL	(UINT32_MAX - 2)
 #define TARGET_INFOS_CHANNEL		(UINT32_MAX - 3)
 #define BOARD_SIZE_CHANNEL			(UINT32_MAX - 4)
-
+#define KILL_CHANNEL				(UINT32_MAX - 5)
 
 typedef struct	s_ipc
 {
@@ -45,6 +45,9 @@ typedef struct	s_ipc
 	t_vec2	board_size;
 }				t_ipc;
 
+
+
+
 typedef struct	s_supervised_infos
 {
 	t_vec2		pos;
@@ -57,6 +60,23 @@ typedef struct	s_supervised_infos_msg
 	uint64_t		    type;
 	t_supervised_infos	target_infos;
 }				t_supervised_infos_msg;
+
+
+
+
+typedef struct	s_kill_info
+{
+	uint32_t	killed_team;
+	uint32_t	killer_team;
+}				t_kill_info;
+
+typedef struct	s_kill_info_msg
+{
+	uint64_t		type;
+	t_kill_info		kill_info;
+}				t_kill_info_msg;
+
+
 
 typedef enum	e_new_target_msg_type
 {

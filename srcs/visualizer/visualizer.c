@@ -3,6 +3,7 @@
 static void	init_visualizer_panels(t_visualizer *v)
 {
 	v->supervision_panel = init_panel(SUPERVISION_PANEL_SIZE, ANCHOR_TOP_RIGHT, 0);
+	v->kills_panel = init_panel(KILLS_PANEL_SIZE, ANCHOR_TOP_LEFT, 1);
 }
 
 static int	init_visualizer(t_visualizer *v, char title[], uint32_t width, uint32_t height)
@@ -16,7 +17,6 @@ static int	init_visualizer(t_visualizer *v, char title[], uint32_t width, uint32
 
 	send_msg(v->ipc.msg_id, "*", 1, VISUALIZER_CHANNEL);
 	v->running = -1;
-
 	v->board_size = board_size;
 	v->cell_size = (height - INITIAL_PADDING) / v->board_size.y;
 	if (v->cell_size * v->board_size.x > (width - INITIAL_PADDING))
@@ -27,6 +27,7 @@ static int	init_visualizer(t_visualizer *v, char title[], uint32_t width, uint32
 		.team = -1,
 		.is_alive = 0
 	};
+	v->kills = NULL;
 	init_visualizer_panels(v);
 	if (init_sdl(v, title, width, height))
 	{
@@ -40,51 +41,10 @@ static void	destroy_visualizer(t_visualizer *v)
 {
 	check_msg(v->ipc.msg_id, NULL, 1, VISUALIZER_CHANNEL);
 	destroy_text_line_list(&v->supervision_panel);
+	destroy_text_line_list(&v->kills_panel);
 	destroy_sdl(v);
+	ft_lstclear(&v->kills, free);
 	free_buffer(v->buffer, v->board_size.y);
-	exit(0);
-}
-
-static int	is_game_ended(uint32_t **board, t_vec2 board_size)
-{
-	uint32_t found_id = 0;
-	for (int y = 0; y < board_size.y; y++) {
-		for (int x = 0; x < board_size.x; x++) {
-			if (board[y][x] != EMPTY_CELL) {
-				if (found_id == 0)
-					found_id = board[y][x];
-				else if (board[y][x] != found_id)
-					return (1);
-			}
-		}
-	}
-	return (found_id == 0);
-}
-
-static void	create_panel_text_lines(t_visualizer *v, t_panel *panel, t_supervised_infos target_infos)
-{
-	if (panel->text_line_list)
-		destroy_text_line_list(panel);
-	panel->text_line_list = NULL;
-	add_text_line(v->text_engine, v->font, panel, "Target Info : ", color_from_u32(0xFF000000), JUSTIFY_CENTER, 0);
-	add_text_line(v->text_engine, v->font, panel, "Position : ", color_from_u32(0xFF000000), JUSTIFY_LEFT, 1);
-	char *str = "(";
-	str = ft_strjoin_free(str, ft_itoa(target_infos.pos.x), 2);
-	str = ft_strjoin_free(str, ", ", 1);
-	str = ft_strjoin_free(str, ft_itoa(target_infos.pos.y), 3);
-	str = ft_strjoin_free(str, ")", 1);
-	add_text_line(v->text_engine, v->font, panel, str, color_from_u32(0xFF000000), JUSTIFY_RIGHT, 1);
-	free(str);
-
-	add_text_line(v->text_engine, v->font, panel, "Team : ", color_from_u32(0xFF000000), JUSTIFY_LEFT, 2);
-	str = ft_itoa(target_infos.team);
-	add_text_line(v->text_engine, v->font, panel, str, get_team_color(target_infos.team), JUSTIFY_RIGHT, 2);
-	free(str);
-
-	add_text_line(v->text_engine, v->font, panel, "Alive : ", color_from_u32(0xFF000000), JUSTIFY_LEFT, 3);
-	str = target_infos.is_alive ? "Yes" : "No";
-	t_color alive_color = target_infos.is_alive ? color_from_u32(0xFF00FF00) : color_from_u32(0xFF0000FF);
-	add_text_line(v->text_engine, v->font, panel, str, alive_color, JUSTIFY_RIGHT, 3);
 }
 
 static int	visualizer_routine(t_visualizer *v)
@@ -104,13 +64,17 @@ static int	visualizer_routine(t_visualizer *v)
 				v->running = 1;
 		}
 		check_msg(v->ipc.msg_id, &v->target_infos, sizeof(v->target_infos), TARGET_INFOS_CHANNEL);
-		create_panel_text_lines(v, &v->supervision_panel, v->target_infos);
+		create_supervision_panel_text_lines(v, &v->supervision_panel, v->target_infos);
 		copy_buffer(v->buffer, v->ipc.data, v->board_size);
+		// update_kill_list(v);
+		// if (v->kills)
+		// 	create_kills_panel_text_lines(v, &v->kills_panel);
 		sem_unlock(v->ipc.sem_id);
 	}
 	clear_window(v->renderer, color_from_u32(0xFF000000));
 	draw_board(v);
 	draw_panel(v->renderer, &v->supervision_panel);
+	// draw_panel(v->renderer, &v->kills_panel);
 	SDL_RenderPresent(v->renderer);
 	if (!is_game_ended(v->buffer, v->board_size))
 		return (0);

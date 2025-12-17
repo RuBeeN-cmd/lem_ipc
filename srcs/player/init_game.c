@@ -22,11 +22,21 @@ int	join_board(t_game *game)
 	pos = rand_pos(game->board_size);
 	if (pos.x < 0 || pos.y < 0)
 		return (1);
+	t_vec2	start_pos = pos;
 	while (game->board[pos.y][pos.x])
 	{
-		pos = rand_pos(game->board_size);
-		if (pos.x < 0 || pos.y < 0)
+		pos.x++;
+		if (pos.x >= game->board_size.x)
+		{
+			pos.x = 0;
+			pos.y++;
+		}
+		if (pos.x == start_pos.x && pos.y == start_pos.y)
 			return (1);
+		if (pos.y >= game->board_size.y) {
+			pos.x = 0;
+			pos.y = 0;
+		}
 	}
 	game->position = pos;
 	game->board[game->position.y][game->position.x] = game->team;

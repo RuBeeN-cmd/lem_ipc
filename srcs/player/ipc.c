@@ -12,6 +12,7 @@ int	ipc_join_board(t_ipc *ipc, t_game *game)
 	if (join_board(game))
 	{
 		ERR("Failed to join board");
+		sem_unlock(ipc->sem_id);
 		return (1);
 	}
 	sem_unlock(ipc->sem_id);
