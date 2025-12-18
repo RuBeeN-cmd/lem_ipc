@@ -41,7 +41,7 @@ int send_msg(int msg_id, void *data, uint32_t data_size, uint32_t channel)
 	}
 	*(uint64_t *)msg_ptr = channel;
 	ft_memcpy(msg_ptr + sizeof(uint64_t), data, data_size);
-	if (msgsnd(msg_id, msg_ptr, data_size, 0) == -1)
+	if (msgsnd(msg_id, msg_ptr, data_size, IPC_NOWAIT) == -1)
 	{
 		free(msg_ptr);
 		perror("msgsnt");
