@@ -169,7 +169,7 @@ int	init_visualizer_ipc(t_ipc *ipc, t_vec2 *board_size)
 	if (init_keys(ipc))
 		return (1);
 	if (init_initialization(ipc, 1)) {
-		ERR("Visualizer needs to be started after players.\n");
+		ERR("No players fighting.\n");
 		return (1);
 	}
 	sem_lock(ipc->init_sem_id);

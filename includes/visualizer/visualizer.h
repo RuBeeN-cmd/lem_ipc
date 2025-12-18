@@ -25,6 +25,8 @@
 #define MOVE_SPEED			12
 #define ZOOM_SPEED			1
 
+#define MAX_LEADERBOARD		10
+
 typedef struct	s_visualizer
 {
 	SDL_Window			*window;

@@ -36,7 +36,7 @@ void	create_kills_panel_text_lines(t_visualizer *v, t_panel *panel)
 
 	add_text_line(v->text_engine, v->font, panel, "Leaderboard: ", color_from_u32(0xFF000000), JUSTIFY_CENTER, 0);
 	t_list *current = v->kills;
-	for (size_t i = 0; i < 5 && current; i++, current = current->next)
+	for (size_t i = 0; i < MAX_LEADERBOARD && current; i++, current = current->next)
 	{
 		t_kill_number *kill_number = (t_kill_number *) current->content;
 		if (kill_number)

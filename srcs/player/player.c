@@ -19,7 +19,7 @@ static void player_loop(t_game *game, t_ipc *ipc)
 	if (killer_team)
 	{
 		sem_lock(ipc->sem_id);
-		send_kill_info(ipc, killer_team, game->team);
+		send_kill_info(ipc, game->team, killer_team);
 		if (game->is_supervised)
 			send_supervision_info(ipc, game, 0);
 		sem_unlock(ipc->sem_id);
