@@ -79,5 +79,4 @@ void	create_supervision_panel_text_lines(t_visualizer *v, t_panel *panel, t_supe
 // utils.c
 int	is_game_ended(uint32_t **board, t_vec2 board_size);
 
-
 #endif

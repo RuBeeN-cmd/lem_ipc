@@ -61,9 +61,6 @@ typedef struct	s_supervised_infos_msg
 	t_supervised_infos	target_infos;
 }				t_supervised_infos_msg;
 
-
-
-
 typedef struct	s_kill_info
 {
 	uint32_t	killed_team;
@@ -76,7 +73,11 @@ typedef struct	s_kill_info_msg
 	t_kill_info		kill_info;
 }				t_kill_info_msg;
 
-
+typedef struct	s_kill_number
+{
+	uint32_t	team;
+	uint32_t	number;
+}				t_kill_number;
 
 typedef enum	e_new_target_msg_type
 {

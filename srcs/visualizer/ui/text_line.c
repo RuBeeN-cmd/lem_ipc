@@ -64,25 +64,25 @@ static int	cmp_text_line(void *a, void *b)
 	return (0);
 }
 
-int	add_text_line(TTF_TextEngine *engine, TTF_Font *font, t_panel *panel, char *text, t_color color, t_justification justification, uint32_t line_number)
+t_list	*add_text_line(TTF_TextEngine *engine, TTF_Font *font, t_panel *panel, char *text, t_color color, t_justification justification, uint32_t line_number)
 {
 	t_list		*new_node;
 	TTF_Text	*ttf_text;
 	t_text_line	*line;
 
 	if (!(ttf_text = TTF_CreateText(engine, font, text, ft_strlen(text))))
-		return (1);
+		return (NULL);
 	if (!(line = init_text_line(text, color, justification, line_number, ttf_text)))
 	{
 		TTF_DestroyText(ttf_text);
-		return (1);
+		return (NULL);
 	}
 	if (!(new_node = ft_lstnew(line)))
 	{
 		destroy_text_line(line);
-		return (1);
+		return (NULL);
 	}
 	ft_lstadd_back(&panel->text_line_list, new_node);
 	ft_lstsort(panel->text_line_list, cmp_text_line);
-	return (0);
+	return (new_node);
 }

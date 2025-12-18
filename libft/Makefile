@@ -22,6 +22,7 @@ SRC = ft_isalnum.c \
 		ft_lstiter.c \
 		ft_lstmap.c \
 		ft_lstsort.c \
+		ft_lstfind.c \
 		ft_bzero.c \
 		ft_calloc.c \
 		ft_memchr.c \

@@ -54,25 +54,25 @@ static t_vec2	get_board_size(int msg_id)
 static int	init_parent(t_ipc *ipc, t_vec2 board_size)
 {
 	if ((ipc->sem_id = init_semaphore(ipc->key, IPC_CREAT | IPC_EXCL | 0644)) == -1) {
-		ERR("Can't create semaphore.");
+		ERR("Can't create semaphore.\n");
 		goto error;
 	}
 	if ((ipc->msg_id = init_msg_queue(ipc->key, IPC_CREAT | IPC_EXCL | 0644)) == -1) {
-		ERR("Can't create message queue.");
+		ERR("Can't create message queue.\n");
 		goto destroy_sem;
 	}
-	DBG("Message queue created: %d", ipc->msg_id);
+	DBG("Message queue created: %d\n", ipc->msg_id);
 	if (send_board_size(ipc->msg_id, board_size))
 	{
-		ERR("Failed to send board size.");
+		ERR("Failed to send board size.\n");
 		goto destroy_msg_q;
 	}
 	if ((ipc->shm_id = get_shm_id(ipc->key, IPC_CREAT | IPC_EXCL | 0644, board_size)) == -1) {
-		ERR("Can't create shared memory.");
+		ERR("Can't create shared memory.\n");
 		goto destroy_shm;
 	}
 	if (!(ipc->data = get_shm_data(ipc->shm_id))) {
-		ERR("Can't attach shared memory.");
+		ERR("Can't attach shared memory.\n");
 		goto destroy_shm;
 	}
 	return (0);
@@ -86,50 +86,50 @@ static int	init_parent(t_ipc *ipc, t_vec2 board_size)
 static int	init_child(t_ipc *ipc, t_vec2 *board_size)
 {
 	if ((ipc->sem_id = init_semaphore(ipc->key, 0644)) == -1) {
-		ERR("Can't get semaphore.");
+		ERR("Can't get semaphore.\n");
 		return (1);
 	}
 	if ((ipc->msg_id = init_msg_queue(ipc->key, 0644)) == -1) {
-		ERR("Can't get message queue.");
+		ERR("Can't get message queue.\n");
 		return (1);
 	}
 	*board_size = get_board_size(ipc->msg_id);
 	if (!vec2cmp(*board_size, NULL_SIZE))
 	{
-		ERR("Failed to fetch board size.");
+		ERR("Failed to fetch board size.\n");
 		return (1);
 	}
 	DBG("Board size received: (%d, %d)\n", board_size->x, board_size->y);
 	if (send_board_size(ipc->msg_id, *board_size))
 	{
-		ERR("Failed to send board size.");
+		ERR("Failed to send board size.\n");
 		return (1);
 	}
 	if ((ipc->shm_id = get_shm_id(ipc->key, 0, *board_size)) == -1) {
-		ERR("Can't get shared memory.");
+		ERR("Can't get shared memory.\n");
 		return (1);
 	}
 	if (!(ipc->data = get_shm_data(ipc->shm_id))) {
-		ERR("Can't attach shared memory.");
+		ERR("Can't attach shared memory.\n");
 		return (1);
 	}
 	return (0);
 }
 
-static int	init_initialization(t_ipc *ipc)
+static int	init_initialization(t_ipc *ipc, int is_visualizer)
 {
 	if ((ipc->init_key = get_key(KEY_PATH, INIT_PROJ_ID)) == -1) {
-		ERR("Can't create initialization key from ftok.");
+		ERR("Can't create initialization key from ftok.\n");
 		return (1);
 	}
 	if ((ipc->key = get_key(KEY_PATH, SHM_PROJ_ID)) == -1) {
-		ERR("Can't create key from ftok.");
+		ERR("Can't create key from ftok.\n");
 		sem_unlock(ipc->init_sem_id);
 		return (1);
 	}
-	if ((ipc->init_sem_id = init_semaphore(ipc->init_key, IPC_CREAT | IPC_EXCL | 0644)) == -1) {
+	if (is_visualizer || (ipc->init_sem_id = init_semaphore(ipc->init_key, IPC_CREAT | IPC_EXCL | 0644)) == -1) {
 		if ((ipc->init_sem_id = init_semaphore(ipc->init_key, 0644)) == -1) {
-			ERR("Can't access initialization semaphore.");
+			ERR("Can't access initialization semaphore.\n");
 			return (1);
 		}
 		ipc->type = CHILD;
@@ -141,7 +141,7 @@ static int	init_initialization(t_ipc *ipc)
 
 int	init_player_ipc(t_ipc *ipc, t_vec2 *board_size)
 {
-	if (init_initialization(ipc))
+	if (init_initialization(ipc, 0))
 		return (1);
 	if (ipc->type == PARENT) {
 		if (init_parent(ipc, *board_size))
@@ -160,7 +160,7 @@ int	init_player_ipc(t_ipc *ipc, t_vec2 *board_size)
 
 int	init_visualizer_ipc(t_ipc *ipc, t_vec2 *board_size)
 {
-	if (init_initialization(ipc))
+	if (init_initialization(ipc, 1))
 		return (1);
 	sem_lock(ipc->init_sem_id);
 	if (init_child(ipc, board_size))

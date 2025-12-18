@@ -26,6 +26,16 @@ char *get_log_prefix(t_log_level level) {
 	int idx = 0;
 	ft_strlcpy(buff + idx, "[", sizeof(buff) - idx);
 	idx += 1;
+	ft_strlcpy(buff + idx, get_color(COLOR_LIGHTGRAY), sizeof(buff) - idx);
+	idx += ft_strlen(get_color(COLOR_DARKGRAY));
+	char *pid_str = ft_itoa(getpid());
+	ft_strlcpy(buff + idx, pid_str, sizeof(buff) - idx);
+	idx += ft_strlen(pid_str);
+	free(pid_str);
+	ft_strlcpy(buff + idx, "]", sizeof(buff) - idx);
+	idx += 1;
+	ft_strlcpy(buff + idx, "[", sizeof(buff) - idx);
+	idx += 1;
 	if (level == LEVEL_DEBUG) {
 		char *color = get_color(COLOR_PURPLE);
 		ft_strlcpy(buff + idx, color, sizeof(buff) - idx);

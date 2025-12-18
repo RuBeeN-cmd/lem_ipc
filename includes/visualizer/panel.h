@@ -56,6 +56,6 @@ typedef struct	s_panel
 t_panel	init_panel(t_vec2 size, t_anchor anchor, int visible);
 void	draw_panel(SDL_Renderer *renderer, t_panel *panel);
 void	destroy_text_line_list(t_panel *panel);
-int		add_text_line(TTF_TextEngine *engine, TTF_Font *font, t_panel *panel, char *text, t_color color, t_justification justification, uint32_t line_number);
+t_list	*add_text_line(TTF_TextEngine *engine, TTF_Font *font, t_panel *panel, char *text, t_color color, t_justification justification, uint32_t line_number);
 
 #endif

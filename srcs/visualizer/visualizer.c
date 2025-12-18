@@ -66,15 +66,14 @@ static int	visualizer_routine(t_visualizer *v)
 		check_msg(v->ipc.msg_id, &v->target_infos, sizeof(v->target_infos), TARGET_INFOS_CHANNEL);
 		create_supervision_panel_text_lines(v, &v->supervision_panel, v->target_infos);
 		copy_buffer(v->buffer, v->ipc.data, v->board_size);
-		// update_kill_list(v);
-		// if (v->kills)
-		// 	create_kills_panel_text_lines(v, &v->kills_panel);
+		update_kill_list(v);
+		create_kills_panel_text_lines(v, &v->kills_panel);
 		sem_unlock(v->ipc.sem_id);
 	}
 	clear_window(v->renderer, color_from_u32(0xFF000000));
 	draw_board(v);
 	draw_panel(v->renderer, &v->supervision_panel);
-	// draw_panel(v->renderer, &v->kills_panel);
+	draw_panel(v->renderer, &v->kills_panel);
 	SDL_RenderPresent(v->renderer);
 	if (!is_game_ended(v->buffer, v->board_size))
 		return (0);
