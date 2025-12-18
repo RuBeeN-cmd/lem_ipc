@@ -16,6 +16,14 @@ static int *get_empty_prefix() {
 	return &empty_prefix;
 }
 
+static pid_t get_saved_pid() {
+	static pid_t pid = 0;
+	if (pid == 0) {
+		pid = getpid();
+	}
+	return pid;
+}
+
 char *get_log_prefix(t_log_level level) {
 	static char buff[128] = {};
 	int 		empty_prefix = *get_empty_prefix();
@@ -28,7 +36,7 @@ char *get_log_prefix(t_log_level level) {
 	idx += 1;
 	ft_strlcpy(buff + idx, get_color(COLOR_LIGHTGRAY), sizeof(buff) - idx);
 	idx += ft_strlen(get_color(COLOR_DARKGRAY));
-	char *pid_str = ft_itoa(getpid());
+	char *pid_str = ft_itoa(get_saved_pid());
 	ft_strlcpy(buff + idx, pid_str, sizeof(buff) - idx);
 	idx += ft_strlen(pid_str);
 	free(pid_str);

@@ -116,7 +116,7 @@ static int	init_child(t_ipc *ipc, t_vec2 *board_size)
 	return (0);
 }
 
-static int	init_initialization(t_ipc *ipc, int is_visualizer)
+static int init_keys(t_ipc *ipc)
 {
 	if ((ipc->init_key = get_key(KEY_PATH, INIT_PROJ_ID)) == -1) {
 		ERR("Can't create initialization key from ftok.\n");
@@ -124,14 +124,16 @@ static int	init_initialization(t_ipc *ipc, int is_visualizer)
 	}
 	if ((ipc->key = get_key(KEY_PATH, SHM_PROJ_ID)) == -1) {
 		ERR("Can't create key from ftok.\n");
-		sem_unlock(ipc->init_sem_id);
 		return (1);
 	}
+	return (0);
+}
+
+static int	init_initialization(t_ipc *ipc, int is_visualizer)
+{
 	if (is_visualizer || (ipc->init_sem_id = init_semaphore(ipc->init_key, IPC_CREAT | IPC_EXCL | 0644)) == -1) {
-		if ((ipc->init_sem_id = init_semaphore(ipc->init_key, 0644)) == -1) {
-			ERR("Can't access initialization semaphore.\n");
+		if ((ipc->init_sem_id = init_semaphore(ipc->init_key, 0644)) == -1)
 			return (1);
-		}
 		ipc->type = CHILD;
 		return (0);
 	}
@@ -141,8 +143,12 @@ static int	init_initialization(t_ipc *ipc, int is_visualizer)
 
 int	init_player_ipc(t_ipc *ipc, t_vec2 *board_size)
 {
-	if (init_initialization(ipc, 0))
+	if (init_keys(ipc))
 		return (1);
+	if (init_initialization(ipc, 0)) {
+		ERR("Failed to access initialization semaphore.\n");
+		return (1);
+	}
 	if (ipc->type == PARENT) {
 		if (init_parent(ipc, *board_size))
 			goto error;
@@ -160,8 +166,12 @@ int	init_player_ipc(t_ipc *ipc, t_vec2 *board_size)
 
 int	init_visualizer_ipc(t_ipc *ipc, t_vec2 *board_size)
 {
-	if (init_initialization(ipc, 1))
+	if (init_keys(ipc))
 		return (1);
+	if (init_initialization(ipc, 1)) {
+		ERR("Visualizer needs to be started after players.\n");
+		return (1);
+	}
 	sem_lock(ipc->init_sem_id);
 	if (init_child(ipc, board_size))
 		goto error;

@@ -34,29 +34,25 @@ int	parse_args(int argc, char *argv[], uint32_t *team, t_vec2 *board_size)
 	{
 		if (argc >= 3)
 		{	
-			if (!str_is_digit(argv[2]))
-			{
-				ERR("Invalid board width.\n");
+			if (!str_is_digit(argv[2])) {
+				ERR("Invalid board width: \"%s\"\n", argv[2]);
 				return (1);
 			}
 			board_size->x = ft_atoi(argv[2]);
-			if (board_size->x <= 0)
-			{
-				ERR("Invalid board width.\n");
+			if (board_size->x <= 0) {
+				ERR("Invalid board width: \"%s\"\n", argv[2]);
 				return (1);
 			}
 		}
 		if (argc == 4)
 		{
-			if (!str_is_digit(argv[3]))
-			{
-				ERR("Invalid board height.\n");
+			if (!str_is_digit(argv[3])) {
+				ERR("Invalid board height: \"%s\"\n", argv[3]);
 				return (1);
 			}
 			board_size->y = ft_atoi(argv[3]);
-			if (board_size->y <= 0)
-			{
-				ERR("Invalid board height.\n");
+			if (board_size->y <= 0) {
+				ERR("Invalid board height: \"%s\"\n", argv[3]);
 				return (1);
 			}
 		}
