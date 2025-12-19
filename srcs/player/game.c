@@ -218,14 +218,15 @@ void	go_to_mate(t_game *game)
 
 int	is_killed_by_team(t_game *game, t_ipc *ipc)
 {
-	sem_lock(ipc->sem_id);
+	// sem_lock(ipc->sem_id);
+	(void) ipc;
 	int team_id = is_two_enemys(game);
 	if (team_id != 0) {
 		game->board[game->position.y][game->position.x] = EMPTY_CELL;
-		sem_unlock(ipc->sem_id);
+		// sem_unlock(ipc->sem_id);
 		return (team_id);
 	}
-	sem_unlock(ipc->sem_id);
+	// sem_unlock(ipc->sem_id);
 	return (0);
 }
 

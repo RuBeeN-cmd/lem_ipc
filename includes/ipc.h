@@ -117,5 +117,6 @@ int			get_nb_process_attach(int shm_id);
 int			shm_det(void *data);
 int			shm_destroy(int shm_id);
 int			msg_queue_destroy(int msg_id);
+uint32_t	message_queue_size_get(int msgid);
 
 #endif

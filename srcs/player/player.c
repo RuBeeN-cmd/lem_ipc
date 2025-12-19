@@ -3,21 +3,26 @@
 static void player_loop(t_game *game, t_ipc *ipc)
 {
 	int killer_team = 0;
-	while (!(killer_team = is_killed_by_team(game, ipc)) && is_other_team(game, ipc))
+	while (is_other_team(game, ipc))
 	{
 		sem_lock(ipc->sem_id);
 		check_supervision_msg(ipc, game);
-		if (!is_game_paused(ipc))
+		if (!is_game_paused(ipc)) {
+			killer_team = is_killed_by_team(game, ipc);
+			if (killer_team) {
+				sem_unlock(ipc->sem_id);
+				break ;
+			}
 			player_routine(game);
+		}
 		if (game->is_supervised) {
-			ft_printf_fd(1, "Player [%d] is sending info...\n", game->team);
+			DBG("Player [%d] is sending info...\n", game->team);
 			send_supervision_info(ipc, game, 1);
 		}
 		sem_unlock(ipc->sem_id);
 		usleep(COOLDOWN);
 	}
-	if (killer_team)
-	{
+	if (killer_team) {
 		sem_lock(ipc->sem_id);
 		send_kill_info(ipc, game->team, killer_team);
 		if (game->is_supervised)

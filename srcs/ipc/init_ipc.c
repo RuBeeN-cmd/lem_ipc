@@ -83,6 +83,15 @@ static int	init_parent(t_ipc *ipc, t_vec2 board_size)
 	error: return (1);
 }
 
+static void clean_msg_queue(t_ipc *ipc)
+{
+	int is_message = 1;
+	while (is_message)
+		if (check_msg(ipc->msg_id, NULL, 1, 0) == 0)
+			is_message = 0;
+}
+
+
 static int	init_child(t_ipc *ipc, t_vec2 *board_size)
 {
 	if ((ipc->sem_id = init_semaphore(ipc->key, 0644)) == -1) {
@@ -100,10 +109,14 @@ static int	init_child(t_ipc *ipc, t_vec2 *board_size)
 		return (1);
 	}
 	DBG("Board size received: (%d, %d)\n", board_size->x, board_size->y);
-	if (send_board_size(ipc->msg_id, *board_size))
-	{
-		ERR("Failed to send board size.\n");
-		return (1);
+	if (send_board_size(ipc->msg_id, *board_size)) {
+		WARN("Failed to send board size, cleaning message queue\n");
+		uint32_t msg_q_size = message_queue_size_get(ipc->msg_id);
+		DBG("Message queue size before : %u\n", msg_q_size);
+		clean_msg_queue(ipc);
+		msg_q_size = message_queue_size_get(ipc->msg_id);
+		DBG("Message queue size after: %u\n", msg_q_size);
+		send_board_size(ipc->msg_id, *board_size);
 	}
 	if ((ipc->shm_id = get_shm_id(ipc->key, 0, *board_size)) == -1) {
 		ERR("Can't get shared memory.\n");

@@ -45,8 +45,22 @@ int send_msg(int msg_id, void *data, uint32_t data_size, uint32_t channel)
 	{
 		free(msg_ptr);
 		perror("msgsnt");
+		uint32_t msg_q_size = message_queue_size_get(msg_id);
+		DBG("Message queue size : %u\n", msg_q_size);
 		return (1);
 	}
 	free(msg_ptr);
 	return (0);
+}
+
+uint32_t message_queue_size_get(int msgid)
+{
+	struct msqid_ds buf = {};
+
+	errno = 0;
+	if (msgctl(msgid, IPC_STAT, &buf) == -1) {
+		// syscall_perror("msgctl");
+		return (0);
+	}
+	return (buf.__msg_cbytes);
 }
