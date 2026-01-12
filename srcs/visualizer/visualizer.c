@@ -47,34 +47,44 @@ static void	destroy_visualizer(t_visualizer *v)
 	free_buffer(v->buffer, v->board_size.y);
 }
 
-static int	visualizer_routine(t_visualizer *v)
+static void	update_supervision(t_visualizer *v)
 {
-	if (handle_events(v))
-		return (0);
+	check_msg(v->ipc.msg_id, &v->target_infos, sizeof(v->target_infos), TARGET_INFOS_CHANNEL);
+	create_supervision_panel_text_lines(v, &v->supervision_panel, v->target_infos);
+}
+
+static void update_kills(t_visualizer *v)
+{
+	update_kill_list(v);
+	create_kills_panel_text_lines(v, &v->kills_panel);
+}
+
+static void try_copy_board(t_visualizer *v)
+{
 	if (sem_lock_no_wait(v->ipc.sem_id) != -1)
 	{
-		if (v->running == -1)
-		{
-			if (check_msg(v->ipc.msg_id, NULL, 1, PAUSE_CHANNEL) == 1)
-			{
-				send_msg(v->ipc.msg_id, "*", 1, PAUSE_CHANNEL);
-				v->running = 0;
-			}
-		 	else
-				v->running = 1;
-		}
-		check_msg(v->ipc.msg_id, &v->target_infos, sizeof(v->target_infos), TARGET_INFOS_CHANNEL);
-		create_supervision_panel_text_lines(v, &v->supervision_panel, v->target_infos);
 		copy_buffer(v->buffer, v->ipc.data, v->board_size);
-		update_kill_list(v);
-		create_kills_panel_text_lines(v, &v->kills_panel);
 		sem_unlock(v->ipc.sem_id);
 	}
+}
+
+static void	draw_game(t_visualizer *v)
+{
 	clear_window(v->renderer, color_from_u32(0xFF000000));
 	draw_board(v);
 	draw_panel(v->renderer, &v->supervision_panel);
 	draw_panel(v->renderer, &v->kills_panel);
 	SDL_RenderPresent(v->renderer);
+}
+
+static int	visualizer_routine(t_visualizer *v)
+{
+	if (handle_events(v))
+		return (0);
+	update_supervision(v);
+	update_kills(v);
+	try_copy_board(v);
+	draw_game(v);
 	if (!is_game_ended(v->buffer, v->board_size))
 		return (0);
 	return (1);
@@ -83,7 +93,7 @@ static int	visualizer_routine(t_visualizer *v)
 static void	visualizer_loop(t_visualizer *v)
 {
 	while (visualizer_routine(v))
-		SDL_Delay(16);
+		SDL_Delay(12);
 	SDL_Delay(2000);
 }
 

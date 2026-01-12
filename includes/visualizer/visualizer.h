@@ -21,7 +21,7 @@
 #define KILLS_PANEL_SIZE			((t_vec2) {KILLS_PANEL_WIDTH, KILLS_PANEL_HEIGHT})
 
 #define INITIAL_PADDING		20
-#define BORDER_WIDTH		2
+#define BORDER_WIDTH		1
 #define MOVE_SPEED			12
 #define ZOOM_SPEED			1
 

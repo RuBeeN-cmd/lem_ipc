@@ -23,7 +23,7 @@ int	player_workflow(uint32_t team, t_vec2 board_size);
 int		get_best_move(t_game *game);
 int		is_with_mate(t_game game);
 void	go_to_mate(t_game *game);
-int		is_killed_by_team(t_game *game, t_ipc *ipc);
+int		is_killed_by_team(t_game *game);
 int		is_other_team(t_game *game, t_ipc *ipc);
 t_vec2	rand_pos(t_vec2 board_size);
 int		is_game_paused(t_ipc *ipc);

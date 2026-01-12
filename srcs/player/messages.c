@@ -4,8 +4,7 @@ void	check_supervision_msg(t_ipc *ipc, t_game *game)
 {
 	t_new_target_msg visualizer_target;
 	int ret = check_msg(ipc->msg_id, &visualizer_target, sizeof(visualizer_target), VISUALIZER_TARGET_CHANNEL);
-	if (ret == 1)
-	{
+	if (ret == 1) {
 		if (!vec2cmp(visualizer_target.target, game->position)) {
 			if (visualizer_target.type == STOP_TARGETING)
 				DBG("Player catch: STOP TARGET\n");
@@ -30,8 +29,14 @@ void	send_supervision_info(t_ipc *ipc, t_game *game, int is_alive)
 
 void	send_kill_info(t_ipc *ipc, uint32_t killed_team, uint32_t killer_team)
 {
-	t_kill_info		kill_info;
+	t_kill_info	kill_info;
 	kill_info.killed_team = killed_team;
 	kill_info.killer_team = killer_team;
-	send_msg(ipc->msg_id, &kill_info, sizeof(t_kill_info), KILL_CHANNEL);
+	DBG("Player sending kill info: killed_team=%u, killer_team=%u\n", killed_team, killer_team);
+	if (send_msg(ipc->msg_id, &kill_info, sizeof(t_kill_info), KILL_CHANNEL) == 1) {
+		do {
+			usleep(100000);
+			DBG("Retrying to send kill info...\n");
+		} while (send_msg(ipc->msg_id, &kill_info, sizeof(t_kill_info), KILL_CHANNEL) == 1);
+	}
 }

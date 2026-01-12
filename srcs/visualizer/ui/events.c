@@ -43,20 +43,15 @@ static void	move(t_visualizer *v, t_vec2 offset)
 
 static void	toggle_pause(t_visualizer *v)
 {
-	sem_lock(v->ipc.sem_id);
-	if (v->running == 1)
-	{
-		v->running = 0;
-		DBG("Paused\n");
-		send_msg(v->ipc.msg_id, "*", 1, PAUSE_CHANNEL);
-	}
-	else if (v->running == 0)
-	{
+	if (v->running == 0) {
 		v->running = 1;
-		DBG("Unpaused\n");
+		DBG("Game Resumed\n");
 		check_msg(v->ipc.msg_id, NULL, 1, PAUSE_CHANNEL);
-	}
-	sem_unlock(v->ipc.sem_id);
+	} else {
+		v->running = 0;
+		DBG("Game Paused\n");
+		send_msg(v->ipc.msg_id, "*", 1, PAUSE_CHANNEL);
+	} 
 }
 
 static int	on_key_down(SDL_Keycode key, t_visualizer *v)

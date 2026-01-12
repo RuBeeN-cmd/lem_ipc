@@ -3,19 +3,37 @@
 
 int	ipc_join_board(t_ipc *ipc, t_game *game)
 {
-	if (ipc->type == PARENT)
-		sleep(START_COOLDOWN);
-	else
-		sem_lock(ipc->sem_id); // childs are waiting here
-	sem_unlock(ipc->sem_id);
-	sem_lock(ipc->sem_id);
-	if (join_board(game))
-	{
-		ERR("Failed to join board");
+	if (ipc->type == PARENT) {
+		if (join_board(game))
+		{
+			ERR("Failed to join board");
+			sem_unlock(ipc->sem_id);
+			return (1);
+		}
 		sem_unlock(ipc->sem_id);
-		return (1);
+		sleep(START_COOLDOWN);
+		send_msg(ipc->msg_id, "*", 1, GAME_START_CHANNEL);
+	} else {
+		sem_lock(ipc->sem_id);
+		if (join_board(game))
+		{
+			ERR("Failed to join board");
+			sem_unlock(ipc->sem_id);
+			return (1);
+		}
+		sem_unlock(ipc->sem_id);
+		int game_started = 0;
+		while (game_started != 1) {
+			if (sem_lock_no_wait(ipc->sem_id) != -1) {
+				game_started = check_msg(ipc->msg_id, NULL, 1, GAME_START_CHANNEL);
+				if (game_started == 1) {
+					send_msg(ipc->msg_id, "*", 1, GAME_START_CHANNEL);
+				}
+				sem_unlock(ipc->sem_id);
+			}
+			usleep(100000);
+		}
 	}
-	sem_unlock(ipc->sem_id);
 	return (0);
 }
 

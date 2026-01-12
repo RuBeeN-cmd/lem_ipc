@@ -43,8 +43,12 @@ int send_msg(int msg_id, void *data, uint32_t data_size, uint32_t channel)
 	ft_memcpy(msg_ptr + sizeof(uint64_t), data, data_size);
 	if (msgsnd(msg_id, msg_ptr, data_size, IPC_NOWAIT) == -1)
 	{
-		free(msg_ptr);
+		int err = errno;
 		perror("msgsnt");
+		free(msg_ptr);
+		if (err != EAGAIN) {
+			return (-1);
+		}
 		uint32_t msg_q_size = message_queue_size_get(msg_id);
 		DBG("Message queue size : %u\n", msg_q_size);
 		return (1);

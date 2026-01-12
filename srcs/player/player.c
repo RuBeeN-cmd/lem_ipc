@@ -5,29 +5,27 @@ static void player_loop(t_game *game, t_ipc *ipc)
 	int killer_team = 0;
 	while (is_other_team(game, ipc))
 	{
-		sem_lock(ipc->sem_id);
 		check_supervision_msg(ipc, game);
 		if (!is_game_paused(ipc)) {
-			killer_team = is_killed_by_team(game, ipc);
+			sem_lock(ipc->sem_id);
+			killer_team = is_killed_by_team(game);
 			if (killer_team) {
 				sem_unlock(ipc->sem_id);
 				break ;
 			}
 			player_routine(game);
+			sem_unlock(ipc->sem_id);
 		}
 		if (game->is_supervised) {
 			DBG("Player [%d] is sending info...\n", game->team);
 			send_supervision_info(ipc, game, 1);
 		}
-		sem_unlock(ipc->sem_id);
 		usleep(COOLDOWN);
 	}
 	if (killer_team) {
-		sem_lock(ipc->sem_id);
 		send_kill_info(ipc, game->team, killer_team);
 		if (game->is_supervised)
 			send_supervision_info(ipc, game, 0);
-		sem_unlock(ipc->sem_id);
 	}
 }
 
@@ -43,6 +41,7 @@ int	player_workflow(uint32_t team, t_vec2 board_size)
 	DBG("Game initialized\n");
 	if (ipc_join_board(&ipc, &game))
 		return (1);
+	DBG("Board joined\n");
 	#ifdef OSX
 		usleep(100000); // for macos: to prevent lock order
 	#endif

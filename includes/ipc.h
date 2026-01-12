@@ -31,6 +31,7 @@
 #define TARGET_INFOS_CHANNEL		(UINT32_MAX - 3)
 #define BOARD_SIZE_CHANNEL			(UINT32_MAX - 4)
 #define KILL_CHANNEL				(UINT32_MAX - 5)
+#define GAME_START_CHANNEL			(UINT32_MAX - 6)
 
 typedef struct	s_ipc
 {
