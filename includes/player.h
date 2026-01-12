@@ -5,6 +5,7 @@
 #include <ipc.h>
 
 #define COOLDOWN		100000
+#define START_COOLDOWN	5
 
 typedef struct	s_game
 {

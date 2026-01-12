@@ -4,7 +4,7 @@
 int	ipc_join_board(t_ipc *ipc, t_game *game)
 {
 	if (ipc->type == PARENT)
-		sleep(5);
+		sleep(START_COOLDOWN);
 	else
 		sem_lock(ipc->sem_id); // childs are waiting here
 	sem_unlock(ipc->sem_id);
