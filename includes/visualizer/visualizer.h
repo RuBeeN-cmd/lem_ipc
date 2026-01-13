@@ -67,8 +67,9 @@ TTF_Font	*load_font(const char *path, int32_t font_size);
 void		unload_font(TTF_Font *font);
 
 // draw.c
-void	draw_board(t_visualizer *v);
-void	clear_window(SDL_Renderer *renderer, t_color color);
+void		draw_board(t_visualizer *v);
+void		clear_window(SDL_Renderer *renderer, t_color color);
+TTF_Text	*draw_text(t_visualizer *v, char *text, t_vec2 pos, t_color color);
 
 // kills.c
 void	create_kills_panel_text_lines(t_visualizer *v, t_panel *panel);

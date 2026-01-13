@@ -38,9 +38,8 @@
 
 typedef enum e_game_state
 {
-	STARTING,
-	RUNNING,
-	PAUSED
+	STARTED = 1,
+	PAUSED = 2
 }				t_game_state;
 
 typedef struct	s_shm_hdr
@@ -109,7 +108,6 @@ typedef struct	s_vec2_msg
 	t_vec2		vec2;
 }				t_vec2_msg;
 
-
 // init_ipc.c
 int	init_player_ipc(t_ipc *ipc, t_vec2 *board_size);
 int	init_visualizer_ipc(t_ipc *ipc, t_vec2 *board_size);
@@ -130,8 +128,6 @@ int			msg_queue_destroy(int msg_id);
 uint32_t	message_queue_size_get(int msgid);
 
 // shm_utils.c
-void			resume_game(t_game_state *game_state);
-void			pause_game(t_game_state *game_state);
 int				shm_det(void *data);
 int				shm_destroy(int shm_id);
 

@@ -74,7 +74,7 @@ static int	init_parent(t_ipc *ipc, t_vec2 board_size)
 		ERR("Can't attach shared memory.\n");
 		goto destroy_shm;
 	}
-	DBG("Shared Memory address: %p\n", ipc->data);
+	ipc->data->game_state = PAUSED;
 	return (0);
 
 	destroy_shm: shm_destroy(ipc->shm_id);
@@ -171,9 +171,6 @@ int	init_player_ipc(t_ipc *ipc, t_vec2 *board_size)
 		if (init_child(ipc, board_size))
 			goto error;
 	}
-	
-	DBG("SHM_DATA_SIZE: %d\n", ((int) SHM_DATA_SIZE(*board_size)));
-	DBG("SHM_BOARD_OFFSET: %d\n", SHM_BOARD_OFFSET);
 	sem_unlock(ipc->init_sem_id);
 	return (0);
 

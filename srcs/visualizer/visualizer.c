@@ -62,12 +62,20 @@ static void update_kills(t_visualizer *v)
 	create_kills_panel_text_lines(v, &v->kills_panel);
 }
 
-static void try_copy_board(t_visualizer *v)
+static void	draw_pause_indicator(t_visualizer *v)
 {
-	if (sem_lock_no_wait(v->ipc.sem_id) != -1)
-	{
-		copy_buffer(v->buffer, (uint32_t *) (v->ipc.data + SHM_BOARD_OFFSET), v->board_size);
-		sem_unlock(v->ipc.sem_id);
+	uint32_t	renderer_width;
+	uint32_t	renderer_height;
+	SDL_GetCurrentRenderOutputSize(v->renderer, (int *) &renderer_width, (int *) &renderer_height);
+
+	t_vec2	pos = {
+		renderer_width / 2 - 50,
+		0
+	};
+	draw_rectangle(v->renderer, (t_vec2) {0, 0}, (t_vec2) {renderer_width, 30}, color_from_u32(0x00000000));
+	if (v->game_state & PAUSED) {
+		TTF_Text *new_text = draw_text(v, "PAUSED", pos, color_from_u32(0xFFFFFFFF));
+		TTF_DestroyText(new_text);
 	}
 }
 
@@ -75,9 +83,20 @@ static void	draw_game(t_visualizer *v)
 {
 	clear_window(v->renderer, color_from_u32(0xFF000000));
 	draw_board(v);
+	draw_pause_indicator(v);
 	draw_panel(v->renderer, &v->supervision_panel);
 	draw_panel(v->renderer, &v->kills_panel);
 	SDL_RenderPresent(v->renderer);
+}
+
+static void	try_copy_shm(t_visualizer *v)
+{
+	if (sem_lock_no_wait(v->ipc.sem_id) != -1)
+	{
+		copy_buffer(v->buffer, (uint32_t *) (v->ipc.data + SHM_BOARD_OFFSET), v->board_size);
+		v->game_state = v->ipc.data->game_state;
+		sem_unlock(v->ipc.sem_id);
+	}
 }
 
 static int	visualizer_routine(t_visualizer *v)
@@ -86,7 +105,7 @@ static int	visualizer_routine(t_visualizer *v)
 		return (0);
 	update_supervision(v);
 	update_kills(v);
-	try_copy_board(v);
+	try_copy_shm(v);
 	draw_game(v);
 	if (!is_game_ended(v->buffer, v->board_size))
 		return (0);

@@ -41,17 +41,12 @@ static void	move(t_visualizer *v, t_vec2 offset)
 	v->offset = add_fvec2(v->offset, scalar_div_fvec2(vec2_to_fvec2(offset), v->cell_size));
 }
 
-static void	toggle_pause(t_ipc *ipc)
+static void	toggle_pause(t_visualizer *v)
 {
-	sem_lock(ipc->sem_id);
-	if (ipc->data->game_state == PAUSED) {
-		DBG("Game Resumed\n");
-		ipc->data->game_state = RUNNING;
-	} else {
-		DBG("Game Paused\n");
-		ipc->data->game_state = PAUSED;
-	}
-	sem_unlock(ipc->sem_id);
+	sem_lock(v->ipc.sem_id);
+	DBG("Pause toggled\n");
+	v->ipc.data->game_state ^= PAUSED;
+	sem_unlock(v->ipc.sem_id);
 }
 
 static int	on_key_down(SDL_Keycode key, t_visualizer *v)
@@ -71,7 +66,7 @@ static int	on_key_down(SDL_Keycode key, t_visualizer *v)
 	else if (key == SDLK_D)
 		move(v, (t_vec2) {MOVE_SPEED, 0});
 	else if (key == SDLK_SPACE)
-		toggle_pause(&v->ipc);
+		toggle_pause(v);
 	return (0);
 }
 

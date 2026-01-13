@@ -1,15 +1,5 @@
 #include <ipc.h>
 
-void	resume_game(t_game_state *game_state)
-{
-	*game_state = RUNNING;
-}
-
-void	pause_game(t_game_state *game_state)
-{
-	*game_state = PAUSED;
-}
-
 int	shm_det(void *data)
 {
 	if (shmdt(data) == -1)

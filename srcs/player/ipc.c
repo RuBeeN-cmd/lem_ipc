@@ -7,15 +7,18 @@ int	ipc_join_board(t_ipc *ipc, t_game *game)
 		if (join_board(game))
 			goto error;
 		sem_unlock(ipc->sem_id);
-		sleep(START_COOLDOWN);
+		for (int cooldown = START_COOLDOWN; cooldown > 0; cooldown -= 1000000) {
+			usleep(1000000);
+			// send_msg(ipc->msg_id, &cooldown, sizeof(cooldown), GAME_START_CHANNEL);
+		}
 		sem_lock(ipc->sem_id);
-		ipc->data->game_state = PAUSED;
+		ipc->data->game_state ^= STARTED;
 		sem_unlock(ipc->sem_id);
 	} else {
 		sem_lock(ipc->sem_id);
 		if (join_board(game))
 			goto error;
-		while (ipc->data->game_state == STARTING) {
+		while (!(ipc->data->game_state & STARTED)) {
 			sem_unlock(ipc->sem_id);
 			usleep(100000);
 			sem_lock(ipc->sem_id);
