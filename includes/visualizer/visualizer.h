@@ -35,6 +35,7 @@ typedef struct	s_visualizer
 	TTF_TextEngine		*text_engine;
 	t_panel				supervision_panel;
 	t_panel				kills_panel;
+	t_game_state		game_state;
 
 	t_fvec2				offset;
 	uint32_t			cell_size;
@@ -68,8 +69,6 @@ void		unload_font(TTF_Font *font);
 // draw.c
 void	draw_board(t_visualizer *v);
 void	clear_window(SDL_Renderer *renderer, t_color color);
-void	draw_target_infos(t_visualizer *v, t_supervised_infos *target_infos);
-
 
 // kills.c
 void	create_kills_panel_text_lines(t_visualizer *v, t_panel *panel);

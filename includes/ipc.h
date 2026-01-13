@@ -130,9 +130,8 @@ int			msg_queue_destroy(int msg_id);
 uint32_t	message_queue_size_get(int msgid);
 
 // shm_utils.c
-t_game_state	get_game_state(int sem_id, t_game_state *game_state);
-void			resume_game(int sem_id, t_game_state *game_state);
-void			pause_game(int sem_id, t_game_state *game_state);
+void			resume_game(t_game_state *game_state);
+void			pause_game(t_game_state *game_state);
 int				shm_det(void *data);
 int				shm_destroy(int shm_id);
 

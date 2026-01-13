@@ -8,15 +8,19 @@ int	ipc_join_board(t_ipc *ipc, t_game *game)
 			goto error;
 		sem_unlock(ipc->sem_id);
 		sleep(START_COOLDOWN);
-		resume_game(ipc->sem_id, &(ipc->data->game_state));
+		sem_lock(ipc->sem_id);
+		ipc->data->game_state = PAUSED;
+		sem_unlock(ipc->sem_id);
 	} else {
 		sem_lock(ipc->sem_id);
 		if (join_board(game))
 			goto error;
-		sem_unlock(ipc->sem_id);
-		while (get_game_state(ipc->sem_id, &(ipc->data->game_state)) == STARTING) {
+		while (ipc->data->game_state == STARTING) {
+			sem_unlock(ipc->sem_id);
 			usleep(100000);
+			sem_lock(ipc->sem_id);
 		}
+		sem_unlock(ipc->sem_id);
 	}
 	return (0);
 

@@ -19,15 +19,11 @@ int	join_board(t_game *game)
 {
 	t_vec2	pos;
 	
-	DBG("Joining board for team %d...\n", game->team);
 	pos = rand_pos(game->board_size);
-	DBG("First found value: %d\n", game->board[pos.y][pos.x]);
-	DBG("Trying to join at random position (%d, %d)\n", pos.x, pos.y);
 	if (pos.x < 0 || pos.y < 0)
 		return (1);
 	t_vec2	start_pos = pos;
 	while (game->board[pos.y][pos.x]) {
-		DBG("Position (%d, %d) occupied, trying next one...\n", pos.x, pos.y);
 		pos.x++;
 		if (pos.x >= game->board_size.x) {
 			pos.x = 0;
@@ -38,7 +34,6 @@ int	join_board(t_game *game)
 		if (pos.x == start_pos.x && pos.y == start_pos.y)
 			return (1);
 	}
-	DBG("Found empty position at (%d, %d), joining board...\n", pos.x, pos.y);
 	game->position = pos;
 	game->board[game->position.y][game->position.x] = game->team;
 	return (0);

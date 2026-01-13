@@ -6,6 +6,12 @@ static void	init_visualizer_panels(t_visualizer *v)
 	v->kills_panel = init_panel(KILLS_PANEL_SIZE, ANCHOR_TOP_LEFT, 1);
 }
 
+static void	update_supervision(t_visualizer *v)
+{
+	check_msg(v->ipc.msg_id, &v->target_infos, sizeof(v->target_infos), TARGET_INFOS_CHANNEL);
+	create_supervision_panel_text_lines(v, &v->supervision_panel, v->target_infos);
+}
+
 static int	init_visualizer(t_visualizer *v, char title[], uint32_t width, uint32_t height)
 {
 	t_vec2	board_size;
@@ -34,6 +40,9 @@ static int	init_visualizer(t_visualizer *v, char title[], uint32_t width, uint32
 		free_buffer(v->buffer, v->board_size.y);
 		return (1);
 	}
+	update_supervision(v);
+	if (vec2cmp(v->target_infos.pos, NULL_POS))
+		v->supervision_panel.visible = 1;
 	return (0);
 }
 
@@ -47,12 +56,6 @@ static void	destroy_visualizer(t_visualizer *v)
 	free_buffer(v->buffer, v->board_size.y);
 }
 
-static void	update_supervision(t_visualizer *v)
-{
-	check_msg(v->ipc.msg_id, &v->target_infos, sizeof(v->target_infos), TARGET_INFOS_CHANNEL);
-	create_supervision_panel_text_lines(v, &v->supervision_panel, v->target_infos);
-}
-
 static void update_kills(t_visualizer *v)
 {
 	update_kill_list(v);
@@ -63,7 +66,6 @@ static void try_copy_board(t_visualizer *v)
 {
 	if (sem_lock_no_wait(v->ipc.sem_id) != -1)
 	{
-		DBG("Copying board\n");
 		copy_buffer(v->buffer, (uint32_t *) (v->ipc.data + SHM_BOARD_OFFSET), v->board_size);
 		sem_unlock(v->ipc.sem_id);
 	}

@@ -1,26 +1,13 @@
 #include <ipc.h>
 
-void	resume_game(int sem_id, t_game_state *game_state)
+void	resume_game(t_game_state *game_state)
 {
-	sem_lock(sem_id);
 	*game_state = RUNNING;
-	sem_unlock(sem_id);
 }
 
-void	pause_game(int sem_id, t_game_state *game_state)
+void	pause_game(t_game_state *game_state)
 {
-	sem_lock(sem_id);
 	*game_state = PAUSED;
-	sem_unlock(sem_id);
-}
-
-t_game_state	get_game_state(int sem_id, t_game_state *game_state)
-{
-	t_game_state state;
-	sem_lock(sem_id);
-	state = *game_state;
-	sem_unlock(sem_id);
-	return (state);
 }
 
 int	shm_det(void *data)

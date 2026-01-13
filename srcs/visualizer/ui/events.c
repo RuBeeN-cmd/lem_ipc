@@ -41,17 +41,17 @@ static void	move(t_visualizer *v, t_vec2 offset)
 	v->offset = add_fvec2(v->offset, scalar_div_fvec2(vec2_to_fvec2(offset), v->cell_size));
 }
 
-static void	toggle_pause(t_visualizer *v)
+static void	toggle_pause(t_ipc *ipc)
 {
-	if (v->running == 0) {
-		v->running = 1;
+	sem_lock(ipc->sem_id);
+	if (ipc->data->game_state == PAUSED) {
 		DBG("Game Resumed\n");
-		resume_game(v->ipc.sem_id, &(v->ipc.data->game_state));
+		ipc->data->game_state = RUNNING;
 	} else {
-		v->running = 0;
 		DBG("Game Paused\n");
-		pause_game(v->ipc.sem_id, &(v->ipc.data->game_state));
-	} 
+		ipc->data->game_state = PAUSED;
+	}
+	sem_unlock(ipc->sem_id);
 }
 
 static int	on_key_down(SDL_Keycode key, t_visualizer *v)
@@ -71,7 +71,7 @@ static int	on_key_down(SDL_Keycode key, t_visualizer *v)
 	else if (key == SDLK_D)
 		move(v, (t_vec2) {MOVE_SPEED, 0});
 	else if (key == SDLK_SPACE)
-		toggle_pause(v);
+		toggle_pause(&v->ipc);
 	return (0);
 }
 
@@ -104,16 +104,17 @@ static void	on_click(t_visualizer *v, t_vec2 pos)
 	t_vec2	click_pos = screen_pos_to_board_pos(v, pos);
 	if (vec2cmp(click_pos, NULL_POS))
 	{
-		sem_lock(v->ipc.sem_id);
 		stop_supervising(v, v->target_infos.pos);
 		t_new_target_msg new_target_msg = new_msg(click_pos, NEW_TARGETING);
+		sem_lock(v->ipc.sem_id);
 		if (get_team_on_board(new_target_msg.target, v->buffer, v->board_size)) {
+			sem_unlock(v->ipc.sem_id);
 			supervise(v, new_target_msg.target);
 			DBG("Supervision msg sent\n");
 		} else {
+			sem_unlock(v->ipc.sem_id);
 			v->target_infos.pos = NULL_POS;
 		}
-		sem_unlock(v->ipc.sem_id);
 	}
 }
 
