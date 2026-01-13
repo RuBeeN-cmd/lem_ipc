@@ -244,18 +244,6 @@ int	is_other_team(t_game *game, t_ipc *ipc)
 	return (0);
 }
 
-int is_game_paused(t_ipc *ipc)
-{
-	sem_lock(ipc->sem_id);
-	if (check_msg(ipc->msg_id, NULL, 1, PAUSE_CHANNEL) == 1)
-	{
-		send_msg(ipc->msg_id, "*", 1, PAUSE_CHANNEL);
-		return (1);
-	}
-	sem_unlock(ipc->sem_id);
-	return (0);
-}
-
 int is_other_mate(t_game game) {
 	for (int y = 0; y < game.board_size.y; y++) {
 		for (int x = 0; x < game.board_size.x; x++) {

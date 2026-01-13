@@ -19,25 +19,26 @@ int	join_board(t_game *game)
 {
 	t_vec2	pos;
 	
+	DBG("Joining board for team %d...\n", game->team);
 	pos = rand_pos(game->board_size);
+	DBG("First found value: %d\n", game->board[pos.y][pos.x]);
+	DBG("Trying to join at random position (%d, %d)\n", pos.x, pos.y);
 	if (pos.x < 0 || pos.y < 0)
 		return (1);
 	t_vec2	start_pos = pos;
-	while (game->board[pos.y][pos.x])
-	{
+	while (game->board[pos.y][pos.x]) {
+		DBG("Position (%d, %d) occupied, trying next one...\n", pos.x, pos.y);
 		pos.x++;
-		if (pos.x >= game->board_size.x)
-		{
+		if (pos.x >= game->board_size.x) {
 			pos.x = 0;
 			pos.y++;
 		}
+		if (pos.y >= game->board_size.y)
+			pos.y = 0;
 		if (pos.x == start_pos.x && pos.y == start_pos.y)
 			return (1);
-		if (pos.y >= game->board_size.y) {
-			pos.x = 0;
-			pos.y = 0;
-		}
 	}
+	DBG("Found empty position at (%d, %d), joining board...\n", pos.x, pos.y);
 	game->position = pos;
 	game->board[game->position.y][game->position.x] = game->team;
 	return (0);
@@ -49,11 +50,11 @@ void	init_board(uint32_t **board, uint32_t *raw_board, t_vec2 board_size)
 		board[i] = raw_board + i * board_size.x;
 }
 
-void	init_game(t_game *game, uint32_t *raw_board, uint32_t team, t_vec2 board_size)
+void	init_game(t_game *game, t_shm_hdr *shm_data, uint32_t team, t_vec2 board_size)
 {
 	game->team = team;
 	game->is_supervised = 0;
 	game->board_size = board_size;
 	game->board = malloc(sizeof(uint32_t *) * board_size.y);
-	init_board(game->board, raw_board, board_size);
+	init_board(game->board, (uint32_t *) (shm_data + SHM_BOARD_OFFSET), board_size);
 }

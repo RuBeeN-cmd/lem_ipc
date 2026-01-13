@@ -14,12 +14,12 @@ static int	init_semaphore(key_t key, int flags)
 	return (semget(key, 1, flags));
 }
 
-static int	get_shm_id(key_t key, int flags, t_vec2 board_size)
+static int	get_shm_id(key_t key, int flags, uint32_t shm_size)
 {
-	return (shmget(key, get_shm_size(board_size), flags));
+	return (shmget(key, shm_size, flags));
 }
-
-static int	*get_shm_data(int shm_id)
+	
+static void	*get_shm_data(int shm_id)
 {
 	int		*data;
 	
@@ -61,20 +61,20 @@ static int	init_parent(t_ipc *ipc, t_vec2 board_size)
 		ERR("Can't create message queue.\n");
 		goto destroy_sem;
 	}
-	DBG("Message queue created: %d\n", ipc->msg_id);
 	if (send_board_size(ipc->msg_id, board_size))
 	{
 		ERR("Failed to send board size.\n");
 		goto destroy_msg_q;
 	}
-	if ((ipc->shm_id = get_shm_id(ipc->key, IPC_CREAT | IPC_EXCL | 0644, board_size)) == -1) {
+	if ((ipc->shm_id = get_shm_id(ipc->key, IPC_CREAT | IPC_EXCL | 0644, get_shm_size(board_size))) == -1) {
 		ERR("Can't create shared memory.\n");
 		goto destroy_shm;
 	}
-	if (!(ipc->data = get_shm_data(ipc->shm_id))) {
+	if (!(ipc->data = (t_shm_hdr *) get_shm_data(ipc->shm_id))) {
 		ERR("Can't attach shared memory.\n");
 		goto destroy_shm;
 	}
+	DBG("Shared Memory address: %p\n", ipc->data);
 	return (0);
 
 	destroy_shm: shm_destroy(ipc->shm_id);
@@ -118,7 +118,7 @@ static int	init_child(t_ipc *ipc, t_vec2 *board_size)
 		DBG("Message queue size after: %u\n", msg_q_size);
 		send_board_size(ipc->msg_id, *board_size);
 	}
-	if ((ipc->shm_id = get_shm_id(ipc->key, 0, *board_size)) == -1) {
+	if ((ipc->shm_id = get_shm_id(ipc->key, 0, get_shm_size(*board_size))) == -1) {
 		ERR("Can't get shared memory.\n");
 		return (1);
 	}
@@ -126,6 +126,7 @@ static int	init_child(t_ipc *ipc, t_vec2 *board_size)
 		ERR("Can't attach shared memory.\n");
 		return (1);
 	}
+	DBG("Shared Memory address: %p\n", ipc->data);
 	return (0);
 }
 
@@ -170,6 +171,9 @@ int	init_player_ipc(t_ipc *ipc, t_vec2 *board_size)
 		if (init_child(ipc, board_size))
 			goto error;
 	}
+	
+	DBG("SHM_DATA_SIZE: %d\n", ((int) SHM_DATA_SIZE(*board_size)));
+	DBG("SHM_BOARD_OFFSET: %d\n", SHM_BOARD_OFFSET);
 	sem_unlock(ipc->init_sem_id);
 	return (0);
 

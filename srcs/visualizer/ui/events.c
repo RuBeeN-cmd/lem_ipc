@@ -46,11 +46,11 @@ static void	toggle_pause(t_visualizer *v)
 	if (v->running == 0) {
 		v->running = 1;
 		DBG("Game Resumed\n");
-		check_msg(v->ipc.msg_id, NULL, 1, PAUSE_CHANNEL);
+		resume_game(v->ipc.sem_id, &(v->ipc.data->game_state));
 	} else {
 		v->running = 0;
 		DBG("Game Paused\n");
-		send_msg(v->ipc.msg_id, "*", 1, PAUSE_CHANNEL);
+		pause_game(v->ipc.sem_id, &(v->ipc.data->game_state));
 	} 
 }
 

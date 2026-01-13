@@ -2,8 +2,7 @@
 
 uint32_t	get_shm_size(t_vec2 board_size)
 {
-	uint32_t	shmem_size = board_size.x * board_size.y * sizeof(uint32_t);
-	return (PAGE_SIZE * ((shmem_size + PAGE_SIZE - 1) / PAGE_SIZE));
+	return (PAGE_SIZE * ((SHM_DATA_SIZE(board_size) + PAGE_SIZE - 1) / PAGE_SIZE));
 }
 
 int	sem_lock(int sem_id)
@@ -55,26 +54,6 @@ int	get_nb_process_attach(int shm_id)
 		return (-1);
 	}
 	return (buf.shm_nattch);
-}
-
-int	shm_det(void *data)
-{
-	if (shmdt(data) == -1)
-	{
-		perror("semget");
-		return (1);
-	}
-	return (0);
-}
-
-int	shm_destroy(int shm_id)
-{
-	if (shmctl(shm_id, IPC_RMID, NULL) == -1)
-	{
-		ERR("Can't destroy shared memory\n");
-		return (1);
-	}
-	return (0);
 }
 
 int	msg_queue_destroy(int msg_id)

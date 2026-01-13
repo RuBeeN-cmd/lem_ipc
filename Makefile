@@ -16,6 +16,7 @@ SRC = main.c \
 		player/messages.c \
 		ipc/init_ipc.c \
 		ipc/ipc_utils.c \
+		ipc/shm_utils.c \
 		ipc/message.c \
 		visualizer/visualizer.c \
 		visualizer/buffer.c \

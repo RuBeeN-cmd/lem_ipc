@@ -63,7 +63,8 @@ static void try_copy_board(t_visualizer *v)
 {
 	if (sem_lock_no_wait(v->ipc.sem_id) != -1)
 	{
-		copy_buffer(v->buffer, v->ipc.data, v->board_size);
+		DBG("Copying board\n");
+		copy_buffer(v->buffer, (uint32_t *) (v->ipc.data + SHM_BOARD_OFFSET), v->board_size);
 		sem_unlock(v->ipc.sem_id);
 	}
 }

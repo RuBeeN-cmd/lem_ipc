@@ -6,7 +6,7 @@ static void player_loop(t_game *game, t_ipc *ipc)
 	while (is_other_team(game, ipc))
 	{
 		check_supervision_msg(ipc, game);
-		if (!is_game_paused(ipc)) {
+		if (get_game_state(ipc->sem_id, &(ipc->data->game_state)) != PAUSED) {
 			sem_lock(ipc->sem_id);
 			killer_team = is_killed_by_team(game);
 			if (killer_team) {

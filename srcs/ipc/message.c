@@ -62,9 +62,7 @@ uint32_t message_queue_size_get(int msgid)
 	struct msqid_ds buf = {};
 
 	errno = 0;
-	if (msgctl(msgid, IPC_STAT, &buf) == -1) {
-		// syscall_perror("msgctl");
+	if (msgctl(msgid, IPC_STAT, &buf) == -1)
 		return (0);
-	}
 	return (buf.__msg_cbytes);
 }

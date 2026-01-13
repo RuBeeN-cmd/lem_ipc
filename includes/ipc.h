@@ -33,21 +33,32 @@
 #define KILL_CHANNEL				(UINT32_MAX - 5)
 #define GAME_START_CHANNEL			(UINT32_MAX - 6)
 
+#define SHM_DATA_SIZE(board_size)	(sizeof(t_shm_hdr) + ((board_size).x * (board_size).y * sizeof(uint32_t)))
+#define SHM_BOARD_OFFSET			(sizeof(t_game_state))
+
+typedef enum e_game_state
+{
+	STARTING,
+	RUNNING,
+	PAUSED
+}				t_game_state;
+
+typedef struct	s_shm_hdr
+{
+	t_game_state	game_state;
+}				t_shm_hdr;
+
 typedef struct	s_ipc
 {
-	int		type;
-	key_t	key;
-	int		shm_id;
-	int		sem_id;
-	int		msg_id;
-	void	*data;
-	key_t	init_key;
-	int		init_sem_id;
-	t_vec2	board_size;
+	int			type;
+	key_t		key;
+	int			shm_id;
+	int			sem_id;
+	int			msg_id;
+	t_shm_hdr	*data;
+	key_t		init_key;
+	int			init_sem_id;
 }				t_ipc;
-
-
-
 
 typedef struct	s_supervised_infos
 {
@@ -115,9 +126,14 @@ int			sem_lock_no_wait(int sem_id);
 int			sem_unlock(int sem_id);
 int			sem_destroy(int sem_id);
 int			get_nb_process_attach(int shm_id);
-int			shm_det(void *data);
-int			shm_destroy(int shm_id);
 int			msg_queue_destroy(int msg_id);
 uint32_t	message_queue_size_get(int msgid);
+
+// shm_utils.c
+t_game_state	get_game_state(int sem_id, t_game_state *game_state);
+void			resume_game(int sem_id, t_game_state *game_state);
+void			pause_game(int sem_id, t_game_state *game_state);
+int				shm_det(void *data);
+int				shm_destroy(int shm_id);
 
 #endif
