@@ -27,11 +27,11 @@ int				is_killed_by_team(t_game *game);
 int				is_other_team(t_game *game, t_ipc *ipc);
 t_vec2			rand_pos(t_vec2 board_size);
 void			escape_from_enemys(t_game *game);
-void			player_routine(t_game *game);
+void			player_move(t_game *game);
 int				is_other_mate(t_game game);
 
 // init_game.c
-void	init_game(t_game *game, t_shm_hdr *shm_data, uint32_t team, t_vec2 board_size);
+void	init_game(t_game *game, t_shm_data *shm_data, uint32_t team, t_vec2 board_size);
 int		join_board(t_game *game);
 void	init_board(uint32_t **board, uint32_t *raw_board, t_vec2 board_size);
 

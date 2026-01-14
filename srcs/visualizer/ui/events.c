@@ -74,7 +74,7 @@ static void	stop_supervising(t_visualizer *v, t_vec2 supervised)
 {
 	if (vec2cmp(supervised, NULL_POS))
 	{
-		t_new_target_msg erase_target_msg = new_msg(supervised, STOP_TARGETING);
+		t_new_target_msg erase_target_msg = new_target_msg(supervised, STOP_TARGETING);
 		send_msg(v->ipc.msg_id, &erase_target_msg, sizeof(erase_target_msg), VISUALIZER_TARGET_CHANNEL);
 		v->supervision_panel.visible = 0;
 	}
@@ -84,27 +84,22 @@ static void	supervise(t_visualizer *v, t_vec2 supervised)
 {
 	if (vec2cmp(supervised, NULL_POS))
 	{
-		t_new_target_msg new_target_msg = new_msg(supervised, NEW_TARGETING);
-		send_msg(v->ipc.msg_id, &new_target_msg, sizeof(new_target_msg), VISUALIZER_TARGET_CHANNEL);
+		t_new_target_msg msg = new_target_msg(supervised, NEW_TARGETING);
+		send_msg(v->ipc.msg_id, &msg, sizeof(msg), VISUALIZER_TARGET_CHANNEL);
 		v->supervision_panel.visible = 1;
 	}
 }
 
 static void	on_click(t_visualizer *v, t_vec2 pos)
 {
-	t_new_target_msg new_target_msg;
-	new_target_msg.type = NEW_TARGETING;
-	new_target_msg.target = screen_pos_to_board_pos(v, (t_vec2) {pos.x, pos.y});
-	
-	t_vec2	click_pos = screen_pos_to_board_pos(v, pos);
-	if (vec2cmp(click_pos, NULL_POS))
+	t_new_target_msg msg = new_target_msg(screen_pos_to_board_pos(v, pos), NEW_TARGETING);
+	if (vec2cmp(msg.target, NULL_POS))
 	{
 		stop_supervising(v, v->target_infos.pos);
-		t_new_target_msg new_target_msg = new_msg(click_pos, NEW_TARGETING);
 		sem_lock(v->ipc.sem_id);
-		if (get_team_on_board(new_target_msg.target, v->buffer, v->board_size)) {
+		if (get_team_on_board(msg.target, v->buffer, v->board_size)) {
 			sem_unlock(v->ipc.sem_id);
-			supervise(v, new_target_msg.target);
+			supervise(v, msg.target);
 			DBG("Supervision msg sent\n");
 		} else {
 			sem_unlock(v->ipc.sem_id);

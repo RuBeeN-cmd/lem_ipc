@@ -1,6 +1,6 @@
 #include <visualizer/visualizer.h>
 
-void	create_supervision_panel_text_lines(t_visualizer *v, t_panel *panel, t_supervised_infos target_infos)
+static void	create_supervision_panel_text_lines(t_visualizer *v, t_panel *panel, t_supervised_infos target_infos)
 {
 	if (panel->text_line_list)
 		destroy_text_line_list(panel);
@@ -24,4 +24,10 @@ void	create_supervision_panel_text_lines(t_visualizer *v, t_panel *panel, t_supe
 	str = target_infos.is_alive ? "Yes" : "No";
 	t_color alive_color = target_infos.is_alive ? color_from_u32(0xFF00FF00) : color_from_u32(0xFF0000FF);
 	add_text_line(v->text_engine, v->font, panel, str, alive_color, JUSTIFY_RIGHT, 3);
+}
+
+void	update_supervision(t_visualizer *v)
+{
+	check_msg(v->ipc.msg_id, &v->target_infos, sizeof(v->target_infos), TARGET_INFOS_CHANNEL);
+	create_supervision_panel_text_lines(v, &v->supervision_panel, v->target_infos);
 }

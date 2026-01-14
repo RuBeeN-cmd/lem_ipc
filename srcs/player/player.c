@@ -13,13 +13,11 @@ static void player_loop(t_game *game, t_ipc *ipc)
 				sem_unlock(ipc->sem_id);
 				break ;
 			}
-			player_routine(game);
+			player_move(game);
 		}
 		sem_unlock(ipc->sem_id);
-		if (game->is_supervised) {
-			DBG("Player [%d] is sending info...\n", game->team);
+		if (game->is_supervised)
 			send_supervision_info(ipc, game, 1);
-		}
 		usleep(COOLDOWN);
 	}
 	if (killer_team) {

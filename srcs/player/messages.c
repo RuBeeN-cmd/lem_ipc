@@ -33,10 +33,5 @@ void	send_kill_info(t_ipc *ipc, uint32_t killed_team, uint32_t killer_team)
 	kill_info.killed_team = killed_team;
 	kill_info.killer_team = killer_team;
 	DBG("Player sending kill info: killed_team=%u, killer_team=%u\n", killed_team, killer_team);
-	if (send_msg(ipc->msg_id, &kill_info, sizeof(t_kill_info), KILL_CHANNEL) == 1) {
-		do {
-			usleep(100000);
-			DBG("Retrying to send kill info...\n");
-		} while (send_msg(ipc->msg_id, &kill_info, sizeof(t_kill_info), KILL_CHANNEL) == 1);
-	}
+	send_msg(ipc->msg_id, &kill_info, sizeof(t_kill_info), KILL_CHANNEL);
 }

@@ -1,22 +1,22 @@
 #include <visualizer/visualizer.h>
 
-int	find_kill_team(void *node, void *to_find)
+static int	is_same_team(void *node, void *to_find)
 {
 	return (((t_kill_number *) node)->team == ((t_kill_number *) to_find)->team);
 }
 
-int	cmp_kill_number(void *kill_number1, void *kill_number2) {
+static int	cmp_kill_number(void *kill_number1, void *kill_number2) {
 	return (((t_kill_number *) kill_number2)->number - ((t_kill_number *) kill_number1)->number);
 }
 
-void	update_kill_list(t_visualizer *v)
+static void	update_kill_list(t_visualizer *v)
 {
 	t_kill_info	kill_info;
 	while (check_msg(v->ipc.msg_id, &kill_info, sizeof(t_kill_info), KILL_CHANNEL) == 1) {
 		uint32_t killer_team = kill_info.killer_team;
 		t_kill_number kn = {.number = 0, .team = killer_team};
 		t_kill_number *found = NULL;
-		if ((found = ft_lstfind(v->kills, &kn, find_kill_team))) {
+		if ((found = ft_lstfind(v->kills, &kn, is_same_team))) {
 			found->number++;
 		} else {
 			t_kill_number *counter = malloc(sizeof(t_kill_number));
@@ -29,7 +29,7 @@ void	update_kill_list(t_visualizer *v)
 	}
 }
 
-void	create_kills_panel_text_lines(t_visualizer *v, t_panel *panel)
+static void	create_kills_panel_text_lines(t_visualizer *v, t_panel *panel)
 {
 	if (panel->text_line_list)
 		destroy_text_line_list(panel);
@@ -50,4 +50,10 @@ void	create_kills_panel_text_lines(t_visualizer *v, t_panel *panel)
 			free(num_str);
 		}
 	}
+}
+
+void update_kills(t_visualizer *v)
+{
+	update_kill_list(v);
+	create_kills_panel_text_lines(v, &v->kills_panel);
 }

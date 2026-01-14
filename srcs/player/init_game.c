@@ -45,7 +45,7 @@ void	init_board(uint32_t **board, uint32_t *raw_board, t_vec2 board_size)
 		board[i] = raw_board + i * board_size.x;
 }
 
-void	init_game(t_game *game, t_shm_hdr *shm_data, uint32_t team, t_vec2 board_size)
+void	init_game(t_game *game, t_shm_data *shm_data, uint32_t team, t_vec2 board_size)
 {
 	game->team = team;
 	game->is_supervised = 0;

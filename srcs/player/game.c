@@ -325,7 +325,7 @@ void escape_from_enemys(t_game *game)
 	}
 }
 
-void player_routine(t_game *game)
+void player_move(t_game *game)
 {
 	if (!is_other_mate(*game)) {
 		escape_from_enemys(game);

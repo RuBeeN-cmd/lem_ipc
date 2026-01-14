@@ -7,18 +7,20 @@ _CYAN="\033[0;36m"
 NAME = lemipc
 
 SRC = main.c \
-		args.c \
-		team.c \
+		parsing/args.c \
+		parsing/team.c \
 		player/player.c \
 		player/game.c \
 		player/init_game.c \
 		player/ipc.c \
 		player/messages.c \
-		ipc/init_ipc.c \
-		ipc/ipc_utils.c \
-		ipc/shm_utils.c \
-		ipc/message.c \
+		ipc/ipc.c \
+		ipc/sem.c \
+		ipc/shm.c \
+		ipc/msg.c \
 		visualizer/visualizer.c \
+		visualizer/draw.c \
+		visualizer/ipc.c \
 		visualizer/buffer.c \
 		visualizer/kills.c \
 		visualizer/supervision.c \

@@ -52,6 +52,13 @@ typedef struct	s_visualizer
 // visualizer.c
 int		visualizer_workflow(void);
 
+// ipc.c
+void	try_sync_shm(t_visualizer *v);
+
+// draw.c
+void	draw_pause_indicator(t_visualizer *v);
+void	draw_game(t_visualizer *v);
+
 // events.c
 int		handle_events(t_visualizer* v);
 
@@ -72,11 +79,10 @@ void		clear_window(SDL_Renderer *renderer, t_color color);
 TTF_Text	*draw_text(t_visualizer *v, char *text, t_vec2 pos, t_color color);
 
 // kills.c
-void	create_kills_panel_text_lines(t_visualizer *v, t_panel *panel);
-void	update_kill_list(t_visualizer *v);
+void 	update_kills(t_visualizer *v);
 
 // supervision.c
-void	create_supervision_panel_text_lines(t_visualizer *v, t_panel *panel, t_supervised_infos target_infos);
+void	update_supervision(t_visualizer *v);
 
 // utils.c
 int	is_game_ended(uint32_t **board, t_vec2 board_size);

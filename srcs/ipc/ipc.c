@@ -70,7 +70,7 @@ static int	init_parent(t_ipc *ipc, t_vec2 board_size)
 		ERR("Can't create shared memory.\n");
 		goto destroy_shm;
 	}
-	if (!(ipc->data = (t_shm_hdr *) get_shm_data(ipc->shm_id))) {
+	if (!(ipc->data = (t_shm_data *) get_shm_data(ipc->shm_id))) {
 		ERR("Can't attach shared memory.\n");
 		goto destroy_shm;
 	}
@@ -78,19 +78,10 @@ static int	init_parent(t_ipc *ipc, t_vec2 board_size)
 	return (0);
 
 	destroy_shm: shm_destroy(ipc->shm_id);
-	destroy_msg_q: msg_queue_destroy(ipc->msg_id);
+	destroy_msg_q: msgq_destroy(ipc->msg_id);
 	destroy_sem: sem_destroy(ipc->sem_id);
 	error: return (1);
 }
-
-static void clean_msg_queue(t_ipc *ipc)
-{
-	int is_message = 1;
-	while (is_message)
-		if (check_msg(ipc->msg_id, NULL, 1, 0) == 0)
-			is_message = 0;
-}
-
 
 static int	init_child(t_ipc *ipc, t_vec2 *board_size)
 {
@@ -111,10 +102,10 @@ static int	init_child(t_ipc *ipc, t_vec2 *board_size)
 	DBG("Board size received: (%d, %d)\n", board_size->x, board_size->y);
 	if (send_board_size(ipc->msg_id, *board_size)) {
 		WARN("Failed to send board size, cleaning message queue\n");
-		uint32_t msg_q_size = message_queue_size_get(ipc->msg_id);
+		uint32_t msg_q_size = get_msgq_size(ipc->msg_id);
 		DBG("Message queue size before : %u\n", msg_q_size);
 		clean_msg_queue(ipc);
-		msg_q_size = message_queue_size_get(ipc->msg_id);
+		msg_q_size = get_msgq_size(ipc->msg_id);
 		DBG("Message queue size after: %u\n", msg_q_size);
 		send_board_size(ipc->msg_id, *board_size);
 	}

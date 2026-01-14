@@ -38,7 +38,7 @@ static int	destroy_ipc(t_ipc *ipc)
 	DBG("Deleting IPC\n");
 	return (sem_destroy(ipc->init_sem_id)
 		|| shm_destroy(ipc->shm_id)
-		|| msg_queue_destroy(ipc->msg_id)
+		|| msgq_destroy(ipc->msg_id)
 		|| sem_destroy(ipc->sem_id));
 }
 
@@ -55,11 +55,11 @@ int is_visualizer(t_ipc *ipc)
 int	close_ipc(t_ipc *ipc)
 {
 	sem_lock(ipc->sem_id);
-	int	nb_process = get_nb_process_attach(ipc->shm_id);
+	int	nb_process = get_attached_process_nb(ipc->shm_id);
 	DBG("Getting nb_process: %d\n", nb_process);
 	if (nb_process == 2 && is_visualizer(ipc))
 	{
-		while ((nb_process = get_nb_process_attach(ipc->shm_id)) != 1)
+		while ((nb_process = get_attached_process_nb(ipc->shm_id)) != 1)
 		{
 			DBG("Getting nb_process: %d\n", nb_process);
 			sem_unlock(ipc->sem_id);
@@ -68,7 +68,7 @@ int	close_ipc(t_ipc *ipc)
 		}
 	}
 	DBG("Detaching from shared memory\n");
-	shm_det(ipc->data);
+	shm_detach(ipc->data);
 	DBG("Quiting with process = %d\n", nb_process);
 	sem_unlock(ipc->sem_id);
 	if (nb_process == 1)

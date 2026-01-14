@@ -1,10 +1,5 @@
 #include <ipc.h>
 
-uint32_t	get_shm_size(t_vec2 board_size)
-{
-	return (PAGE_SIZE * ((SHM_DATA_SIZE(board_size) + PAGE_SIZE - 1) / PAGE_SIZE));
-}
-
 int	sem_lock(int sem_id)
 {
 	struct sembuf	ops;
@@ -40,27 +35,6 @@ int	sem_destroy(int sem_id)
 	if (semctl(sem_id, 0, IPC_RMID) == -1)
 	{
 		ERR("Can't destroy semaphore\n");
-		return (1);
-	}
-	return (0);
-}
-
-int	get_nb_process_attach(int shm_id)
-{
-	struct shmid_ds	buf;
-	if (shmctl(shm_id, IPC_STAT, &buf) == -1)
-	{
-		perror("shmctl");
-		return (-1);
-	}
-	return (buf.shm_nattch);
-}
-
-int	msg_queue_destroy(int msg_id)
-{
-	if (msgctl(msg_id, IPC_RMID, NULL) == -1)
-	{
-		ERR("Can't destroy message queue\n");
 		return (1);
 	}
 	return (0);
