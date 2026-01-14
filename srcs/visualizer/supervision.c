@@ -28,6 +28,9 @@ static void	create_supervision_panel_text_lines(t_visualizer *v, t_panel *panel,
 
 void	update_supervision(t_visualizer *v)
 {
-	check_msg(v->ipc.msg_id, &v->target_infos, sizeof(v->target_infos), TARGET_INFOS_CHANNEL);
+	if (check_msg(v->ipc.msg_id, &v->target_infos, sizeof(v->target_infos), TARGET_INFOS_CHANNEL) != 1)
+		return ;
+	if (v->supervision_panel.visible == 0)
+		v->supervision_panel.visible = 1;
 	create_supervision_panel_text_lines(v, &v->supervision_panel, v->target_infos);
 }

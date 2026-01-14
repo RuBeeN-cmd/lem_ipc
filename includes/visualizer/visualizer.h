@@ -9,6 +9,7 @@
 #include <models/color.h>
 #include <models/vector.h>
 #include <visualizer/panel.h>
+#include <visualizer/sdl_utils.h>
 
 #define WIN_WIDTH					800
 #define WIN_HEIGHT					600
@@ -55,8 +56,7 @@ int		visualizer_workflow(void);
 void	try_sync_shm(t_visualizer *v);
 
 // draw.c
-void	draw_pause_indicator(t_visualizer *v);
-void	draw_game(t_visualizer *v);
+int	draw_game(t_visualizer *v);
 
 // events.c
 int		handle_events(t_visualizer* v);
@@ -72,6 +72,9 @@ void		destroy_sdl(t_visualizer *v);
 TTF_Font	*load_font(const char *path, int32_t font_size);
 void		unload_font(TTF_Font *font);
 
+// game.c
+int	is_game_ended(uint32_t **board, t_vec2 board_size);
+
 // draw.c
 void		draw_board(t_visualizer *v);
 void		clear_window(SDL_Renderer *renderer, t_color color);
@@ -82,8 +85,5 @@ void 	update_kills(t_visualizer *v);
 
 // supervision.c
 void	update_supervision(t_visualizer *v);
-
-// utils.c
-int	is_game_ended(uint32_t **board, t_vec2 board_size);
 
 #endif

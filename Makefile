@@ -27,6 +27,7 @@ SRC = main.c \
 		visualizer/ui/draw.c \
 		visualizer/ui/events.c \
 		visualizer/ui/sdl.c \
+		visualizer/ui/sdl_utils.c \
 		visualizer/ui/panel.c \
 		visualizer/ui/text_line.c \
 		models/vector/vec2.c \

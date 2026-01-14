@@ -9,7 +9,7 @@ static float hue2rgb(float p, float q, float t) {
 	return p;
 }
 
-t_color hsl_to_rgb(uint16_t h_deg, float s, float l) {
+t_color hsl2rgb(uint16_t h_deg, float s, float l) {
 	float h = (h_deg % 360) / 360.0f;
 	float r, g, b;
 
@@ -50,7 +50,7 @@ t_color	get_team_color(int team)
 		lightness = 0.75;
 	else if (team > 12)
 		lightness = 0.25;
-	return (hsl_to_rgb(hue, 1, lightness));
+	return (hsl2rgb(hue, 1, lightness));
 }
 
 static uint32_t	get_team_from_str(const char *nptr)

@@ -40,6 +40,10 @@ int init_sdl(t_visualizer *v, char title[], uint32_t width, uint32_t height)
 		ERR("Failed to init renderer\n");
 		goto destroy_window;
 	}
+	if (!SDL_SetRenderDrawBlendMode(v->renderer, SDL_BLENDMODE_BLEND)) {
+		ERR("Failed to init SDL_ttf\n");
+		goto destroy_window;
+	}
 	if (!TTF_Init()) {
 		ERR("Failed to init SDL_ttf\n");
 		goto destroy_renderer;

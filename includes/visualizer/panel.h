@@ -3,13 +3,14 @@
 
 #include <SDL3/SDL.h>
 #include <SDL3_ttf/SDL_ttf.h>
+#include <visualizer/sdl_utils.h>
 #include <models/color.h>
 #include <models/vector.h>
 #include <libft.h>
 
 #define PANEL_DEF_MARGIN		10
 #define PANEL_DEF_PADDING		10
-#define PANEL_DEF_BORDER_WIDTH	2
+#define PANEL_DEF_BORDER_WIDTH	1
 
 typedef enum e_justification
 {

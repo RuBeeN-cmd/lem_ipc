@@ -33,9 +33,6 @@ static int	init_visualizer(t_visualizer *v, char title[], uint32_t width, uint32
 		free_board_buffer(v->board_copy, v->board_size.y);
 		return (1);
 	}
-	update_supervision(v);
-	if (vec2cmp(v->target_infos.pos, NULL_POS))
-		v->supervision_panel.visible = 1;
 	return (0);
 }
 

@@ -17,17 +17,6 @@ void	destroy_text_line_list(t_panel *panel)
 	ft_lstclear(&panel->text_line_list, destroy_text_line);
 }
 
-static t_vec2	get_text_size(TTF_Text *text)
-{
-	t_vec2 size;
-	if (!TTF_GetTextSize(text, &size.x, &size.y))
-	{
-		ft_printf_fd(2, "%s\n", SDL_GetError());
-		return (NULL_SIZE);
-	}
-	return (size);
-}
-
 static t_text_line	*init_text_line(char *text, t_color color, t_justification justification, uint32_t line_number, TTF_Text *ttf_text)
 {
 	t_vec2 text_size = get_text_size(ttf_text);

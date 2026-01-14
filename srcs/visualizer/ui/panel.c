@@ -3,7 +3,7 @@
 t_panel	init_panel(t_vec2 size, t_anchor anchor, int visible)
 {
 	return ((t_panel) {
-		.color = color_from_u32(0xFFFFFFFF),
+		.color = color_from_u32(0xAFFFFFFF),
 		.size = size,
 		.anchor = anchor,
 		.margin = (t_vec2) {PANEL_DEF_MARGIN, PANEL_DEF_MARGIN},
@@ -53,10 +53,13 @@ void	draw_panel(SDL_Renderer *renderer, t_panel *panel)
 		default:
 			break;
 	}
-	draw_rectangle(renderer, pos, size, panel->border_color);
+	SDL_SetRenderDrawColor(renderer, panel->border_color.r, panel->border_color.g, panel->border_color.b, panel->border_color.a);
+	SDL_FRect rect = {pos.x, pos.y, size.x, size.y};
+	SDL_RenderRect(renderer, &rect);
 
 	pos = add_vec2(pos, (t_vec2) {panel->border_size, panel->border_size});
 	size = sub_vec2(panel->size, scalar_mult_vec2((t_vec2) {panel->border_size, panel->border_size}, 2));
+
 	draw_rectangle(renderer, pos, size, panel->color);
 
 	if (panel->text_line_list)

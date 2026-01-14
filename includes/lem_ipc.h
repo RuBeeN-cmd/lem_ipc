@@ -24,6 +24,6 @@ int	parse_args(int argc, char *argv[], uint32_t *team, t_vec2 *board_size);
 uint32_t	get_team(char *team_str);
 uint32_t	get_team_on_board(t_vec2 target, uint32_t *board[], t_vec2 board_size);
 t_color		get_team_color(int team);
-t_color		hsl_to_rgb(uint16_t h_deg, float s, float l);
+t_color		hsl2rgb(uint16_t h_deg, float s, float l);
 
 #endif
