@@ -19,6 +19,7 @@
 #define KILLS_PANEL_WIDTH			200
 #define KILLS_PANEL_HEIGHT			300
 #define KILLS_PANEL_SIZE			((t_vec2) {KILLS_PANEL_WIDTH, KILLS_PANEL_HEIGHT})
+#define FONT_PATH					"./fonts/DejaVuSansMono.ttf"
 
 #define INITIAL_PADDING		20
 #define BORDER_WIDTH		1
@@ -35,18 +36,16 @@ typedef struct	s_visualizer
 	TTF_TextEngine		*text_engine;
 	t_panel				supervision_panel;
 	t_panel				kills_panel;
-	t_game_state		game_state;
 
 	t_fvec2				offset;
 	uint32_t			cell_size;
-
-	uint32_t			**buffer;
+	
 	t_ipc				ipc;
-	int					running;
+	t_shm_data			shm_copy;
+	uint32_t			**board_copy;
 	t_vec2				board_size;
-	t_supervised_infos	target_infos;
-
 	t_list				*kills;
+	t_supervised_infos	target_infos;
 }				t_visualizer;
 
 // visualizer.c
@@ -63,9 +62,9 @@ void	draw_game(t_visualizer *v);
 int		handle_events(t_visualizer* v);
 
 // buffer.c
-void	free_buffer(uint32_t **buffer, size_t height);
-int		init_buffer(uint32_t ***buffer, t_vec2 board_size);
-void	copy_buffer(uint32_t **dst, uint32_t *src, t_vec2 board_size);
+void	free_board_buffer(uint32_t **buffer, size_t height);
+int		init_board_buffer(uint32_t ***buffer, t_vec2 board_size);
+void	copy_board(uint32_t **dst, uint32_t *src, t_vec2 board_size);
 
 // sdl.c
 int			init_sdl(t_visualizer *v, char title[], uint32_t width, uint32_t height);

@@ -11,7 +11,7 @@ void	draw_pause_indicator(t_visualizer *v)
 		0
 	};
 	draw_rectangle(v->renderer, (t_vec2) {0, 0}, (t_vec2) {renderer_width, 30}, color_from_u32(0x00000000));
-	if (v->game_state & PAUSED) {
+	if (v->shm_copy.game_state & PAUSED) {
 		TTF_Text *new_text = draw_text(v, "PAUSED", pos, color_from_u32(0xFFFFFFFF));
 		TTF_DestroyText(new_text);
 	}

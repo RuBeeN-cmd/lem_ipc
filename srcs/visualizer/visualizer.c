@@ -12,11 +12,10 @@ static int	init_visualizer(t_visualizer *v, char title[], uint32_t width, uint32
 
 	if (init_visualizer_ipc(&v->ipc, &board_size) == 1)
 		return (1);
-	if (init_buffer(&v->buffer, board_size))
+	if (init_board_buffer(&v->board_copy, board_size))
 		return (1);
 
 	send_msg(v->ipc.msg_id, "*", 1, VISUALIZER_CHANNEL);
-	v->running = -1;
 	v->board_size = board_size;
 	v->cell_size = (height - INITIAL_PADDING) / v->board_size.y;
 	if (v->cell_size * v->board_size.x > (width - INITIAL_PADDING))
@@ -31,7 +30,7 @@ static int	init_visualizer(t_visualizer *v, char title[], uint32_t width, uint32
 	init_visualizer_panels(v);
 	if (init_sdl(v, title, width, height))
 	{
-		free_buffer(v->buffer, v->board_size.y);
+		free_board_buffer(v->board_copy, v->board_size.y);
 		return (1);
 	}
 	update_supervision(v);
@@ -47,7 +46,7 @@ static void	destroy_visualizer(t_visualizer *v)
 	destroy_text_line_list(&v->kills_panel);
 	destroy_sdl(v);
 	ft_lstclear(&v->kills, free);
-	free_buffer(v->buffer, v->board_size.y);
+	free_board_buffer(v->board_copy, v->board_size.y);
 }
 
 static int	visualizer_routine(t_visualizer *v)
@@ -58,7 +57,7 @@ static int	visualizer_routine(t_visualizer *v)
 	update_kills(v);
 	try_sync_shm(v);
 	draw_game(v);
-	if (!is_game_ended(v->buffer, v->board_size))
+	if (!is_game_ended(v->board_copy, v->board_size))
 		return (0);
 	return (1);
 }

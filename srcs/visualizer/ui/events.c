@@ -97,7 +97,7 @@ static void	on_click(t_visualizer *v, t_vec2 pos)
 	{
 		stop_supervising(v, v->target_infos.pos);
 		sem_lock(v->ipc.sem_id);
-		if (get_team_on_board(msg.target, v->buffer, v->board_size)) {
+		if (get_team_on_board(msg.target, v->board_copy, v->board_size)) {
 			sem_unlock(v->ipc.sem_id);
 			supervise(v, msg.target);
 			DBG("Supervision msg sent\n");

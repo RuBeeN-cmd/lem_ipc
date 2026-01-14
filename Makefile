@@ -20,8 +20,7 @@ SRC = main.c \
 		ipc/msg.c \
 		visualizer/visualizer.c \
 		visualizer/draw.c \
-		visualizer/ipc.c \
-		visualizer/buffer.c \
+		visualizer/shared_memory.c \
 		visualizer/kills.c \
 		visualizer/supervision.c \
 		visualizer/game.c \

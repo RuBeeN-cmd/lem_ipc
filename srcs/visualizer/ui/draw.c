@@ -29,7 +29,7 @@ void	draw_board(t_visualizer *v)
 	SDL_GetCurrentRenderOutputSize(v->renderer, (int *) &renderer_width, (int *) &renderer_height);
 	for (size_t y = 0; y < (size_t) v->board_size.y; y++)
 		for (size_t x = 0; x < (size_t) v->board_size.x; x++)
-			draw_cell(v, x, y, v->buffer[y][x], renderer_width, renderer_height);
+			draw_cell(v, x, y, v->board_copy[y][x], renderer_width, renderer_height);
 }
 
 void	clear_window(SDL_Renderer *renderer, t_color color)
