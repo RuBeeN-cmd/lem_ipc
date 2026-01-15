@@ -77,22 +77,23 @@ t_vec2	get_nearest(t_game game, int find_mate)
 	int dist_max = ft_max(game.position.x, game.board_size.x - game.position.x - 1)
 		+ ft_max(game.position.y, game.board_size.y - game.position.y - 1);
 	for (int dist = 1; dist <= dist_max; dist++) {
-		for (int dir = 0; dir < 4; dir++) {
+		for (int dir = 0; dir < 4; dir++) {			// NORTH, WEST, SOUTH, EAST
 			t_vec2 target = add_vec2(game.position, (t_vec2) {
 				dist * (dir & 1) * ((dir & 2) - 1),
 				dist * (!(dir & 1)) * ((dir & 2) - 1)
 			});
+			t_vec2 increment = (t_vec2) {
+				1 - (dir & 2),						// SOUTH, EAST: x--		NORTH, WEST: x++ 
+				1 - (((dir & 1) << 1) ^ (dir & 2))	// WEST, SOUTH: y-- 	NORTH, EAST: y++ 
+			};
 			for (int i = 0; i < dist; i++) {
 				if (target.x >= 0 && target.x < game.board_size.x && target.y >= 0 && target.y < game.board_size.y) {
-					uint32_t	target_team = game.board[target.y][target.x];
+					uint32_t target_team = game.board[target.y][target.x];
 					if (target_team && ((find_mate && target_team == game.team)
 						|| (!find_mate && target_team != game.team)))
 						return (target);
 				}
-				target = sub_vec2(target, (t_vec2) {
-					(dir & 2) - 1,
-					(((dir & 1) << 1) ^ (dir & 2)) - 1
-				});
+				target = add_vec2(target, increment);
 			}
 		}
 	}
