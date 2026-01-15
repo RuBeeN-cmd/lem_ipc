@@ -74,37 +74,29 @@ void	move_right(t_game *game)
 
 t_vec2	get_nearest(t_game game, int find_mate)
 {
-	size_t		max_iter;
-	size_t		target_size;
-	max_iter = ft_max(game.position.x, game.board_size.x - game.position.x - 1);
-	max_iter = ft_max(max_iter, ft_max(game.position.y, game.board_size.y - game.position.y - 1));
-	for	(size_t i = 1; i <= max_iter; i++)
-	{
-		target_size = 2 * i;
-		for (size_t j = 0; j < 4; j++)
-		{
-			t_vec2 target = { game.position.x + ((j >> 1 & 1) * 2 - 1) * i, game.position.y + ((j & 1) * 2 - 1) * i };
-			for (size_t k = 0; k < target_size; k++)
-			{
-				if (target.x >= 0 && target.x < game.board_size.x && target.y >= 0 && target.y < game.board_size.y)
-				{
+	int dist_max = ft_max(game.position.x, game.board_size.x - game.position.x - 1)
+		+ ft_max(game.position.y, game.board_size.y - game.position.y - 1);
+	for (int dist = 1; dist <= dist_max; dist++) {
+		for (int dir = 0; dir < 4; dir++) {
+			t_vec2 target = add_vec2(game.position, (t_vec2) {
+				dist * (dir & 1) * ((dir & 2) - 1),
+				dist * (!(dir & 1)) * ((dir & 2) - 1)
+			});
+			for (int i = 0; i < dist; i++) {
+				if (target.x >= 0 && target.x < game.board_size.x && target.y >= 0 && target.y < game.board_size.y) {
 					uint32_t	target_team = game.board[target.y][target.x];
 					if (target_team && ((find_mate && target_team == game.team)
 						|| (!find_mate && target_team != game.team)))
 						return (target);
 				}
-				if ((j & 1) && (j & 2)) // South
-					target.x--;
-				else if (j & 1) // West
-					target.y--;
-				else if (j & 2) // East
-					target.y++;
-				else // North
-					target.x++;
+				target = sub_vec2(target, (t_vec2) {
+					(dir & 2) - 1,
+					(((dir & 1) << 1) ^ (dir & 2)) - 1
+				});
 			}
 		}
 	}
-	return ((t_vec2) { -1, -1 });
+	return (NULL_POS);
 }
 
 int can_move_straight(t_vec2 target, t_game *game) {
