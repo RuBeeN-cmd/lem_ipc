@@ -38,6 +38,7 @@ static int	init_visualizer(t_visualizer *v, char title[], uint32_t width, uint32
 
 static void	destroy_visualizer(t_visualizer *v)
 {
+	shm_detach(v->ipc.data);
 	check_msg(v->ipc.msg_id, NULL, 1, VISUALIZER_CHANNEL);
 	destroy_text_line_list(&v->supervision_panel);
 	destroy_text_line_list(&v->kills_panel);
@@ -73,7 +74,6 @@ int	visualizer_workflow(void)
 	if (init_visualizer(&v, WIN_TITLE, WIN_WIDTH, WIN_HEIGHT))
 		return (1);
 	visualizer_loop(&v);
-	shm_detach(v.ipc.data);
 	destroy_visualizer(&v);
 	return (0);
 }
