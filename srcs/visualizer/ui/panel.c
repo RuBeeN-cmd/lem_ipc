@@ -23,6 +23,13 @@ void	draw_rectangle(SDL_Renderer *renderer, t_vec2 pos, t_vec2 size, t_color col
 	SDL_RenderFillRect(renderer, &rect);
 }
 
+void	draw_border_rectangle(SDL_Renderer *renderer, t_vec2 pos, t_vec2 size, t_color color)
+{
+	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+	SDL_FRect rect = {pos.x, pos.y, size.x, size.y};
+	SDL_RenderRect(renderer, &rect);
+}
+
 void	draw_panel(SDL_Renderer *renderer, t_panel *panel)
 {
 	if (!panel->visible)

@@ -5,9 +5,13 @@ void	draw_cell(t_visualizer *v, int x, int y, int team, uint32_t renderer_width,
 	t_color		team_color = get_team_color(team);
 	size_t		cell_size = v->cell_size;
 	t_vec2		pos = {
-		(x - (float) (v->board_size.x / 2) - v->offset.x) * cell_size + renderer_width / 2 + BORDER_WIDTH / 2,
-		(y - (float) (v->board_size.y / 2) - v->offset.y) * cell_size + renderer_height / 2 + BORDER_WIDTH / 2
+		(x - v->board_size.x / 2.0 - (float) v->offset.x) * (float) cell_size + renderer_width / 2.0 + BORDER_WIDTH / 2.0,
+		(y - v->board_size.y / 2.0 - (float) v->offset.y) * (float) cell_size + renderer_height / 2.0 + BORDER_WIDTH / 2.0
 	};
+	if (pos.x < 0)
+		pos.x--;
+	if (pos.y < 0)
+		pos.y--;
 	SDL_FRect	cell = {pos.x, pos.y, cell_size - BORDER_WIDTH, cell_size - BORDER_WIDTH};
 	SDL_SetRenderDrawColor(v->renderer, team_color.r, team_color.g, team_color.b, team_color.a);
 	SDL_RenderFillRect(v->renderer, &cell);
