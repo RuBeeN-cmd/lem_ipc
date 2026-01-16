@@ -15,7 +15,7 @@ t_panel	init_panel(t_vec2 size, t_anchor anchor, int visible)
 	});
 }
 
-t_vec2	get_panel_pos(t_sdl *sdl, t_panel *panel) {
+static t_vec2	get_panel_pos(t_sdl *sdl, t_panel *panel) {
 	switch (panel->anchor)
 	{
 		case ANCHOR_TOP_LEFT:
@@ -33,7 +33,7 @@ t_vec2	get_panel_pos(t_sdl *sdl, t_panel *panel) {
 	}
 }
 
-void	draw_panel_text(t_panel *panel, t_vec2 pos, t_vec2 size) {
+static void	draw_panel_text(t_panel *panel, t_vec2 pos, t_vec2 size) {
 	if (panel->text_line_list)
 	{
 		t_list *current = panel->text_line_list;

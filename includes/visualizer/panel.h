@@ -11,8 +11,6 @@
 #define PANEL_DEF_PADDING		10
 #define PANEL_DEF_BORDER_WIDTH	1
 
-#define NULL_POS				((t_vec2) {-1, -1})
-
 typedef enum e_justification
 {
 	JUSTIFY_LEFT,
@@ -53,8 +51,11 @@ typedef struct	s_panel
 }				t_panel;
 
 
+// panel.c
 t_panel	init_panel(t_vec2 size, t_anchor anchor, int visible);
 void	draw_panel(t_sdl *sdl, t_panel *panel);
+
+// text_line.c
 void	destroy_text_line_list(t_panel *panel);
 t_list	*add_text_line(TTF_TextEngine *engine, TTF_Font *font, t_panel *panel, char *text, t_color color, t_justification justification, uint32_t line_number);
 
