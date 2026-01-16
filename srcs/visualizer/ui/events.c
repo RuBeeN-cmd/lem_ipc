@@ -9,7 +9,7 @@ static int	is_on_board(t_vec2 pos, t_vec2 board_size)
 static t_vec2	screen_pos_to_board_pos(t_visualizer *v, t_vec2 screen_pos)
 {
 	t_vec2 renderer_size;
-	SDL_GetCurrentRenderOutputSize(v->renderer, &(renderer_size.x), &(renderer_size.y));
+	SDL_GetCurrentRenderOutputSize(v->sdl.renderer, &(renderer_size.x), &(renderer_size.y));
 
 	t_vec2	v1 = sub_vec2(screen_pos, scalar_div_vec2(renderer_size, 2));
 	t_fvec2	v2 = scalar_div_fvec2(vec2_to_fvec2(v1), v->cell_size);
@@ -49,10 +49,11 @@ static void	toggle_pause(t_visualizer *v)
 	sem_unlock(v->ipc.sem_id);
 }
 
-static int	on_key_down(SDL_Keycode key, t_visualizer *v)
+void	on_key_down(SDL_Keycode key, void *_v)
 {
+	t_visualizer	*v = _v;
 	if (key == SDLK_ESCAPE)
-		return (1);
+		sdl_quit(&v->sdl, 2000);
 	else if (key == SDLK_UP)
 		zoom(v, 1.1);
 	else if (key == SDLK_DOWN)
@@ -67,7 +68,6 @@ static int	on_key_down(SDL_Keycode key, t_visualizer *v)
 		move(v, (t_vec2) {MOVE_SPEED, 0});
 	else if (key == SDLK_SPACE)
 		toggle_pause(v);
-	return (0);
 }
 
 static void	stop_supervising(t_visualizer *v, t_vec2 supervised)
@@ -90,8 +90,9 @@ static void	supervise(t_visualizer *v, t_vec2 supervised)
 	}
 }
 
-static void	on_click(t_visualizer *v, t_vec2 pos)
+void	on_click(t_vec2 pos, void *_v)
 {
+	t_visualizer	*v = _v;
 	t_new_target_msg msg = new_target_msg(screen_pos_to_board_pos(v, pos), NEW_TARGETING);
 	if (vec2cmp(msg.target, NULL_POS))
 	{
@@ -106,22 +107,4 @@ static void	on_click(t_visualizer *v, t_vec2 pos)
 			v->target_infos.pos = NULL_POS;
 		}
 	}
-}
-
-int	handle_events(t_visualizer* v)
-{
-	SDL_Event	e;
-
-	while (SDL_PollEvent(&e))
-	{
-		if (e.type == SDL_EVENT_QUIT)
-			return (1);
-		else if (e.type == SDL_EVENT_KEY_DOWN) {
-			if (on_key_down(e.key.key, v))
-			return (1);
-		}
-		else if (e.type == SDL_EVENT_MOUSE_BUTTON_DOWN && e.button.button == SDL_BUTTON_LEFT)
-			on_click(v, (t_vec2) {e.button.x, e.button.y});
-	}
-	return (0);
 }

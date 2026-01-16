@@ -19,20 +19,21 @@ SRC = main.c \
 		ipc/shm.c \
 		ipc/msg.c \
 		visualizer/visualizer.c \
-		visualizer/draw.c \
 		visualizer/shared_memory.c \
-		visualizer/kills.c \
-		visualizer/supervision.c \
 		visualizer/game.c \
 		visualizer/ui/draw.c \
+		visualizer/ui/kills.c \
+		visualizer/ui/supervision.c \
 		visualizer/ui/events.c \
-		visualizer/ui/sdl.c \
-		visualizer/ui/sdl_utils.c \
-		visualizer/ui/panel.c \
-		visualizer/ui/text_line.c \
-		models/vector/vec2.c \
-		models/vector/fvec2.c \
-		models/color.c \
+		visualizer/ui/sdl/sdl.c \
+		visualizer/ui/sdl/loop.c \
+		visualizer/ui/sdl/draw.c \
+		visualizer/ui/sdl/utils.c \
+		visualizer/ui/sdl/panel/panel.c \
+		visualizer/ui/sdl/panel/text_line.c \
+		utils/vector/vec2.c \
+		utils/vector/fvec2.c \
+		utils/color.c \
 		utils/log.c \
 		utils/ansi_color.c
 

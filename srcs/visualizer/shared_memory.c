@@ -1,13 +1,13 @@
 #include <visualizer/visualizer.h>
 
-void	free_board_buffer(uint32_t **buffer, size_t height)
+void	free_board_copy(uint32_t **buffer, size_t height)
 {
 	for (size_t i = 0; i < height && buffer[i]; i++)
 		free(buffer[i]);
 	free(buffer);
 }
 
-int	init_board_buffer(uint32_t ***buffer, t_vec2 board_size)
+int	init_board_copy(uint32_t ***buffer, t_vec2 board_size)
 {
 	*buffer = (uint32_t **) malloc(board_size.y * sizeof(uint32_t *));
 	if (!*buffer)
@@ -17,7 +17,7 @@ int	init_board_buffer(uint32_t ***buffer, t_vec2 board_size)
 		(*buffer)[i] = (uint32_t *) malloc(board_size.x * sizeof(uint32_t *));
 		if (!*buffer)
 		{
-			free_board_buffer(*buffer, i);
+			free_board_copy(*buffer, i);
 			return (1);
 		}
 		ft_bzero((*buffer)[i], board_size.x * sizeof(uint32_t));
@@ -37,8 +37,8 @@ void	try_sync_shm(t_visualizer *v)
 {
 	if (sem_lock_no_wait(v->ipc.sem_id) != -1)
 	{
-		copy_board(v->board_copy, (uint32_t *) (v->ipc.data + SHM_BOARD_OFFSET), v->board_size);
 		ft_memcpy(&v->shm_copy, v->ipc.data, sizeof(v->ipc.data));
+		copy_board(v->board_copy, (uint32_t *) (v->ipc.data + SHM_BOARD_OFFSET), v->board_size);
 		sem_unlock(v->ipc.sem_id);
 	}
 }

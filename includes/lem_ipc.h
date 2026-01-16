@@ -3,9 +3,9 @@
 
 #include <stdint.h>
 #include <libft.h>
-#include <models/vector.h>
+#include <utils/vector.h>
 #include <utils/log.h>
-#include <models/color.h>
+#include <utils/color.h>
 
 #define DEF_BOARD_WIDTH		30
 #define DEF_BOARD_HEIGHT	30

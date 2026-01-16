@@ -15,7 +15,7 @@
 
 #include <libft.h>
 #include <utils/log.h>
-#include <models/vector.h>
+#include <utils/vector.h>
 
 #define PAGE_SIZE		getpagesize()
 

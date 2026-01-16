@@ -1,16 +1,17 @@
 #ifndef PANEL_H
 #define PANEL_H
 
-#include <SDL3/SDL.h>
-#include <SDL3_ttf/SDL_ttf.h>
-#include <visualizer/sdl_utils.h>
-#include <models/color.h>
-#include <models/vector.h>
+#include <visualizer/sdl.h>
+
+#include <utils/color.h>
+#include <utils/vector.h>
 #include <libft.h>
 
 #define PANEL_DEF_MARGIN		10
 #define PANEL_DEF_PADDING		10
 #define PANEL_DEF_BORDER_WIDTH	1
+
+#define NULL_POS				((t_vec2) {-1, -1})
 
 typedef enum e_justification
 {
@@ -28,8 +29,8 @@ typedef struct s_text_line
 	uint32_t				line_number;
 	t_justification			justification;
 }				t_text_line;
-
 typedef enum e_anchor
+
 {
 	ANCHOR_TOP_LEFT,
 	ANCHOR_TOP_RIGHT,
@@ -49,15 +50,11 @@ typedef struct	s_panel
 	t_vec2		margin;
 	t_vec2		padding;
 	t_list		*text_line_list;
-
-	t_list		*rows;
 }				t_panel;
 
 
 t_panel	init_panel(t_vec2 size, t_anchor anchor, int visible);
-void	draw_panel(SDL_Renderer *renderer, t_panel *panel);
-void	draw_rectangle(SDL_Renderer *renderer, t_vec2 pos, t_vec2 size, t_color color);
-void	draw_border_rectangle(SDL_Renderer *renderer, t_vec2 pos, t_vec2 size, t_color color);
+void	draw_panel(t_sdl *sdl, t_panel *panel);
 void	destroy_text_line_list(t_panel *panel);
 t_list	*add_text_line(TTF_TextEngine *engine, TTF_Font *font, t_panel *panel, char *text, t_color color, t_justification justification, uint32_t line_number);
 

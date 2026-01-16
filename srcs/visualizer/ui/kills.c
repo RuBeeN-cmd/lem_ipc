@@ -34,7 +34,7 @@ static void	create_kills_panel_text_lines(t_visualizer *v, t_panel *panel)
 	if (panel->text_line_list)
 		destroy_text_line_list(panel);
 
-	add_text_line(v->text_engine, v->font, panel, "Leaderboard: ", color_from_u32(0xFF000000), JUSTIFY_CENTER, 0);
+	add_text_line(v->sdl.text_engine, v->sdl.font, panel, "Leaderboard: ", color_from_u32(0xFF000000), JUSTIFY_CENTER, 0);
 	t_list *current = v->kills;
 	for (size_t i = 0; i < MAX_LEADERBOARD && current; i++, current = current->next)
 	{
@@ -43,10 +43,10 @@ static void	create_kills_panel_text_lines(t_visualizer *v, t_panel *panel)
 		{
 			char *line_text = ft_strjoin_free("Team ", ft_itoa(kill_number->team), 2);
 			line_text = ft_strjoin_free(line_text, " : ", 1);
-			add_text_line(v->text_engine, v->font, panel, line_text, get_team_color(kill_number->team), JUSTIFY_LEFT, i + 1);
+			add_text_line(v->sdl.text_engine, v->sdl.font, panel, line_text, get_team_color(kill_number->team), JUSTIFY_LEFT, i + 1);
 			free(line_text);
 			char *num_str = ft_itoa(kill_number->number);
-			add_text_line(v->text_engine, v->font, panel, num_str, get_team_color(kill_number->team), JUSTIFY_RIGHT, i + 1);
+			add_text_line(v->sdl.text_engine, v->sdl.font, panel, num_str, get_team_color(kill_number->team), JUSTIFY_RIGHT, i + 1);
 			free(num_str);
 		}
 	}

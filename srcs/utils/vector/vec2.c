@@ -1,4 +1,4 @@
-#include <models/vector.h>
+#include <utils/vector.h>
 
 int	vec2cmp(t_vec2 v1, t_vec2 v2) {
 	return (v1.x != v2.x || v1.y != v2.y);

@@ -20,10 +20,8 @@ do
     # valgrind --log-file=./val_log_player${i}.log 
     # valgrind --log-file=./val_log_player${i}.log ${PROGRAM} ${team_id} >> ${LOGS_DIR}player.log & # >/dev/null 2>&1 &
     ${PROGRAM} ${team_id} 10 10 >> ${LOGS_DIR}player${i}.log 2>&1 & # >/dev/null 2>&1 &
-	if [[ $i -eq 2 ]]; then
-		${PROGRAM} visualizer > viz.log 2>&1 &
-	fi
     sleep 0.0001
 done
 
+valgrind --leak-check=full --show-leak-kinds=all --suppressions=vsupp ${PROGRAM} visualizer #> viz.log 2>&1 &
 
