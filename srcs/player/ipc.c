@@ -42,7 +42,7 @@ static int	destroy_ipc(t_ipc *ipc)
 		|| sem_destroy(ipc->sem_id));
 }
 
-int is_visualizer(t_ipc *ipc)
+int is_visualizer_alive(t_ipc *ipc)
 {
 	if (check_msg(ipc->msg_id, NULL, 1, VISUALIZER_CHANNEL) == 1)
 	{
@@ -56,12 +56,10 @@ int	close_ipc(t_ipc *ipc)
 {
 	sem_lock(ipc->sem_id);
 	int	nb_process = get_attached_process_nb(ipc->shm_id);
-	DBG("Getting nb_process: %d\n", nb_process);
-	if (nb_process == 2 && is_visualizer(ipc))
+	if (nb_process == 2 && is_visualizer_alive(ipc))
 	{
 		while ((nb_process = get_attached_process_nb(ipc->shm_id)) != 1)
 		{
-			DBG("Getting nb_process: %d\n", nb_process);
 			sem_unlock(ipc->sem_id);
 			usleep(100);
 			sem_lock(ipc->sem_id);	

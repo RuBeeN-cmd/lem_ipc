@@ -34,8 +34,8 @@ int	join_board(t_game *game)
 		if (pos.x == start_pos.x && pos.y == start_pos.y)
 			return (1);
 	}
-	game->position = pos;
-	game->board[game->position.y][game->position.x] = game->team;
+	game->player.position = pos;
+	game->board[game->player.position.y][game->player.position.x] = game->player.team;
 	return (0);
 }
 
@@ -47,8 +47,7 @@ void	init_board(uint32_t **board, uint32_t *raw_board, t_vec2 board_size)
 
 void	init_game(t_game *game, t_shm_data *shm_data, uint32_t team, t_vec2 board_size)
 {
-	game->team = team;
-	game->is_supervised = 0;
+	init_player(&game->player, team);
 	game->board_size = board_size;
 	game->board = malloc(sizeof(uint32_t *) * board_size.y);
 	init_board(game->board, (uint32_t *) (shm_data + SHM_BOARD_OFFSET), board_size);

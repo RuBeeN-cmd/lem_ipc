@@ -7,14 +7,21 @@
 #define COOLDOWN		100000
 #define START_COOLDOWN	5000000
 
+typedef struct	s_player {
+	t_vec2			position;
+	uint32_t		team;
+	int				is_supervised;
+}				t_player;
+
 typedef struct	s_game
 {
 	uint32_t		**board;
 	t_vec2			board_size;
-	t_vec2			position;
-	uint32_t		team;
-	int				is_supervised;
+	t_player		player;
 }				t_game;
+
+// init_player.c
+void	init_player(t_player *player, uint32_t team);
 
 // player.c
 int	player_workflow(uint32_t team, t_vec2 board_size);
@@ -43,5 +50,6 @@ int	close_ipc(t_ipc *ipc);
 void	check_supervision_msg(t_ipc *ipc, t_game *game);
 void	send_supervision_info(t_ipc *ipc, t_game *game, int is_alive);
 void	send_kill_info(t_ipc *ipc, uint32_t killed_team, uint32_t killer_team);
+void	check_team_msg(t_ipc *ipc, t_game *game);
 
 #endif

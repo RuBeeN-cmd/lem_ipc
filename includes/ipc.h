@@ -115,7 +115,6 @@ int			sem_lock_no_wait(int sem_id);
 int			sem_unlock(int sem_id);
 int			sem_destroy(int sem_id);
 int			get_attached_process_nb(int shm_id);
-int			msg_queue_destroy(int msg_id);
 uint32_t	get_msgq_size(int msgid);
 
 // shm_utils.c

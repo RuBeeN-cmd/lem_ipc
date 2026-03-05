@@ -6,6 +6,7 @@ static void player_loop(t_game *game, t_ipc *ipc)
 	while (is_other_team(game, ipc))
 	{
 		check_supervision_msg(ipc, game);
+		check_team_msg(ipc, game);
 		sem_lock(ipc->sem_id);
 		if (!(ipc->data->game_state & PAUSED)) {
 			killer_team = is_killed_by_team(game);
@@ -16,13 +17,13 @@ static void player_loop(t_game *game, t_ipc *ipc)
 			player_move(game);
 		}
 		sem_unlock(ipc->sem_id);
-		if (game->is_supervised)
+		if (game->player.is_supervised)
 			send_supervision_info(ipc, game, 1);
 		usleep(COOLDOWN);
 	}
 	if (killer_team) {
-		send_kill_info(ipc, game->team, killer_team);
-		if (game->is_supervised)
+		send_kill_info(ipc, game->player.team, killer_team);
+		if (game->player.is_supervised)
 			send_supervision_info(ipc, game, 0);
 	}
 }
