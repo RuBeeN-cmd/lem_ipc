@@ -325,13 +325,70 @@ void escape_from_enemys(t_game *game)
 	}
 }
 
+t_vec2 get_pos_around_leader(t_vec2 leader, t_game *game) {
+	int	radius = 1;
+	int	max_radius = ft_max(
+		ft_max(
+			ft_max(leader.x, leader.y),
+			game->board_size.x - leader.x - 1
+		),
+		game->board_size.y - leader.y - 1
+	);
+	while (radius < max_radius) {
+		for (int local_y = -radius; local_y <= radius; local_y++) {
+			int y = local_y + leader.y; 
+			if (y < 0 || y >= game->board_size.x)
+				continue;
+			for (int local_x = -radius; local_x < radius; local_x++) {
+				int x = local_x + leader.x;
+				if (x < 0 || x >= game->board_size.x)
+					continue;
+				if (!x && !y)
+					continue;
+				if (game->player.position.x == x && game->player.position.y == y)
+					return game->player.position;
+				if (game->board[y][x] == EMPTY_CELL)
+					return (t_vec2) {x, y};
+			}
+		}
+		radius++;
+	}
+	return (NULL_POS);
+}
+
+void go_to_leader(t_game *game) {
+	if (!vec2cmp(game->player.leader.pos, NULL_POS))
+		return ;
+	t_vec2 target = get_pos_around_leader(game->player.leader.pos, game);
+	if (!vec2cmp(target, NULL_POS))
+		return ;
+	t_vec2 delta = {target.x - game->player.position.x, target.y - game->player.position.y};
+	if (ft_abs(delta.x) > ft_abs(delta.y)) {
+		if (delta.x > 0)
+			move_right(game);
+		else
+			move_left(game);
+	} else {
+		if (delta.y > 0)
+			move_down(game);
+		else
+			move_up(game);
+	}
+}
+
+
+
+
+
 void player_move(t_game *game)
 {
-	if (!is_other_mate(*game)) {
-		escape_from_enemys(game);
-	} else if (!is_with_mate(*game)) {
-		go_to_mate(game);
-	} else {
-		get_best_move(game);
-	}
+	if (!game->player.is_chunk_leader)
+		go_to_leader(game);
+	// if (!is_other_mate(*game)) {
+	// 	escape_from_enemys(game);
+	// } else if (!is_with_mate(*game)) {
+	// 	go_to_mate(game);
+	// } else {
+	// 	get_best_move(game);
+	// }
 }

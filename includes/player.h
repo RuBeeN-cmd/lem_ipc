@@ -7,17 +7,27 @@
 #define COOLDOWN		100000
 #define START_COOLDOWN	5000000
 
+typedef struct	s_leader_info
+{
+	pid_t	pid;
+	t_vec2	pos;
+}				t_leader_info;
+
 typedef struct	s_player {
 	t_vec2			position;
 	uint32_t		team;
 	int				is_supervised;
+	int				is_chunk_leader;
+	t_leader_info	leader;
 }				t_player;
 
 typedef struct	s_game
 {
 	uint32_t		**board;
 	t_vec2			board_size;
+	uint32_t		chunk_size;
 	t_player		player;
+	pid_t			pid;
 }				t_game;
 
 // init_player.c
@@ -36,7 +46,7 @@ t_vec2			rand_pos(t_vec2 board_size);
 void			escape_from_enemys(t_game *game);
 void			player_move(t_game *game);
 int				is_other_mate(t_game game);
-
+int				is_mate_in_chunk(t_game *game, t_vec2 pos);
 // init_game.c
 void	init_game(t_game *game, t_shm_data *shm_data, uint32_t team, t_vec2 board_size);
 int		join_board(t_game *game);

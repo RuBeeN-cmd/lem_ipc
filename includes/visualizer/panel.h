@@ -53,7 +53,6 @@ typedef struct	s_panel
 	t_list		*rows;
 }				t_panel;
 
-
 t_panel	init_panel(t_vec2 size, t_anchor anchor, int visible);
 void	draw_panel(SDL_Renderer *renderer, t_panel *panel);
 void	draw_rectangle(SDL_Renderer *renderer, t_vec2 pos, t_vec2 size, t_color color);

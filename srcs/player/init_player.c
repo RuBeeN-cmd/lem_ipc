@@ -4,4 +4,6 @@ void	init_player(t_player *player, uint32_t team) {
 	player->team = team;
 	player->is_supervised = 0;
 	player->position = NULL_POS;
+	player->is_chunk_leader = 0;
+	player->leader = (t_leader_info) {0, NULL_POS};
 }
