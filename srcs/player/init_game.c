@@ -53,8 +53,11 @@ int	join_board(t_game *game)
 		if (pos.x == start_pos.x && pos.y == start_pos.y)
 			return (1);
 	}
-	if (!is_mate_in_chunk(game, pos))
-		game->player.is_chunk_leader = 1;
+	// if (!is_mate_in_chunk(game, pos))
+	if (!is_other_mate(*game)) {
+		DBG("Defined as leader !\n");
+		game->player.is_leader = 1;
+	}
 	game->player.position = pos;
 	game->board[game->player.position.y][game->player.position.x] = game->player.team;
 	return (0);
@@ -72,6 +75,5 @@ void	init_game(t_game *game, t_shm_data *shm_data, uint32_t team, t_vec2 board_s
 	game->chunk_size = 10;
 	game->board_size = board_size;
 	game->board = malloc(sizeof(uint32_t *) * board_size.y);
-	game->pid = getpid();
 	init_board(game->board, (uint32_t *) (shm_data + SHM_BOARD_OFFSET), board_size);
 }

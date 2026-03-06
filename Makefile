@@ -14,7 +14,7 @@ SRC = main.c \
 		player/init_game.c \
 		player/ipc.c \
 		player/messages.c \
-		player/init_player.c \
+		player/workflow.c \
 		ipc/ipc.c \
 		ipc/sem.c \
 		ipc/shm.c \

@@ -55,7 +55,7 @@ static int	visualizer_routine(t_visualizer *v)
 	update_kills(v);
 	try_sync_shm(v);
 	draw_game(v);
-	if (!is_game_ended(v->board_copy, v->board_size))
+	if (0) //!is_game_ended(v->board_copy, v->board_size))
 		return (0);
 	return (1);
 }

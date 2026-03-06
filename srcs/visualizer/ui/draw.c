@@ -24,12 +24,14 @@ void	draw_cell(t_visualizer *v, int x, int y, int team, uint32_t renderer_width,
 		SDL_SetRenderDrawColor(v->renderer, 0, 0, 0, 0xFF);
 		SDL_RenderFillRect(v->renderer, &cell);
 	} else if (!vec2cmp(v->target_infos.chunk_leader, (t_vec2) {x, y})) {
-		t_vec2	pin_rect_size = {cell_size - BORDER_WIDTH, cell_size - BORDER_WIDTH};
-		pin_rect_size = scalar_div_vec2(pin_rect_size, 2);
-		t_vec2	pin_rect_pos = add_vec2(pos, scalar_div_vec2(pin_rect_size, 2));
-		SDL_FRect	cell = {pin_rect_pos.x, pin_rect_pos.y, pin_rect_size.x, pin_rect_size.y};
-		SDL_SetRenderDrawColor(v->renderer, 0xFF, 0xD7, 0, 0xFF);
-		SDL_RenderFillRect(v->renderer, &cell);
+		if (!vec2cmp(v->target_infos.chunk_leader, NULL_SIZE)) {
+			t_vec2	pin_rect_size = {cell_size - BORDER_WIDTH, cell_size - BORDER_WIDTH};
+			pin_rect_size = scalar_div_vec2(pin_rect_size, 2);
+			t_vec2	pin_rect_pos = add_vec2(pos, scalar_div_vec2(pin_rect_size, 2));
+			SDL_FRect	cell = {pin_rect_pos.x, pin_rect_pos.y, pin_rect_size.x, pin_rect_size.y};
+			SDL_SetRenderDrawColor(v->renderer, 0xFF, 0xD7, 0, 0xFF);
+			SDL_RenderFillRect(v->renderer, &cell);
+		}
 	}
 }
 
