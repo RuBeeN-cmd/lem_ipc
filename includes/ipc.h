@@ -65,8 +65,6 @@ typedef struct	s_supervised_infos
 	t_vec2		pos;
 	uint32_t	team;
 	int			is_alive;
-	int			is_chunk_leader;
-	t_vec2		chunk_leader;
 }				t_supervised_infos;
 
 typedef struct	s_kill_info

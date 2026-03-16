@@ -7,21 +7,10 @@
 #define COOLDOWN		100000
 #define START_COOLDOWN	5000000
 
-#define	LEADER_DIST_THRESHOLD	40
-#define LEADER_MSG_TTL			100
-
-typedef struct	s_leader_msg
-{
-	t_vec2		pos;
-	uint32_t	ttl;
-}				t_leader_msg;
-
 typedef struct	s_player {
 	t_vec2			position;
 	uint32_t		team;
 	int				is_supervised;
-	int				is_leader;
-	t_vec2			leader;
 }				t_player;
 
 typedef struct	s_game

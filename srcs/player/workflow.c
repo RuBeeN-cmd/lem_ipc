@@ -8,22 +8,11 @@ static void player_loop(t_game *game, t_ipc *ipc)
 		check_supervision_msg(ipc, game);
 		sem_lock(ipc->sem_id);
 		if (!(ipc->data->game_state & PAUSED)) {
-			// if (!game->player.is_leader)
-			// 	check_leader_position(ipc, &game->player);
 			killer_team = is_killed_by_team(game);
 			if (killer_team) {
 				sem_unlock(ipc->sem_id);
 				break ;
 			}
-			// if (game->player.is_leader) {
-			// 	t_vec2 target = get_nearest(*game, 0);
-			// 	if (!vec2cmp(target, NULL_POS)) {
-			// 		player_move_to_target(game, target);
-			// 		send_target_position(ipc, game, target);
-			// 	}
-			// } else {
-			// 	player_move(game);
-			// }
 		}
 		sem_unlock(ipc->sem_id);
 		if (game->player.is_supervised)

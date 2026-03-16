@@ -53,11 +53,6 @@ int	join_board(t_game *game)
 		if (pos.x == start_pos.x && pos.y == start_pos.y)
 			return (1);
 	}
-	// if (!is_mate_in_chunk(game, pos))
-	if (!is_other_mate(*game)) {
-		DBG("Defined as leader !\n");
-		game->player.is_leader = 1;
-	}
 	game->player.position = pos;
 	game->board[game->player.position.y][game->player.position.x] = game->player.team;
 	return (0);

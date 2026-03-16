@@ -24,11 +24,6 @@ static void	create_supervision_panel_text_lines(t_visualizer *v, t_panel *panel,
 	str = target_infos.is_alive ? "Yes" : "No";
 	t_color alive_color = target_infos.is_alive ? color_from_u32(0xFF00FF00) : color_from_u32(0xFF0000FF);
 	add_text_line(v->text_engine, v->font, panel, str, alive_color, JUSTIFY_RIGHT, 3);
-
-	add_text_line(v->text_engine, v->font, panel, "Leader : ", color_from_u32(0xFF000000), JUSTIFY_LEFT, 4);
-	str = target_infos.is_chunk_leader ? "Yes" : "No";
-	t_color chunk_leader_color = target_infos.is_chunk_leader ? color_from_u32(0xFF00FF00) : color_from_u32(0xFF0000FF);
-	add_text_line(v->text_engine, v->font, panel, str, chunk_leader_color, JUSTIFY_RIGHT, 4);
 }
 
 void	update_supervision(t_visualizer *v)

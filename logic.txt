@@ -1,5 +1,10 @@
-Player logic:
-	No more mate alive:
-		Escape !!!!! 
-	ELSE:
-		
+Chain Strat
+
+If first in X radius:
+	-> Send follow me msg
+
+Look for follow me msg
+
+if 
+	-> follow
+	-> save
