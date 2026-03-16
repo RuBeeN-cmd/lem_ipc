@@ -7,10 +7,15 @@
 #define COOLDOWN		100000
 #define START_COOLDOWN	5000000
 
+#define SCAN_RADIUS		10
+
 typedef struct	s_player {
 	t_vec2			position;
 	uint32_t		team;
 	int				is_supervised;
+	t_state			state;
+	int				chain_id;
+	t_vec2			last_pos;
 }				t_player;
 
 typedef struct	s_game
@@ -57,5 +62,7 @@ void	send_kill_info(t_ipc *ipc, uint32_t killed_team, uint32_t killer_team);
 void	check_leader_position(t_ipc *ipc, t_player *player);
 void	send_position(t_ipc *ipc, t_player *player);
 void	send_target_position(t_ipc *ipc, t_game *game, t_vec2 target);
+void	send_team_msg(t_ipc *ipc, t_game *game);
+void	check_team_msg(t_ipc *ipc, t_game *game);
 
 #endif

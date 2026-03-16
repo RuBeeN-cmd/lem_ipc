@@ -7,10 +7,8 @@ int	ipc_join_board(t_ipc *ipc, t_game *game)
 		if (join_board(game))
 			goto error;
 		sem_unlock(ipc->sem_id);
-		for (int cooldown = START_COOLDOWN; cooldown > 0; cooldown -= 1000000) {
+		for (int cooldown = START_COOLDOWN; cooldown > 0; cooldown -= 1000000)
 			usleep(1000000);
-			// send_msg(ipc->msg_id, &cooldown, sizeof(cooldown), GAME_START_CHANNEL);
-		}
 		sem_lock(ipc->sem_id);
 		ipc->data->game_state ^= STARTED;
 		sem_unlock(ipc->sem_id);

@@ -1,5 +1,6 @@
 #include <visualizer/visualizer.h>
 
+
 void	draw_cell(t_visualizer *v, int x, int y, int team, uint32_t renderer_width, uint32_t renderer_height)
 {
 	t_color		team_color = get_team_color(team);
@@ -12,7 +13,7 @@ void	draw_cell(t_visualizer *v, int x, int y, int team, uint32_t renderer_width,
 		pos.x--;
 	if (pos.y < 0)
 		pos.y--;
-	SDL_FRect	cell = {pos.x, pos.y, cell_size - BORDER_WIDTH, cell_size - BORDER_WIDTH};
+	SDL_FRect cell = {pos.x, pos.y, cell_size - BORDER_WIDTH, cell_size - BORDER_WIDTH};
 	SDL_SetRenderDrawColor(v->renderer, team_color.r, team_color.g, team_color.b, team_color.a);
 	SDL_RenderFillRect(v->renderer, &cell);
 	if (v->target_infos.is_alive && !vec2cmp(v->target_infos.pos, (t_vec2) {x, y}))

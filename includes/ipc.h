@@ -43,6 +43,11 @@ typedef enum e_game_state
 	PAUSED = 2
 }				t_game_state;
 
+typedef enum	s_state {
+	UNPAIRED,
+	LEADING
+}				t_state;
+
 typedef struct	s_shm_data
 {
 	t_game_state	game_state;
@@ -65,6 +70,8 @@ typedef struct	s_supervised_infos
 	t_vec2		pos;
 	uint32_t	team;
 	int			is_alive;
+	t_state		player_state;
+	int			chain_id;
 }				t_supervised_infos;
 
 typedef struct	s_kill_info
@@ -90,6 +97,13 @@ typedef struct	s_new_target_msg
 	t_new_target_msg_type	type;
 	t_vec2					target;
 }				t_new_target_msg;
+
+typedef struct	s_team_msg
+{
+	int		chain_id;
+	t_vec2	last_pos;
+	t_vec2	pos;
+}				t_team_msg;
 
 // init_ipc.c
 int	init_player_ipc(t_ipc *ipc, t_vec2 *board_size);
