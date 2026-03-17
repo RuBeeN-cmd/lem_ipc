@@ -44,7 +44,10 @@ static void	move(t_visualizer *v, t_vec2 offset)
 static void	toggle_pause(t_visualizer *v)
 {
 	sem_lock(v->ipc.sem_id);
-	DBG("Pause toggled\n");
+	if (v->ipc.data->game_state & PAUSED)
+		INFO("Game %sResumed%s\n", ANSI_GREEN, ANSI_RESET);
+	else
+		INFO("Game %sPaused%s\n", ANSI_RED, ANSI_RESET);
 	v->ipc.data->game_state ^= PAUSED;
 	sem_unlock(v->ipc.sem_id);
 }
@@ -100,10 +103,11 @@ static void	on_click(t_visualizer *v, t_vec2 pos)
 		if (get_team_on_board(msg.target, v->board_copy, v->board_size)) {
 			sem_unlock(v->ipc.sem_id);
 			supervise(v, msg.target);
-			DBG("Supervision msg sent\n");
+			INFO("Supervision request sent\n");
 		} else {
 			sem_unlock(v->ipc.sem_id);
 			v->target_infos.pos = NULL_POS;
+			v->target_infos.leader_pos = NULL_POS;
 		}
 	}
 }

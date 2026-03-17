@@ -7,15 +7,21 @@
 #define COOLDOWN		100000
 #define START_COOLDOWN	5000000
 
-#define SCAN_RADIUS		10
+#define SCAN_RADIUS		30
+
+typedef struct	s_leader {
+	t_vec2	position;
+	t_vec2	target;
+}				t_leader;
 
 typedef struct	s_player {
 	t_vec2			position;
 	uint32_t		team;
 	int				is_supervised;
-	t_state			state;
+
 	int				chain_id;
-	t_vec2			last_pos;
+	t_vec2			last_position;
+	t_leader		leader;
 }				t_player;
 
 typedef struct	s_game
@@ -33,18 +39,9 @@ void	init_player(t_player *player, uint32_t team);
 int	player_workflow(uint32_t team, t_vec2 board_size);
 
 // game.c
-int				get_best_move(t_game *game);
-int				is_with_mate(t_game game);
-void			go_to_mate(t_game *game);
-int				is_killed_by_team(t_game *game);
-int				is_other_team(t_game *game, t_ipc *ipc);
-t_vec2			rand_pos(t_vec2 board_size);
-void			escape_from_enemys(t_game *game);
-int 			player_move(t_game *game);
-int 			player_move_to_target(t_game *game, t_vec2 target);
-int				is_other_mate(t_game game);
-int				is_mate_in_chunk(t_game *game, t_vec2 pos);
-t_vec2			get_nearest(t_game game, int find_mate);
+int go_to_target(t_game *game);
+int	is_killed_by_team(t_game *game);
+int	is_other_team(t_game *game, t_ipc *ipc);
 
 // init_game.c
 void	init_game(t_game *game, t_shm_data *shm_data, uint32_t team, t_vec2 board_size);
@@ -62,7 +59,7 @@ void	send_kill_info(t_ipc *ipc, uint32_t killed_team, uint32_t killer_team);
 void	check_leader_position(t_ipc *ipc, t_player *player);
 void	send_position(t_ipc *ipc, t_player *player);
 void	send_target_position(t_ipc *ipc, t_game *game, t_vec2 target);
-void	send_team_msg(t_ipc *ipc, t_game *game);
+void	send_leading_msg(t_ipc *ipc, t_game *game);
 void	check_team_msg(t_ipc *ipc, t_game *game);
 
 #endif

@@ -99,7 +99,7 @@ static int	init_child(t_ipc *ipc, t_vec2 *board_size)
 		ERR("Failed to fetch board size.\n");
 		return (1);
 	}
-	DBG("Board size received: (%d, %d)\n", board_size->x, board_size->y);
+	INFO("Board size received: (%d, %d)\n", board_size->x, board_size->y);
 	if (send_board_size(ipc->msg_id, *board_size)) {
 		WARN("Failed to send board size, cleaning message queue\n");
 		uint32_t msg_q_size = get_msgq_size(ipc->msg_id);
