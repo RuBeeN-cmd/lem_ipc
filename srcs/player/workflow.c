@@ -1,5 +1,13 @@
 #include <player.h>
 
+static void	update_player_target(t_game *game) {
+	if (!is_with_mate(game)) {
+		game->player.target = get_nearest(game, 1);
+	} else {
+		game->player.target = get_nearest(game, 0);
+	}
+}
+
 static void player_loop(t_game *game, t_ipc *ipc)
 {
 	int killer_team = 0;
@@ -13,6 +21,7 @@ static void player_loop(t_game *game, t_ipc *ipc)
 				sem_unlock(ipc->sem_id);
 				break ;
 			}
+			update_player_target(game);
 			player_move(game);
 		}
 		sem_unlock(ipc->sem_id);

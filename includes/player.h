@@ -13,6 +13,7 @@ typedef struct	s_player {
 	t_vec2			position;
 	uint32_t		team;
 	int				is_supervised;
+	t_vec2			target;
 }				t_player;
 
 typedef struct	s_game
@@ -33,9 +34,11 @@ int	player_workflow(uint32_t team, t_vec2 board_size);
 int player_move(t_game *game);
 
 // game_utils.c
-int	is_killed_by_team(t_game *game);
-int is_other_mate(t_game game);
-int is_other_team(t_game *game, t_ipc *ipc);
+int		is_killed_by_team(t_game *game);
+int 	is_other_mate(t_game game);
+int 	is_other_team(t_game *game, t_ipc *ipc);
+t_vec2	get_nearest(t_game *game, int find_mate);
+int		is_with_mate(t_game *game);
 
 // init_game.c
 void	init_game(t_game *game, t_shm_data *shm_data, uint32_t team, t_vec2 board_size);
