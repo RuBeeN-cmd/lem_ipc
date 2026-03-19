@@ -10,11 +10,12 @@ SRC = main.c \
 		parsing/args.c \
 		parsing/team.c \
 		player/player.c \
-		player/game.c \
+		player/movement.c \
 		player/init_game.c \
 		player/ipc.c \
 		player/messages.c \
 		player/workflow.c \
+		player/game_utils.c \
 		ipc/ipc.c \
 		ipc/sem.c \
 		ipc/shm.c \
@@ -24,7 +25,7 @@ SRC = main.c \
 		visualizer/shared_memory.c \
 		visualizer/kills.c \
 		visualizer/supervision.c \
-		visualizer/game.c \
+		visualizer/game_utils.c \
 		visualizer/ui/draw.c \
 		visualizer/ui/events.c \
 		visualizer/ui/sdl.c \

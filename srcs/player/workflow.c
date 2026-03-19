@@ -1,23 +1,5 @@
 #include <player.h>
 
-static int is_other_team(t_game *game, t_ipc *ipc)
-{
-	sem_lock(ipc->sem_id);
-	for (size_t y = 0; y < (size_t) game->board_size.y; y++)
-	{
-		for (size_t x = 0; x <  (size_t)game->board_size.x; x++)
-		{
-			if (game->board[y][x] != EMPTY_CELL && game->board[y][x] != game->player.team)
-			{
-				sem_unlock(ipc->sem_id);
-				return (1);
-			}
-		}
-	}
-	sem_unlock(ipc->sem_id);
-	return (0);
-}
-
 static void player_loop(t_game *game, t_ipc *ipc)
 {
 	int killer_team = 0;
@@ -31,6 +13,7 @@ static void player_loop(t_game *game, t_ipc *ipc)
 				sem_unlock(ipc->sem_id);
 				break ;
 			}
+			player_move(game);
 		}
 		sem_unlock(ipc->sem_id);
 		if (game->player.is_supervised)

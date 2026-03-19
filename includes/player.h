@@ -29,9 +29,13 @@ void	init_player(t_player *player, uint32_t team);
 // player.c
 int	player_workflow(uint32_t team, t_vec2 board_size);
 
-// game.c
-int go_to_target(t_game *game);
+// movement.c
+int player_move(t_game *game);
+
+// game_utils.c
 int	is_killed_by_team(t_game *game);
+int is_other_mate(t_game game);
+int is_other_team(t_game *game, t_ipc *ipc);
 
 // init_game.c
 void	init_game(t_game *game, t_shm_data *shm_data, uint32_t team, t_vec2 board_size);
