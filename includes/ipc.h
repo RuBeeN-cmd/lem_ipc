@@ -65,6 +65,8 @@ typedef struct	s_supervised_infos
 	t_vec2		pos;
 	uint32_t	team;
 	int			is_alive;
+	uint32_t	target_team;
+	t_vec2		target;
 }				t_supervised_infos;
 
 typedef struct	s_kill_info

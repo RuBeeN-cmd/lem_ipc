@@ -14,13 +14,13 @@ typedef struct	s_player {
 	uint32_t		team;
 	int				is_supervised;
 	t_vec2			target;
+	uint32_t		targeted_team;
 }				t_player;
 
 typedef struct	s_game
 {
 	uint32_t		**board;
 	t_vec2			board_size;
-	uint32_t		chunk_size;
 	t_player		player;
 }				t_game;
 
@@ -37,7 +37,7 @@ int player_move(t_game *game);
 int		is_killed_by_team(t_game *game);
 int 	is_other_mate(t_game game);
 int 	is_other_team(t_game *game, t_ipc *ipc);
-t_vec2	get_nearest(t_game *game, int find_mate);
+t_vec2	get_nearest(t_game *game, uint32_t to_find);
 int		is_with_mate(t_game *game);
 
 // init_game.c
@@ -53,5 +53,7 @@ int	close_ipc(t_ipc *ipc);
 void	check_supervision_msg(t_ipc *ipc, t_game *game);
 void	send_supervision_info(t_ipc *ipc, t_game *game, int is_alive);
 void	send_kill_info(t_ipc *ipc, uint32_t killed_team, uint32_t killer_team);
+void	choose_target_team(t_ipc *ipc, t_game *game);
+int		get_target_team(t_ipc *ipc, t_game *game);
 
 #endif

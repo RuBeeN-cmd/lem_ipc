@@ -1,10 +1,31 @@
 #include <player.h>
 
+static int	is_team_alive(t_game *game, uint32_t team) {
+	for (int y = 0; y < game->board_size.y; y++) {
+		for (int x = 0; x < game->board_size.x; x++) {
+			if (game->board[y][x] == team) {
+				return (1);
+			}
+		}
+	}
+	return (0);
+}
+
+void	update_targeted_team(t_game *game, t_ipc *ipc) {
+	if (!game->player.targeted_team) {
+		if (!get_target_team(ipc, game)) {
+			choose_target_team(ipc, game);
+		}
+	} else if (!is_team_alive(game, game->player.targeted_team)) {
+		choose_target_team(ipc, game);
+	}
+}
+
 static void	update_player_target(t_game *game) {
 	if (!is_with_mate(game)) {
-		game->player.target = get_nearest(game, 1);
-	} else {
-		game->player.target = get_nearest(game, 0);
+		game->player.target = get_nearest(game, game->player.team);
+	} else if (game->player.targeted_team) {
+		game->player.target = get_nearest(game, game->player.targeted_team);
 	}
 }
 
@@ -21,6 +42,7 @@ static void player_loop(t_game *game, t_ipc *ipc)
 				sem_unlock(ipc->sem_id);
 				break ;
 			}
+			update_targeted_team(game, ipc);
 			update_player_target(game);
 			player_move(game);
 		}

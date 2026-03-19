@@ -48,22 +48,45 @@ int	move_right(t_game *game) {
 	return move_player(game, new_pos);
 }
 
+uint32_t get_lowest_heuristic(uint32_t *heuristics) {
+	uint32_t min = UINT32_MAX;
+	int idx = -1;
+	for (size_t i = 0; i < 4; i++)
+	{
+		if (heuristics[i] < min) {
+			min = heuristics[i];
+			idx = i;
+		}
+	}
+	heuristics[idx] = UINT32_MAX;
+	return idx;
+}
+
 int player_move(t_game *game) {
 	t_vec2	target = game->player.target;
 	if (!vec2cmp(target, NULL_POS))
 		return (1);
+	t_vec2 possible_dir_offset[4] = {
+		{.x = 0, .y = -1}, // top
+		{.x = 0, .y = 1}, // bot
+		{.x = 1, .y = 0}, // right
+		{.x = -1, .y = 0} // left
+	};
+
+	uint32_t heuristic[4] = {};
+	for (size_t i = 0; i < 4; i++)
+	{
+		t_vec2 pos = add_vec2(game->player.position, possible_dir_offset[i]);
+		t_vec2 delta = {target.x - pos.x, target.y - pos.y};
+		heuristic[i] = ft_abs(delta.x) + ft_abs(delta.y);
+	}
 	
-	t_vec2 delta = {target.x - game->player.position.x, target.y - game->player.position.y};
-	if (ft_abs(delta.x) > ft_abs(delta.y)) {
-		if (delta.x > 0)
-			move_right(game);
-		else
-			move_left(game);
-	} else {
-		if (delta.y > 0)
-			move_down(game);
-		else
-			move_up(game);
+	for (size_t i = 0; i < 4; i++)
+	{
+		int idx = get_lowest_heuristic(heuristic);
+		t_vec2 new_pos = add_vec2(game->player.position, possible_dir_offset[idx]);
+		if (move_player(game, new_pos))
+			break ;
 	}
 	return (0);
 }

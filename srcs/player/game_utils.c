@@ -59,7 +59,7 @@ int is_other_team(t_game *game, t_ipc *ipc) {
 	return (0);
 }
 
-t_vec2	get_nearest(t_game *game, int find_mate)
+t_vec2	get_nearest(t_game *game, uint32_t to_find)
 {
 	int dist_max = ft_max(game->player.position.x, game->board_size.x - game->player.position.x - 1)
 		+ ft_max(game->player.position.y, game->board_size.y - game->player.position.y - 1);
@@ -76,8 +76,8 @@ t_vec2	get_nearest(t_game *game, int find_mate)
 			for (int i = 0; i < dist; i++) {
 				if (target.x >= 0 && target.x < game->board_size.x && target.y >= 0 && target.y < game->board_size.y) {
 					uint32_t target_team = game->board[target.y][target.x];
-					if (target_team && ((find_mate && target_team == game->player.team)
-						|| (!find_mate && target_team != game->player.team)))
+					if (target_team && ((target_team == to_find)
+						|| (!to_find && target_team != game->player.team)))
 						return (target);
 				}
 				target = add_vec2(target, increment);
