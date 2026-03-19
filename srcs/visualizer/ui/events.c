@@ -107,7 +107,6 @@ static void	on_click(t_visualizer *v, t_vec2 pos)
 		} else {
 			sem_unlock(v->ipc.sem_id);
 			v->target_infos.pos = NULL_POS;
-			v->target_infos.leader_pos = NULL_POS;
 		}
 	}
 }

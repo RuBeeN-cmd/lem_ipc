@@ -65,8 +65,6 @@ typedef struct	s_supervised_infos
 	t_vec2		pos;
 	uint32_t	team;
 	int			is_alive;
-	int			chain_id;
-	t_vec2		leader_pos;
 }				t_supervised_infos;
 
 typedef struct	s_kill_info
@@ -92,13 +90,6 @@ typedef struct	s_new_target_msg
 	t_new_target_msg_type	type;
 	t_vec2					target;
 }				t_new_target_msg;
-
-typedef struct	s_leading_msg {
-	int		chain_id;
-	t_vec2	last_position;
-	t_vec2	position;
-	t_vec2	target;
-}				t_leading_msg;
 
 // init_ipc.c
 int	init_player_ipc(t_ipc *ipc, t_vec2 *board_size);

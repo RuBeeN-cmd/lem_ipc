@@ -1,14 +1,29 @@
 #include <player.h>
 
+static int is_other_team(t_game *game, t_ipc *ipc)
+{
+	sem_lock(ipc->sem_id);
+	for (size_t y = 0; y < (size_t) game->board_size.y; y++)
+	{
+		for (size_t x = 0; x <  (size_t)game->board_size.x; x++)
+		{
+			if (game->board[y][x] != EMPTY_CELL && game->board[y][x] != game->player.team)
+			{
+				sem_unlock(ipc->sem_id);
+				return (1);
+			}
+		}
+	}
+	sem_unlock(ipc->sem_id);
+	return (0);
+}
+
 static void player_loop(t_game *game, t_ipc *ipc)
 {
-	// if (game->player.chain_id != -1)
-	// 	send_leading_msg(ipc, game);
 	int killer_team = 0;
-	while (1 || is_other_team(game, ipc))
+	while (is_other_team(game, ipc))
 	{
 		check_supervision_msg(ipc, game);
-		check_team_msg(ipc, game);
 		sem_lock(ipc->sem_id);
 		if (!(ipc->data->game_state & PAUSED)) {
 			killer_team = is_killed_by_team(game);
@@ -16,7 +31,6 @@ static void player_loop(t_game *game, t_ipc *ipc)
 				sem_unlock(ipc->sem_id);
 				break ;
 			}
-			go_to_target(game);
 		}
 		sem_unlock(ipc->sem_id);
 		if (game->player.is_supervised)
