@@ -1,1 +1,0 @@
-/usr/bin/cc -O2 -g -DNDEBUG CMakeFiles/testgputext.dir/examples/testgputext.c.o -o testgputext  -Wl,-rpath,/home/rrollin/Documents/lem_ipc/SDL3_ttf-3.2.2/build:/home/rrollin/Documents/lem_ipc/SDL3-3.2.10 libSDL3_ttf.so.0.2.2 /home/rrollin/Documents/lem_ipc/SDL3-3.2.10/libSDL3.so.0.2.10 
