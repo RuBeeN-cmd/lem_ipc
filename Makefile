@@ -1,10 +1,17 @@
+# ------------ COLORS --------------
+
 _END="\033[0m"
 _RED="\033[0;31m"
 _GREEN="\033[0;32m"
 _YELLOW="\033[0;33m"
 _CYAN="\033[0;36m"
 
+# ----------------------------------
+
 NAME = lemipc
+
+SRC_DIR = srcs
+OBJ_DIR = objs
 
 SRC = main.c \
 		parsing/args.c \
@@ -38,28 +45,47 @@ SRC = main.c \
 		utils/log.c \
 		utils/ansi_color.c
 
-OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
 CC = clang
-CFLAGS = -Wall -Werror -Wextra -gdwarf-4 #-fsanitize=address
-INC = -Iincludes -Ilibft/includes -ISDL3-3.2.10/include -ISDL3_ttf-3.2.2/include
+CFLAGS = -Wall -Werror -Wextra -gdwarf-4 # -fsanitize=address
+INC = -Iincludes
 
-LIB = libft/libft.a SDL3-3.2.10/libSDL3.so SDL3_ttf-3.2.2/libSDL3_ttf.so
+# ------------- LIBS ----------------
+
+LIBFT_DIR = libft
+LIBFT_INCLUDE = $(LIBFT_DIR)/includes
+LIBFT = $(LIBFT_DIR)/libft.a
+
+SDL_DIR     = SDL3-3.2.30
+SDL_BUILD   = $(SDL_DIR)/build
+SDL_INSTALL = $(abspath $(SDL_DIR)/install)
+SDL_CONFIG  = $(SDL_BUILD)/CMakeCache.txt
+SDL_BUILD_LIB = $(SDL_BUILD)/libSDL3.so
+SDL_INCLUDE = $(SDL_INSTALL)/include
+SDL     	= $(SDL_INSTALL)/lib/libSDL3.so
+
+SDL_TTF_DIR     = SDL3_ttf-3.2.2
+SDL_TTF_BUILD   = $(SDL_TTF_DIR)/build
+SDL_TTF_INSTALL = $(SDL_TTF_DIR)/install
+SDL_TTF_CONFIG  = $(SDL_TTF_BUILD)/CMakeCache.txt
+SDL_TTF_BUILD_LIB = $(SDL_TTF_BUILD)/libSDL3_ttf.so
+SDL_TTF_INCLUDE = $(SDL_TTF_INSTALL)/include
+SDL_TTF       	= $(SDL_TTF_INSTALL)/lib/libSDL3_ttf.so
+
+LIB = $(LIBFT) $(SDL) $(SDL_TTF)
 LIBFLAGS = $(addprefix -L, $(dir $(LIB))) $(addprefix -l, $(notdir $(subst lib,,$(basename $(LIB)))))
-LIBFLAGS += -Wl,-rpath,SDL3-3.2.10 -Wl,-rpath,SDL3_ttf-3.2.2
+LIBFLAGS += -Wl,-rpath,$(dir $(SDL)) -Wl,-rpath,$(dir $(SDL_TTF))
 LIBFLAGS += -lm
+INC += -I$(LIBFT_INCLUDE) -I$(SDL_INCLUDE) -I$(SDL_TTF_INCLUDE)
+OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
-SRC_DIR = srcs
-OBJ_DIR = objs
+# ----------------------------------
 
 all: $(NAME)
 
 $(NAME): $(LIB) $(OBJ_DIR) $(OBJ)
 	@echo $(_GREEN)Compiling $(OBJ)...$(_END)
 	@$(CC) $(CFLAGS) $(OBJ) $(LIBFLAGS) -o $@
-
-%.a %.so:
-	@make -C $(dir $@)
 
 $(OBJ_DIR):
 	@mkdir -p $@
@@ -69,17 +95,62 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@echo $(_CYAN)Compiling $<...$(_END)
 	@$(CC) -o $@ -c $< $(CFLAGS) $(INC)
 
+
+# ------- LIBFT -------
+
+%.a:
+	@make -C $(dir $@)
+	
+# ---------- SDL ----------
+
+$(SDL_CONFIG):
+	@cmake -S $(SDL_DIR) -B $(SDL_BUILD)
+
+$(SDL_BUILD_LIB): $(SDL_CONFIG)
+	@cmake --build $(SDL_BUILD)
+
+$(SDL): $(SDL_BUILD_LIB)
+	@cmake --install $(SDL_BUILD) --prefix $(SDL_INSTALL)
+
+sdl: $(SDL)
+
+# ---------- SDL_ttf ----------
+
+
+$(SDL_TTF_CONFIG): $(SDL)
+	@cmake -S $(SDL_TTF_DIR) -B $(SDL_TTF_BUILD) \
+	      -DCMAKE_PREFIX_PATH=$(SDL_INSTALL)
+
+$(SDL_TTF_BUILD_LIB): $(SDL_TTF_CONFIG)
+	@cmake --build $(SDL_TTF_BUILD)
+
+$(SDL_TTF): $(SDL_TTF_BUILD_LIB)
+	@cmake --install $(SDL_TTF_BUILD) --prefix $(SDL_TTF_INSTALL)
+
+# ---------- Public targets ----------
+
+sdl: $(SDL)
+sdl_clean:
+	@rm -rf $(SDL_BUILD) $(SDL_INSTALL)
+
+sdl_ttf: $(SDL_TTF)
+sdl_ttf_clean:
+	@rm -rf $(SDL_TTF_BUILD) $(SDL_TTF_INSTALL)
+
+libft: $(LIBFT)
+libft_clean:
+	@make -C $(LIBFT_DIR) fclean
+
 clean:
 	@echo $(_YELLOW)Cleaning $(OBJ)...$(_END)
-# @for lib in $(dir $(LIB)); \
-# 	do make -C $$lib fclean
-# done
 	@rm -rf $(OBJ_DIR)
 
 fclean: clean
 	@echo $(_RED)Cleaning $(NAME)...$(_END)
 	@rm -f $(NAME)
 
+ffclean: fclean libft_clean sdl_clean sdl_ttf_clean
+
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re ffclean libft_clean sdl_clean sdl_ttf_clean
