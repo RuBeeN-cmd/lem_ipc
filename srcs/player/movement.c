@@ -48,20 +48,6 @@ int	move_right(t_game *game) {
 	return move_player(game, new_pos);
 }
 
-uint32_t get_lowest_heuristic(uint32_t *heuristics) {
-	uint32_t min = UINT32_MAX;
-	int idx = -1;
-	for (size_t i = 0; i < 4; i++)
-	{
-		if (heuristics[i] < min) {
-			min = heuristics[i];
-			idx = i;
-		}
-	}
-	heuristics[idx] = UINT32_MAX;
-	return idx;
-}
-
 int player_move(t_game *game) {
 	t_vec2	target = game->player.target;
 	if (!vec2cmp(target, NULL_POS))
