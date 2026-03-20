@@ -73,8 +73,9 @@ SDL_TTF_INCLUDE = $(SDL_TTF_INSTALL)/include
 SDL_TTF       	= $(SDL_TTF_INSTALL)/lib/libSDL3_ttf.so
 
 LIB = $(LIBFT) $(SDL) $(SDL_TTF)
-LIBFLAGS = $(addprefix -L, $(dir $(LIB))) $(addprefix -l, $(notdir $(subst lib,,$(basename $(LIB)))))
+LIBFLAGS = -L$(dir $(SDL)) -L$(dir $(SDL_TTF)) -L$(dir $(LIBFT))
 LIBFLAGS += -Wl,-rpath,$(dir $(SDL)) -Wl,-rpath,$(dir $(SDL_TTF))
+LIBFLAGS += -lSDL3 -lSDL3_ttf -lft
 LIBFLAGS += -lm
 INC += -I$(LIBFT_INCLUDE) -I$(SDL_INCLUDE) -I$(SDL_TTF_INCLUDE)
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
@@ -95,7 +96,6 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@echo $(_CYAN)Compiling $<...$(_END)
 	@$(CC) -o $@ -c $< $(CFLAGS) $(INC)
 
-
 # ------- LIBFT -------
 
 %.a:
@@ -109,37 +109,46 @@ $(SDL_CONFIG):
 $(SDL_BUILD_LIB): $(SDL_CONFIG)
 	@cmake --build $(SDL_BUILD)
 
-$(SDL): $(SDL_BUILD_LIB)
-	@cmake --install $(SDL_BUILD) --prefix $(SDL_INSTALL)
+SDL_STAMP = $(SDL_INSTALL)/.installed
 
-sdl: $(SDL)
+$(SDL_STAMP): $(SDL_BUILD_LIB) $(SDL_CONFIG)
+	@cmake --install $(SDL_BUILD) --prefix $(SDL_INSTALL)
+	@touch $(SDL_STAMP)
+
+$(SDL): $(SDL_STAMP)
 
 # ---------- SDL_ttf ----------
 
-
-$(SDL_TTF_CONFIG): $(SDL)
+$(SDL_TTF_CONFIG): $(SDL_STAMP)
 	@cmake -S $(SDL_TTF_DIR) -B $(SDL_TTF_BUILD) \
-	      -DCMAKE_PREFIX_PATH=$(SDL_INSTALL)
+		-DCMAKE_PREFIX_PATH=$(SDL_INSTALL)
 
 $(SDL_TTF_BUILD_LIB): $(SDL_TTF_CONFIG)
 	@cmake --build $(SDL_TTF_BUILD)
 
-$(SDL_TTF): $(SDL_TTF_BUILD_LIB)
+SDL_TTF_STAMP = $(SDL_TTF_INSTALL)/.installed
+
+$(SDL_TTF_STAMP): $(SDL_TTF_BUILD_LIB) $(SDL_TTF_CONFIG)
 	@cmake --install $(SDL_TTF_BUILD) --prefix $(SDL_TTF_INSTALL)
+	@touch $(SDL_TTF_STAMP)
+
+$(SDL_TTF): $(SDL_TTF_STAMP)
 
 # ---------- Public targets ----------
-
-sdl: $(SDL)
-sdl_clean:
-	@rm -rf $(SDL_BUILD) $(SDL_INSTALL)
-
-sdl_ttf: $(SDL_TTF)
-sdl_ttf_clean:
-	@rm -rf $(SDL_TTF_BUILD) $(SDL_TTF_INSTALL)
 
 libft: $(LIBFT)
 libft_clean:
 	@make -C $(LIBFT_DIR) fclean
+
+sdl: $(SDL)
+sdl_clean:
+	@echo $(_RED)Cleaning $(SDL_BUILD) $(SDL_INSTALL)...$(_END)
+	@rm -rf $(SDL_BUILD) $(SDL_INSTALL) $(SDL_STAMP)
+
+sdl_ttf: $(SDL_TTF)
+sdl_ttf_clean:
+	@echo $(_RED)Cleaning $(SDL_TTF_BUILD) $(SDL_TTF_INSTALL)...$(_END)
+	@rm -rf $(SDL_TTF_BUILD) $(SDL_TTF_INSTALL) $(SDL_TTF_STAMP)
 
 clean:
 	@echo $(_YELLOW)Cleaning $(OBJ)...$(_END)
@@ -153,4 +162,4 @@ ffclean: fclean libft_clean sdl_clean sdl_ttf_clean
 
 re: fclean all
 
-.PHONY: all clean fclean re ffclean libft_clean sdl_clean sdl_ttf_clean
+.PHONY: all clean fclean re ffclean libft sdl sdl_ttf libft_clean sdl_clean sdl_ttf_clean
