@@ -31,19 +31,11 @@
 }
 
 {
-   dlopen
-   Memcheck:Leak
-   ...
-   fun:*dl_open*
-   ...
-}
-
-{
-   dlclose
-   Memcheck:Leak
-   ...
-   fun:_dl_close*
-   ...
+	dl
+	Memcheck:Leak
+   	fun:_dl_open
+	fun:_dl_init
+   	fun:_dl_close
 }
 
 {

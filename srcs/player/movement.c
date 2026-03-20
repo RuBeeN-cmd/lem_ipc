@@ -66,27 +66,24 @@ int player_move(t_game *game) {
 	t_vec2	target = game->player.target;
 	if (!vec2cmp(target, NULL_POS))
 		return (1);
-	t_vec2 possible_dir_offset[4] = {
-		{.x = 0, .y = -1}, // top
-		{.x = 0, .y = 1}, // bot
-		{.x = 1, .y = 0}, // right
-		{.x = -1, .y = 0} // left
-	};
-
-	uint32_t heuristic[4] = {};
-	for (size_t i = 0; i < 4; i++)
-	{
-		t_vec2 pos = add_vec2(game->player.position, possible_dir_offset[i]);
-		t_vec2 delta = {target.x - pos.x, target.y - pos.y};
-		heuristic[i] = ft_abs(delta.x) + ft_abs(delta.y);
-	}
-	
-	for (size_t i = 0; i < 4; i++)
-	{
-		int idx = get_lowest_heuristic(heuristic);
-		t_vec2 new_pos = add_vec2(game->player.position, possible_dir_offset[idx]);
-		if (move_player(game, new_pos))
-			break ;
-	}
-	return (0);
+	t_vec2 delta = {target.x - game->player.position.x, target.y - game->player.position.y};
+	if (ft_abs(delta.x) + ft_abs(delta.y) <= 1)
+		return (1);
+	t_vec2 base_dir;
+	if (ft_abs(delta.x) > ft_abs(delta.y))
+		base_dir = (t_vec2) { (delta.x > 0) * 2 - 1, 0 };
+	else
+		base_dir = (t_vec2) { 0, (delta.y > 0) * 2 - 1 };
+	if (move_player(game, add_vec2(game->player.position, base_dir)))
+		return (0);
+	t_vec2 new_dir = (t_vec2) { base_dir.y, base_dir.x };
+	if (move_player(game, add_vec2(game->player.position, new_dir)))
+		return (0);
+	new_dir = scalar_mult_vec2(new_dir, -1);
+	if (move_player(game, add_vec2(game->player.position, new_dir)))
+		return (0);
+	new_dir = scalar_mult_vec2(base_dir, -1);
+	if (move_player(game, add_vec2(game->player.position, new_dir)))
+		return (0);
+	return (1);
 }

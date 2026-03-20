@@ -89,10 +89,10 @@ t_vec2	get_nearest(t_game *game, uint32_t to_find)
 
 int	is_with_mate(t_game *game)
 {
-	for (int y = game->player.position.y - 1; y <= game->player.position.y + 1; y++) {
+	for (int y = game->player.position.y - 2; y <= game->player.position.y + 2; y++) {
 		if (y < 0 || y >= game->board_size.y)
 			continue ;
-		for (int x = game->player.position.x - 1; x <= game->player.position.x + 1; x++) {
+		for (int x = game->player.position.x - 2; x <= game->player.position.x + 2; x++) {
 			if ((x < 0 || x >= game->board_size.x) || (x == game->player.position.x && y == game->player.position.y))
 				continue ;
 			else if (game->board[y][x] == game->player.team)
