@@ -77,5 +77,6 @@ int	player_workflow(uint32_t team, t_vec2 board_size)
 	#endif
 	player_loop(&game, &ipc);
 	close_ipc(&ipc);
+	free(game.board);
 	return (0);
 }
