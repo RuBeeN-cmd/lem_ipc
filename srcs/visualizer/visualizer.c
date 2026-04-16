@@ -24,7 +24,7 @@ static int	init_visualizer(t_visualizer *v, char title[], uint32_t width, uint32
 	v->target_infos = (t_supervised_infos) {
 		.pos = NULL_POS,
 		.team = -1,
-		.is_alive = 0
+		.is_alive = -1
 	};
 	v->kills = NULL;
 	init_visualizer_panels(v);

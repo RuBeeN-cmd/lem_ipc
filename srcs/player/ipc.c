@@ -40,21 +40,23 @@ static int	destroy_ipc(t_ipc *ipc)
 		|| sem_destroy(ipc->sem_id));
 }
 
-int is_visualizer_alive(t_ipc *ipc)
+uint32_t get_nb_visualizer_alive(t_ipc *ipc)
 {
-	if (check_msg(ipc->msg_id, NULL, 1, VISUALIZER_CHANNEL) == 1)
-	{
-		send_msg(ipc->msg_id, "*", 1, VISUALIZER_CHANNEL);
-		return (1);
+	uint32_t nb_msg = 0;
+	while (check_msg(ipc->msg_id, NULL, 1, VISUALIZER_CHANNEL) == 1) {
+		nb_msg++;
 	}
-	return (0);
+	for (size_t i = 0; i < nb_msg; i++) {
+		send_msg(ipc->msg_id, "*", 1, VISUALIZER_CHANNEL);
+	}
+	return (nb_msg);
 }
 
 int	close_ipc(t_ipc *ipc)
 {
 	sem_lock(ipc->sem_id);
 	int	nb_process = get_attached_process_nb(ipc->shm_id);
-	if (nb_process == 2 && is_visualizer_alive(ipc))
+	if (nb_process >= 2 && (uint32_t) nb_process == get_nb_visualizer_alive(ipc) + 1)
 	{
 		while ((nb_process = get_attached_process_nb(ipc->shm_id)) != 1)
 		{

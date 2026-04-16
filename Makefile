@@ -47,7 +47,7 @@ SRC = main.c \
 
 
 CC = clang
-CFLAGS = -Wall -Werror -Wextra -gdwarf-4 # -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -gdwarf-4 #-fsanitize=address
 INC = -Iincludes
 
 # ------------- LIBS ----------------
